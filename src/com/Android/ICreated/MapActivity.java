@@ -1,5 +1,6 @@
 package com.Android.ICreated;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -52,6 +53,8 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     public boolean onMarkerClick(Marker marker)
     {
         storage.setCurLatLng(marker.getPosition());
+        Intent intent = new Intent(this, EventShowActivity.class);
+        startActivity(intent);
         return true;
     }
 }
