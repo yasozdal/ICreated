@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener
+public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener
 {
     SupportMapFragment mapFragment;
     GoogleMap map;
@@ -33,25 +33,25 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
             finish();
             return;
         }
-        map.setOnMapClickListener(this);
+        map.setOnMapLongClickListener(this);
+        map.setOnMarkerClickListener(this);
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
 
     @Override
-    public void onMapClick(LatLng latLng)
+    public void onMapLongClick(LatLng latLng)
     {
-
+        storage.setCurLatLng(latLng);
+        Marker marker = map.addMarker(new MarkerOptions()
+                        .position(latLng)
+        );
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng)
+    public boolean onMarkerClick(Marker marker)
     {
-
-        Marker marker = map.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title("Вечеринка")
-        );
-        marker.showInfoWindow();
+        storage.setCurLatLng(marker.getPosition());
+        return true;
     }
 }
