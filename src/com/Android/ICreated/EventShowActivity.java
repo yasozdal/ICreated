@@ -15,12 +15,21 @@ public class EventShowActivity extends Activity {
     private void eventShow()
     {
         Event event = storage.getEvent(storage.getCurLatLng());
+        if (event == null)
+        {
+            TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
+            EventTittle.setText("Ой, событие не найдено :(");
+        }
+        else
+        {
+            TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
+            EventTittle.setText(event.getTitle());
 
-        TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
-        EventTittle.setText(event.getTitle());
+            TextView EventDescription = (TextView) findViewById(R.id.EventDescription);
+            EventDescription.setText(event.getDescription());
 
-        TextView EventDescription = (TextView) findViewById(R.id.EventDescription);
-        EventDescription.setText(event.getDescription());
+        }
+
 
         Button CloseButton = (Button) findViewById(R.id.CloseButton);
         View.OnClickListener oclCloseButton = new View.OnClickListener() {
@@ -35,6 +44,8 @@ public class EventShowActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.description);
+        getActionBar().hide();
         storage = (Storage) getApplication();
         eventShow();
 
