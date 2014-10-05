@@ -7,9 +7,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClickListener
+public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener
 {
     SupportMapFragment mapFragment;
     GoogleMap map;
@@ -37,10 +38,16 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
     @Override
     public void onMapClick(LatLng latLng)
     {
-        map.addMarker(new MarkerOptions()
-            .position(latLng)
-            .title("Вечеринка")
-        );
+
     }
 
+    @Override
+    public void onMapLongClick(LatLng latLng)
+    {
+        Marker marker = map.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title("Вечеринка")
+        );
+        marker.showInfoWindow();
+    }
 }

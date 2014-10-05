@@ -9,6 +9,7 @@ import java.util.Calendar;
  */
 public class Event
 {
+    private long id;
     private Calendar time;
     private LatLng latLng;
     private String title;
@@ -16,9 +17,40 @@ public class Event
 
     public Event(Calendar time, LatLng latLng, String title, String description)
     {
+        id = -1;
         this.time = time;
         this.latLng = latLng;
         this.title = title;
         this.description = description;
+    }
+
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+
+    public long getId()
+    {
+        return id;
+    }
+
+    public Calendar getTime()
+    {
+        return time;
+    }
+
+    public LatLng getLatLng()
+    {
+        return latLng;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public String getDescription()
+    {
+        return description;
     }
 }
