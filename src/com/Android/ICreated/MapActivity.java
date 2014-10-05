@@ -2,6 +2,7 @@ package com.Android.ICreated;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -41,4 +42,5 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
             .title("Вечеринка")
         );
     }
+
 }
