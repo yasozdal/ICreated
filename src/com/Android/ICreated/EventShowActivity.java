@@ -15,19 +15,17 @@ public class EventShowActivity extends Activity {
     private void eventShow()
     {
         Event event = storage.getEvent(storage.getCurLatLng());
+        TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
+        TextView EventDescription = (TextView) findViewById(R.id.EventDescription);
+
         if (event == null)
         {
-            TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
             EventTittle.setText("Ой, событие не найдено :(");
         }
         else
         {
-            TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
             EventTittle.setText(event.getTitle());
-
-            TextView EventDescription = (TextView) findViewById(R.id.EventDescription);
             EventDescription.setText(event.getDescription());
-
         }
 
 
