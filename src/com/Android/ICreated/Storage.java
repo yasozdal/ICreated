@@ -1,7 +1,6 @@
 package com.Android.ICreated;
 
 import android.app.Application;
-import android.os.Bundle;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;

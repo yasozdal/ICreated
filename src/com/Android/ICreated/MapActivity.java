@@ -24,7 +24,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
         setContentView(R.layout.main);
         getActionBar().hide();
 
-        storage = (Storage) getApplicationContext();
+        storage = (Storage) getApplication();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
