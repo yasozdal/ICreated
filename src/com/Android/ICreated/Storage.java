@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public final class Storage extends Application
 {
     private ArrayList<Event> events;
+    private LatLng curLatLng;
     private long curID;
 
     @Override
@@ -20,6 +21,7 @@ public final class Storage extends Application
         super.onCreate();
         events = new ArrayList<Event>();
         curID = 0;
+        curLatLng = null;
     }
 
     public void addEvent(Event event)
@@ -41,5 +43,13 @@ public final class Storage extends Application
         return null;
     }
 
+    public void setCurLatLng(LatLng latLng)
+    {
+        curLatLng = latLng;
+    }
 
+    public LatLng getCurLatLng()
+    {
+        return curLatLng;
+    }
 }

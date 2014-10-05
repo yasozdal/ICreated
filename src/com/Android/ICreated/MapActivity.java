@@ -15,6 +15,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
     SupportMapFragment mapFragment;
     GoogleMap map;
     UiSettings uiSettings;
+    Storage storage;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -22,6 +23,8 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         getActionBar().hide();
+
+        storage = (Storage) getApplicationContext();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
@@ -44,6 +47,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapClic
     @Override
     public void onMapLongClick(LatLng latLng)
     {
+
         Marker marker = map.addMarker(new MarkerOptions()
                         .position(latLng)
                         .title("Вечеринка")
