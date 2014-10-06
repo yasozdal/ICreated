@@ -26,7 +26,6 @@ public final class Storage extends Application
 
     public void addEvent(Event event)
     {
-        Log.d("Logs", "" + event);
         ++curID;
         event.setId(curID);
         events.add(event);

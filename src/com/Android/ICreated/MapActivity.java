@@ -51,7 +51,6 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         Marker marker = map.addMarker(new MarkerOptions()
                         .position(latLng)
         );
-        Log.d("Logs", "" + curSize + " " + storage.getSize());
         if (curSize == storage.getSize())
         {
             marker.remove();
