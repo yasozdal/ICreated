@@ -3,6 +3,7 @@ package com.Android.ICreated;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -11,7 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, StorageListener
+public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, StorageListener, GoogleMap.OnInfoWindowClickListener
 {
     SupportMapFragment mapFragment;
     GoogleMap map;
@@ -37,6 +38,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         }
         map.setOnMapLongClickListener(this);
         map.setOnMarkerClickListener(this);
+        map.setOnInfoWindowClickListener(this);
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
@@ -52,10 +54,15 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public boolean onMarkerClick(Marker marker)
     {
+        return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker)
+    {
         storage.setCurLatLng(marker.getPosition());
         Intent intent = new Intent(this, EventShowActivity.class);
         startActivity(intent);
-        return false;
     }
 
     @Override
