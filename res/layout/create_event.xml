@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Event title"
+            android:inputType="textCapSentences|textMultiLine"
+            android:id="@+id/title_text"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Event description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:id="@+id/description_text"
+            android:layout_below="@+id/title_text"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"/>
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:enabled="false"
+            android:id="@+id/save_button"
+            android:textSize="18dp"
+            android:onClick="saving"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/cancel_button"
+            android:textSize="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" android:onClick="finish"/>
+</RelativeLayout>
