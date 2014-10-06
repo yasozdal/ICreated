@@ -74,5 +74,6 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
                 .position(event.getLatLng())
                 .title(event.getTitle())
         );
+        marker.showInfoWindow();
     }
 }
