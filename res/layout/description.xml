@@ -20,6 +20,6 @@
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="@string/close_button"
             android:id="@+id/CloseButton"/>
 </LinearLayout>
