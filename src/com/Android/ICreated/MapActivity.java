@@ -3,6 +3,7 @@ package com.Android.ICreated;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -43,10 +44,18 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public void onMapLongClick(LatLng latLng)
     {
+        int curSize = storage.getSize();
         storage.setCurLatLng(latLng);
+        Intent intent = new Intent(this, EventCreateActivity.class);
+        startActivity(intent);
         Marker marker = map.addMarker(new MarkerOptions()
                         .position(latLng)
         );
+        Log.d("Logs", "" + curSize + " " + storage.getSize());
+        if (curSize == storage.getSize())
+        {
+            marker.remove();
+        }
     }
 
     @Override

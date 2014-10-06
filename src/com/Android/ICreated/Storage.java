@@ -1,6 +1,7 @@
 package com.Android.ICreated;
 
 import android.app.Application;
+import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public final class Storage extends Application
 
     public void addEvent(Event event)
     {
+        Log.d("Logs", "" + event);
         ++curID;
         event.setId(curID);
         events.add(event);
@@ -40,6 +42,11 @@ public final class Storage extends Application
             }
         }
         return null;
+    }
+
+    public int getSize()
+    {
+        return events.size();
     }
 
     public void setCurLatLng(LatLng latLng)
