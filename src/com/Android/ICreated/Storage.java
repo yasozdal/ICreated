@@ -14,6 +14,7 @@ public final class Storage extends Application
     private ArrayList<Event> events;
     private LatLng curLatLng;
     private long curID;
+    private ArrayList<StorageListener> listeners;
 
     @Override
     public void onCreate()
@@ -22,6 +23,20 @@ public final class Storage extends Application
         events = new ArrayList<Event>();
         curID = 0;
         curLatLng = null;
+        listeners = new ArrayList<StorageListener>();
+    }
+
+    public void addListener(StorageListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    private void fireListeners(Event event)
+    {
+        for (StorageListener listener : listeners)
+        {
+            listener.onEventAdded(event);
+        }
     }
 
     public void addEvent(Event event)
@@ -29,13 +44,14 @@ public final class Storage extends Application
         ++curID;
         event.setId(curID);
         events.add(event);
+        fireListeners(event);
     }
 
     public Event getEvent(LatLng latLng)
     {
         for (Event event : events)
         {
-            if (event.getLatLng() == latLng)
+            if (event.getLatLng().equals(latLng))
             {
                 return event;
             }

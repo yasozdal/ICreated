@@ -3,7 +3,6 @@ package com.Android.ICreated;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -12,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener
+public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, StorageListener
 {
     SupportMapFragment mapFragment;
     GoogleMap map;
@@ -27,6 +26,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         getActionBar().hide();
 
         storage = (Storage) getApplication();
+        storage.addListener(this);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
@@ -44,17 +44,9 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public void onMapLongClick(LatLng latLng)
     {
-        int curSize = storage.getSize();
         storage.setCurLatLng(latLng);
         Intent intent = new Intent(this, EventCreateActivity.class);
         startActivity(intent);
-        Marker marker = map.addMarker(new MarkerOptions()
-                        .position(latLng)
-        );
-        if (curSize == storage.getSize())
-        {
-            marker.remove();
-        }
     }
 
     @Override
@@ -63,6 +55,15 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         storage.setCurLatLng(marker.getPosition());
         Intent intent = new Intent(this, EventShowActivity.class);
         startActivity(intent);
-        return true;
+        return false;
+    }
+
+    @Override
+    public void onEventAdded(Event event)
+    {
+        map.addMarker(new MarkerOptions()
+                .position(event.getLatLng())
+                .title(event.getTitle())
+        );
     }
 }

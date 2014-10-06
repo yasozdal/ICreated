@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">ЯСоздал</string>
     <string name="save_button">Save</string>
-    <string name="cancel_button">Cancel</string>    //on Create screen
-    <string name="close_button">Close</string>       //On Show screen
+    <string name="cancel_button">Cancel</string>
+    <string name="close_button">Close</string>
     <string name="title_text">Event title</string>
     <string name="description_text">Event description</string>
 </resources>
