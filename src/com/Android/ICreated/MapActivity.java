@@ -39,6 +39,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         map.setOnMapLongClickListener(this);
         map.setOnMarkerClickListener(this);
         map.setOnInfoWindowClickListener(this);
+        map.setInfoWindowAdapter(new InfoWindowAdapter(this));
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
@@ -54,6 +55,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public boolean onMarkerClick(Marker marker)
     {
+        storage.setCurLatLng(marker.getPosition());
         return false;
     }
 
@@ -68,9 +70,10 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public void onEventAdded(Event event)
     {
-        map.addMarker(new MarkerOptions()
+        Marker marker = map.addMarker(new MarkerOptions()
                 .position(event.getLatLng())
                 .title(event.getTitle())
         );
+        marker.showInfoWindow();
     }
 }
