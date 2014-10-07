@@ -9,6 +9,7 @@ import android.widget.Button;
 /**
  * Created by Филипп on 07.10.2014.
  */
+
 public class StartPageActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
