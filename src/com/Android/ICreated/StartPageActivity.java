@@ -13,6 +13,11 @@ import android.widget.TextView;
  */
 
 public class StartPageActivity extends Activity{
+
+    EditText userName;
+    EditText password;
+    EditText passwordConfirm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,7 @@ public class StartPageActivity extends Activity{
                 Register();
             }
         };
+        btnRegister.setOnClickListener(oclBtnRegister);
     }
 
     private void ToMap()
@@ -50,7 +56,12 @@ public class StartPageActivity extends Activity{
 
     private void Register()
     {
+        userName = (EditText) findViewById(R.id.userName);
+        password = (EditText) findViewById(R.id.password);
+        passwordConfirm = (EditText) findViewById(R.id.passwordConfirm);
 
-
+        ServerAPI handler = new ServerAPI();
+        String response = handler.RegistrationNewUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
+        userName.setText(response);
     }
 }
