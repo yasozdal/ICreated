@@ -31,20 +31,21 @@ public class ServerAPI {
             {
                 try
                 {
-                    HttpPost request = new HttpPost(serverURL);
+                    HttpPost request = new HttpPost(serverURL + registration);
+//                    List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
 
-                    List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+//                    urlParameters.add(new BasicNameValuePair("UserName:", user[0]));
+//                    urlParameters.add(new BasicNameValuePair("Password:", user[1]));
+//                    urlParameters.add(new BasicNameValuePair("ConfirmPassword:", user[2]));
+//                    p.setEntity(new StringEntity("{\"username\":\"" + this.apiusername + "\",\"password\":\"" + this.apipassword + "\"}",
+//                            ContentType.create("application/json")));
+                    request.setEntity(new StringEntity("{\"UserName\":\"" + user[0] + "\",\"Password\":\"" + user[1] + "\",\"ConfirmPassword\":\"" +
+                            user[2] + "\"}"));
 
-                    urlParameters.add(new BasicNameValuePair("UserName", user[0]));
-                    urlParameters.add(new BasicNameValuePair("UserName", user[1]));
-                    urlParameters.add(new BasicNameValuePair("UserName", user[2]));
-
-                    request.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-                    request.addHeader("content-type", "application/json");
+                    request.addHeader("Content-Type", "application/json");
 
                     HttpResponse response = httpClient.execute(request);
-                    response.getParams();
+
                     BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
                     StringBuffer result = new StringBuffer();
@@ -85,41 +86,5 @@ public class ServerAPI {
             return e.toString();
         }
     }
-//        try
-//        {
-//            HttpPost request = new HttpPost(serverURL);
-//
-//            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-//
-//            urlParameters.add(new BasicNameValuePair("UserName", userName));
-//            urlParameters.add(new BasicNameValuePair("UserName", password));
-//            urlParameters.add(new BasicNameValuePair("UserName", confirmPassword));
-//
-//            request.setEntity(new UrlEncodedFormEntity(urlParameters));
-//
-//            request.addHeader("content-type", "application/json");
-//
-//            HttpResponse response = httpClient.execute(request);
-//            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-//
-//            StringBuffer result = new StringBuffer();
-//            String line = "";
-//            while ((line = rd.readLine()) != null) {
-//                result.append(line);
-//            }
-//            return result.toString();
-//
-//        }
-//        catch (Exception ex)
-//        {
-//            return "Exception " + ex.toString();
-//        }
-//        finally
-//        {
-//            httpClient.getConnectionManager().shutdown();
-//        }
-//
-//    }
-
 
 }

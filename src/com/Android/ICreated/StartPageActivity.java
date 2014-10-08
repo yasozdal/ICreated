@@ -65,6 +65,6 @@ public class StartPageActivity extends Activity{
 
         ServerAPI handler = new ServerAPI();
         String response = handler.RegistrationNewUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
-        DEBUG.setText(response);
+        DEBUG.setText(password.getText().toString() + passwordConfirm.getText().toString() + response);
     }
 }
