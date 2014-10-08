@@ -60,10 +60,4 @@
                     android:gravity="left|top"/>
         </FrameLayout>
     </RelativeLayout>
-    <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New ToggleButton"
-            android:id="@+id/toggleButton" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-            android:layout_above="@+id/title_text" android:layout_alignParentRight="true"/>
 </RelativeLayout>
