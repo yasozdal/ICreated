@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:weightSum="1">
 
     <EditText
             android:layout_width="match_parent"
@@ -39,4 +39,14 @@
                 android:text="На Карту"
                 android:id="@+id/btnToMap" android:layout_alignParentTop="true" android:layout_alignParentRight="true"/>
     </RelativeLayout>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView" android:layout_gravity="center_horizontal">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DEBUG"
+                android:id="@+id/DEBUG" android:layout_weight="0.05" android:autoText="false"/>
+    </ScrollView>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.w3c.dom.Text;
 
 /**
  * Created by Филипп on 07.10.2014.
@@ -17,6 +18,7 @@ public class StartPageActivity extends Activity{
     EditText userName;
     EditText password;
     EditText passwordConfirm;
+    TextView DEBUG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,10 @@ public class StartPageActivity extends Activity{
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         passwordConfirm = (EditText) findViewById(R.id.passwordConfirm);
+        DEBUG = (TextView) findViewById(R.id.DEBUG);
 
         ServerAPI handler = new ServerAPI();
         String response = handler.RegistrationNewUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
-        userName.setText(response);
+        DEBUG.setText(response);
     }
 }
