@@ -59,6 +59,12 @@ public final class Storage extends Application
         return null;
     }
 
+    public Event[] getAllEvents()
+    {
+        Event[] eventsArr = new Event[events.size()];
+        return events.toArray(eventsArr);
+    }
+
     public int getSize()
     {
         return events.size();

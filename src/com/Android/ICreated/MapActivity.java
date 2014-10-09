@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -42,6 +43,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         map.setOnMarkerClickListener(this);
         map.setOnInfoWindowClickListener(this);
         map.setInfoWindowAdapter(new InfoWindowAdapter(this));
+
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
@@ -74,8 +76,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     {
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(event.getLatLng())
-                .title(event.getTitle())
-        );
+                .title(event.getTitle()));
         marker.showInfoWindow();
     }
 }
