@@ -1,5 +1,6 @@
 package com.Android.ICreated;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
  */
 public class EventShowActivity extends Activity {
     Storage storage;
+    ActionBar actionBar;
 
     private void eventShow()
     {
@@ -20,10 +22,12 @@ public class EventShowActivity extends Activity {
 
         if (event == null)
         {
+            actionBar.setTitle("Ошибка");
             EventTittle.setText("Ой, событие не найдено :(");
         }
         else
         {
+            actionBar.setTitle(event.getTitle());
             EventTittle.setText(event.getTitle());
             EventDescription.setText(event.getDescription());
         }
@@ -43,7 +47,8 @@ public class EventShowActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.description);
-        getActionBar().hide();
+        actionBar = getActionBar();
+
         storage = (Storage) getApplication();
         eventShow();
 

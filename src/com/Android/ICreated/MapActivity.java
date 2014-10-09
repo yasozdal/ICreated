@@ -1,5 +1,6 @@
 package com.Android.ICreated;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +25,9 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        getActionBar().hide();
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("События");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         storage = (Storage) getApplication();
         storage.addListener(this);

@@ -1,7 +1,6 @@
 package com.Android.ICreated;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -36,9 +35,9 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View view = inflater.inflate(R.layout.info_window, null);
 
-        TextView tv = (TextView)view.findViewById(R.id.title_text);
+        TextView tv = (TextView)view.findViewById(R.id.tvTitle);
         tv.setText(title);
-        tv = (TextView)view.findViewById(R.id.description_text);
+        tv = (TextView)view.findViewById(R.id.tvDescription);
         tv.setText(description);
 
         return view;
