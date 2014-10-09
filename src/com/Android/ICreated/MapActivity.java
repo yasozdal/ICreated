@@ -27,7 +27,6 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         setContentView(R.layout.main);
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("События");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         storage = (Storage) getApplication();
         storage.addListener(this);
