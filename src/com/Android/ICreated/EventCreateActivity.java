@@ -30,6 +30,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         setContentView(R.layout.create_event);
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Новое событие");
+        actionBar.setDisplayHomeAsUpEnabled(true);
         storage = (Storage)getApplication();
         title_text = (EditText) findViewById(R.id.title_text);
         description_text = (EditText) findViewById(R.id.description_text);

@@ -48,6 +48,7 @@ public class EventShowActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.description);
         actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         storage = (Storage) getApplication();
         eventShow();
