@@ -17,9 +17,9 @@ import java.util.Calendar;
 public class EventCreateActivity extends Activity implements TextWatcher
 {
     Storage storage;
-    EditText title_text;
-    EditText description_text;
-    Button save_button;
+    EditText etTitle;
+    EditText etDescription;
+    Button btnSave;
     String title;
     String description;
 
@@ -31,11 +31,11 @@ public class EventCreateActivity extends Activity implements TextWatcher
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Новое событие");
         storage = (Storage)getApplication();
-        title_text = (EditText) findViewById(R.id.title_text);
-        description_text = (EditText) findViewById(R.id.description_text);
-        save_button = (Button) findViewById(R.id.save_button);
-        title_text.addTextChangedListener(this);
-        description_text.addTextChangedListener(this);
+        etTitle = (EditText) findViewById(R.id.etTitle);
+        etDescription = (EditText) findViewById(R.id.etDescription);
+        btnSave = (Button) findViewById(R.id.btnSave);
+        etTitle.addTextChangedListener(this);
+        etDescription.addTextChangedListener(this);
     }
 
     @Override
@@ -47,15 +47,15 @@ public class EventCreateActivity extends Activity implements TextWatcher
     @Override
     public void afterTextChanged(Editable s)
     {
-        String title = title_text.getText().toString();
-        String description = description_text.getText().toString();
+        String title = etTitle.getText().toString();
+        String description = etDescription.getText().toString();
         if (title.matches("") || description.matches(("")))
         {
-            save_button.setEnabled(false);
+            btnSave.setEnabled(false);
         }
         else
         {
-            save_button.setEnabled(true);
+            btnSave.setEnabled(true);
         }
     }
 
@@ -68,8 +68,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
 
     public void saving(View view)
     {
-        String title = title_text.getText().toString();
-        String description = description_text.getText().toString();
+        String title = etTitle.getText().toString();
+        String description = etDescription.getText().toString();
         Event event = new Event(Calendar.getInstance(), storage.getCurLatLng(), title, description);
         storage.addEvent(event);
         finish();

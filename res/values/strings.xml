@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ЯСоздал</string>
-    <string name="save_button">Save</string>
-    <string name="cancel_button">Cancel</string>
-    <string name="close_button">Close</string>
-    <string name="title_text">Event title</string>
-    <string name="description_text">Event description</string>
+    <string name="btnSave">Save</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="etTitle">Event title</string>
+    <string name="etDescription">Event description</string>
 </resources>
