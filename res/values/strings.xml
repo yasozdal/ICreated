@@ -5,4 +5,5 @@
     <string name="btnCancel">Cancel</string>
     <string name="etTitle">Event title</string>
     <string name="etDescription">Event description</string>
+    <string name="action_new">New event</string>
 </resources>
