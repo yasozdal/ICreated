@@ -38,6 +38,11 @@
                 android:layout_height="wrap_content"
                 android:text="На Карту"
                 android:id="@+id/btnToMap" android:layout_alignParentTop="true" android:layout_alignParentRight="true"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:id="@+id/btnSignIn" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
     </RelativeLayout>
     <ScrollView
             android:layout_width="match_parent"

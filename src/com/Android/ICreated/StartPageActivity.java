@@ -48,6 +48,15 @@ public class StartPageActivity extends Activity{
             }
         };
         btnRegister.setOnClickListener(oclBtnRegister);
+
+        Button btnSignIn = (Button) findViewById(R.id.btnSignIn);
+        View.OnClickListener oclBtnSignIn =  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        };
+        btnSignIn.setOnClickListener(oclBtnSignIn);
     }
 
     private void ToMap()
@@ -67,5 +76,15 @@ public class StartPageActivity extends Activity{
         ServerAPI handler = new ServerAPI();
         String response = handler.RegistrationNewUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
         DEBUG.setText(password.getText().toString() + passwordConfirm.getText().toString() + response);
+    }
+    private void signIn()
+    {
+        userName = (EditText) findViewById(R.id.userName);
+        password = (EditText) findViewById(R.id.password);
+        DEBUG = (TextView) findViewById(R.id.DEBUG);
+
+        ServerAPI handler = new ServerAPI();
+        String response = handler.getToken(userName.getText().toString(), password.getText().toString());
+        DEBUG.setText(password.getText().toString() + response);
     }
 }
