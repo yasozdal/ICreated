@@ -54,7 +54,9 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public void onMapLongClick(LatLng latLng)
     {
-
+        storage.setCurLatLng(latLng);
+        Intent intent = new Intent(this, EventCreateActivity.class);
+        startActivity(intent);
     }
 
     @Override

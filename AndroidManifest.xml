@@ -3,11 +3,12 @@
           package="com.Android.ICreated"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="13"/>
+    <uses-sdk android:minSdkVersion="14"/>
     <application
+            android:theme="@style/action_bar_style"
             android:name=".Storage"
             android:label="@string/app_name"
-            android:icon="@drawable/ic_launcher">
+            android:icon="@drawable/logo">
         <activity android:name="StartPageActivity"
                   android:label="@string/app_name"
                   android:configChanges="keyboardHidden|orientation|screenSize">
