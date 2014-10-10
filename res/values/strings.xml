@@ -6,4 +6,7 @@
     <string name="etTitle">Event title</string>
     <string name="etDescription">Event description</string>
     <string name="action_new">New event</string>
+    <string name="events">События</string>
+    <string name="friends">Друзья</string>
+    <string name="followed"></string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="drawer_titles">
+        <item>@string/events</item>
+        <item>@string/friends</item>
+    </array>
+</resources>
