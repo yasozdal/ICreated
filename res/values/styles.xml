@@ -8,5 +8,6 @@
            parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/main</item>
         <item name="android:colorBackground">@color/main</item>
+        <item name="android:icon">@drawable/bar_icon</item>
     </style>
 </resources>
