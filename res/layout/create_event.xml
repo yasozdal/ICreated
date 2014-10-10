@@ -21,11 +21,11 @@
             android:layout_below="@+id/etTitle">
         <Button
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="@string/btnSave"
                 android:enabled="false"
                 android:id="@+id/btnSave"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:onClick="saving"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -33,14 +33,14 @@
                 android:isScrollContainer="true"/>
         <Button
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="@string/btnCancel"
                 android:id="@+id/btnCancel"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:isScrollContainer="true"
-                android:onClick="finish"/>
+                android:onClick="cancel"/>
         <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
