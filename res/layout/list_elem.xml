@@ -9,9 +9,9 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:padding="@dimen/drawer_element_padding"
         android:text="TextView"
-        android:textSize="18sp"
+        android:textSize="@dimen/drawer_text_size"
         android:textColor="#ffffff" android:gravity="center_vertical|left">
     </TextView>
 </LinearLayout>

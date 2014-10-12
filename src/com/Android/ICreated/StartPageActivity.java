@@ -24,7 +24,6 @@ public class StartPageActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_page);
-        //getActionBar().hide();
         showStartPage();
 
     }

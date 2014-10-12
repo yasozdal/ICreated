@@ -24,7 +24,6 @@ public class EventShowActivity extends Activity {
         if (event == null)
         {
             actionBar.setTitle("Ошибка");
-            EventTittle.setText("Ой, событие не найдено :(");
         }
         else
         {

@@ -4,24 +4,24 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#ffffffff">
+              android:background="@color/white">
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvTitle"
             android:layout_gravity="center_horizontal"
-            android:textColor="#ff000000"
+            android:textColor="@color/black"
             android:textSize="20dp"/>
     <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#ff000000">
+            android:background="@color/black">
     </View>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvDescription"
             android:layout_gravity="center_horizontal"
-            android:textColor="#ff000000"/>
+            android:textColor="@color/black"/>
 </LinearLayout>

@@ -2,20 +2,15 @@ package com.Android.ICreated;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -40,11 +35,17 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         ActionBar actionBar = getActionBar();
-        actionBar.setTitle("События");
+        actionBar.setTitle(R.string.events);
 
         storage = (Storage) getApplication();
         storage.addListener(this);
 
+        mapInit();
+        drawerInit();
+    }
+
+    private void mapInit()
+    {
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
         if (map == null)
@@ -59,12 +60,15 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
 
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
+    }
 
+    private void drawerInit()
+    {
         drawerTitles = getResources().getStringArray(R.array.drawer_titles);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
-        drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, drawerTitles, "Roboto-Regular.ttf"));
+        drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, drawerTitles, getResources().getString(R.string.menu_font)));
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
         {
@@ -72,15 +76,15 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
             public void onDrawerClosed(View view)
             {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle("События");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getActionBar().setTitle(R.string.events);
+                invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView)
             {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("ЯСоздал");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getActionBar().setTitle(R.string.app_name);
+                invalidateOptionsMenu();
             }
         };
 
@@ -90,7 +94,14 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
-        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
+        if (drawerLayout.isDrawerOpen(drawerList))
+        {
+            menu.findItem(R.id.action_new_event).setVisible(false);
+        }
+        else
+        {
+            menu.findItem(R.id.action_new_event).setVisible(true);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 

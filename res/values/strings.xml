@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ЯСоздал</string>
-    <string name="btnSave">Save</string>
-    <string name="btnCancel">Cancel</string>
-    <string name="etTitle">Event title</string>
-    <string name="etDescription">Event description</string>
-    <string name="action_new">New event</string>
+    <string name="menu_font">Roboto-Regular.ttf</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="event_title">Название события</string>
+    <string name="event_description">Описание события</string>
+    <string name="action_new">Новое событие</string>
     <string name="events">События</string>
     <string name="friends">Друзья</string>
-    <string name="followed"></string>
+    <string name="close">Закрыть</string>
+    <string name="user_name">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="register">Зарегестрироваться</string>
+    <string name="log_in">Войти</string>
+    <string name="error">Ошибка</string>
 </resources>

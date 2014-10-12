@@ -2,12 +2,9 @@ package com.Android.ICreated;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +22,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
     EditText etDescription;
     Button btnSave;
     Button btnCancel;
-    String title;
-    String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
