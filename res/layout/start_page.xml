@@ -27,27 +27,29 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordConfirm"/>
-    <LinearLayout
-            android:layout_width="match_parent"
+    <RelativeLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/register"
-                android:id="@+id/btnRegister"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="На Карту"
-                android:id="@+id/btnToMap"
-                android:layout_alignParentRight="true"/>
+                android:id="@+id/btnRegister" android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/log_in"
                 android:id="@+id/btnSignIn"
-                android:layout_centerHorizontal="true"/>
-    </LinearLayout>
+                android:layout_alignParentTop="true" android:layout_toRightOf="@+id/btnRegister"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="На Карту"
+                android:id="@+id/btnToMap"
+                android:layout_gravity="right" android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"/>
+    </RelativeLayout>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
