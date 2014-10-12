@@ -2,6 +2,7 @@ package com.Android.ICreated;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -61,7 +63,8 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         drawerTitles = getResources().getStringArray(R.array.drawer_titles);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.list_elem, drawerTitles));
+
+        drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, drawerTitles, "Roboto-Regular.ttf"));
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
         {

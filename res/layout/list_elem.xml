@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
+        android:orientation="horizontal">
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
         android:text="TextView"
-        android:textSize="50dp">
-</TextView>
+        android:textSize="18sp"
+        android:textColor="#ffffff" android:gravity="center_vertical|left">
+    </TextView>
+</LinearLayout>
