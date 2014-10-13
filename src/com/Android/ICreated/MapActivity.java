@@ -2,6 +2,7 @@ package com.Android.ICreated;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -70,7 +71,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
 
         drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, drawerTitles, getResources().getString(R.string.menu_font)));
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_navigation_drawer, R.string.app_name, R.string.events)
         {
 
             public void onDrawerClosed(View view)
@@ -89,6 +90,23 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -139,6 +157,10 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        if (drawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
         switch (item.getItemId())
         {
             case R.id.action_new_event:
