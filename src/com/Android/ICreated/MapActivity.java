@@ -72,7 +72,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
 
         drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_navigation_drawer, R.string.app_name, R.string.events)
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.lines, R.string.app_name, R.string.events)
         {
 
             public void onDrawerClosed(View view)
