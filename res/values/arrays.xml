@@ -4,4 +4,8 @@
         <item>@string/events</item>
         <item>@string/friends</item>
     </array>
+    <array name="drawer_icons">
+        <item>&#xf12a;</item>
+        <item>&#xf0c0;</item>
+    </array>
 </resources>

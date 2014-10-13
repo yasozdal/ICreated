@@ -5,4 +5,5 @@
     <dimen name="drawer_element_padding">15dp</dimen>
     <dimen name="drawer_text_size">18sp</dimen>
     <dimen name="drawer_width">300dp</dimen>
+    <dimen name="drawer_left_padding">20dp</dimen>
 </resources>

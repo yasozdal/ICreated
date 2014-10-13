@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">ЯСоздал</string>
     <string name="menu_font">Roboto-Regular.ttf</string>
+    <string name="icon_font">FontAwesome.ttf</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
     <string name="event_title">Название события</string>

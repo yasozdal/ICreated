@@ -3,9 +3,12 @@ package com.Android.ICreated;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -14,6 +17,10 @@ import android.widget.TextView;
 public class EventShowActivity extends Activity {
     Storage storage;
     ActionBar actionBar;
+    String[] drawerTitles;
+    DrawerLayout drawerLayout;
+    ListView drawerList;
+    ActionBarDrawerToggle drawerToggle;
 
     private void eventShow()
     {
@@ -63,7 +70,37 @@ public class EventShowActivity extends Activity {
         actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         storage = (Storage) getApplication();
+        drawerInit();
         eventShow();
+    }
 
+    private void drawerInit()
+    {
+        drawerTitles = getResources().getStringArray(R.array.drawer_titles);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
+        String[] icons = getResources().getStringArray(R.array.drawer_icons);
+
+        drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
+        {
+
+            public void onDrawerClosed(View view)
+            {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(R.string.events);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView)
+            {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(R.string.app_name);
+                invalidateOptionsMenu();
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerToggle);
     }
 }
