@@ -13,7 +13,7 @@
     <string name="user_name">Имя пользователя</string>
     <string name="password">Пароль</string>
     <string name="repeat_password">Повторите пароль</string>
-    <string name="register">Зарегестрироваться</string>
+    <string name="register">Создаться</string>
     <string name="log_in">Войти</string>
     <string name="error">Ошибка</string>
 </resources>

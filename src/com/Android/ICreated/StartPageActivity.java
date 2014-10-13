@@ -3,6 +3,7 @@ package com.Android.ICreated;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,8 @@ public class StartPageActivity extends Activity{
         View.OnClickListener oclBtnToMapButton = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Log.d("test", ServerAPI.user.getToken());
+
                 ToMap();
             }
         };
@@ -60,6 +63,7 @@ public class StartPageActivity extends Activity{
 
     private void ToMap()
     {
+
         Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
         finish();
@@ -70,20 +74,17 @@ public class StartPageActivity extends Activity{
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         passwordConfirm = (EditText) findViewById(R.id.passwordConfirm);
-        DEBUG = (TextView) findViewById(R.id.DEBUG);
 
-        ServerAPI handler = new ServerAPI();
-        String response = handler.RegistrationNewUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
-        DEBUG.setText(password.getText().toString() + passwordConfirm.getText().toString() + response);
+        ServerAPI.setUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
+        ServerAPI.Response response = ServerAPI.RegistrationNewUser();
+
     }
     private void signIn()
     {
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
-        DEBUG = (TextView) findViewById(R.id.DEBUG);
 
-        ServerAPI handler = new ServerAPI();
-        String response = handler.getToken(userName.getText().toString(), password.getText().toString());
-        DEBUG.setText(password.getText().toString() + response);
+        ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
+        Log.d("signInS", Boolean.toString(ServerAPI.signIn()));
     }
 }
