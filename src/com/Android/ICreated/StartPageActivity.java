@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 /**
  * Created by Филипп on 07.10.2014.
  */
@@ -20,11 +22,13 @@ public class StartPageActivity extends Activity{
     EditText password;
     EditText passwordConfirm;
     TextView DEBUG;
+    Storage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_page);
+        storage = (Storage)getApplication();
         showStartPage();
 
     }
@@ -59,6 +63,15 @@ public class StartPageActivity extends Activity{
             }
         };
         btnSignIn.setOnClickListener(oclBtnSignIn);
+
+        Button btnDebug = (Button) findViewById(R.id.btnDebug);
+        View.OnClickListener oclBtnDebug = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Debug();
+            }
+        };
+        btnDebug.setOnClickListener(oclBtnDebug);
     }
 
     private void ToMap()
@@ -86,5 +99,13 @@ public class StartPageActivity extends Activity{
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
         Log.d("signInS", Boolean.toString(ServerAPI.signIn()));
+    }
+
+    private void Debug(){
+
+        ArrayList<Event> events = ServerAPI.getEvents();
+        for (Event event: events){
+            storage.addEvent(event);
+        }
     }
 }

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -125,6 +126,12 @@ public class EventCreateActivity extends Activity implements TextWatcher
         String description = etDescription.getText().toString();
         Event event = new Event(Calendar.getInstance(), storage.getCurLatLng(), title, description);
         storage.addEvent(event);
+        ServerAPI.addEvent(Double.toString(event.getLatLng().latitude), Double.toString(event.getLatLng().longitude), description, "doesntmatter");
+        ArrayList<Event> events = ServerAPI.getEvents();
+        for (Event eventt: events){
+            storage.addEvent(eventt);
+        }
+        // потом сделать, чтобы в storage добавлялось после подтверждения добавления с сервера
         finish();
     }
 
