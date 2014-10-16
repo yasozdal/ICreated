@@ -21,7 +21,7 @@ public class StartPageActivity extends Activity{
     EditText userName;
     EditText password;
     EditText passwordConfirm;
-    TextView DEBUG;
+//    TextView DEBUG;
     Storage storage;
 
     @Override
@@ -64,14 +64,14 @@ public class StartPageActivity extends Activity{
         };
         btnSignIn.setOnClickListener(oclBtnSignIn);
 
-        Button btnDebug = (Button) findViewById(R.id.btnDebug);
-        View.OnClickListener oclBtnDebug = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Debug();
-            }
-        };
-        btnDebug.setOnClickListener(oclBtnDebug);
+//        Button btnDebug = (Button) findViewById(R.id.btnDebug);
+//        View.OnClickListener oclBtnDebug = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Debug();
+//            }
+//        };
+//        btnDebug.setOnClickListener(oclBtnDebug);
     }
 
     private void ToMap()
@@ -108,11 +108,11 @@ public class StartPageActivity extends Activity{
         //Log.d("signInS", Boolean.toString(ServerAPI.signIn()));
     }
 
-    private void Debug(){
-
-        ArrayList<Event> events = ServerAPI.getEvents();
-        for (Event event: events){
-            storage.addEvent(event);
-        }
-    }
+//    private void Debug(){
+//
+//        ArrayList<Event> events = ServerAPI.getEvents();
+//        for (Event event: events){
+//            storage.addEvent(event);
+//        }
+//    }
 }
