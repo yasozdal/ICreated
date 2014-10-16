@@ -90,6 +90,10 @@ public class StartPageActivity extends Activity{
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
         ServerAPI.Response response = ServerAPI.RegistrationNewUser();
+        Log.d("Register", response.type);
+        if (response.type.equals("OK")) {
+            signIn();
+        }
 
     }
     private void signIn()
@@ -98,7 +102,10 @@ public class StartPageActivity extends Activity{
         password = (EditText) findViewById(R.id.password);
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
-        Log.d("signInS", Boolean.toString(ServerAPI.signIn()));
+        if (ServerAPI.signIn()) {
+            ToMap();
+        }
+        //Log.d("signInS", Boolean.toString(ServerAPI.signIn()));
     }
 
     private void Debug(){

@@ -127,6 +127,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         Event event = new Event(Calendar.getInstance(), storage.getCurLatLng(), title, description);
         storage.addEvent(event);
         ServerAPI.addEvent(Double.toString(event.getLatLng().latitude), Double.toString(event.getLatLng().longitude), description, "doesntmatter");
+        // решить в каком формате передавать время события
         ArrayList<Event> events = ServerAPI.getEvents();
         for (Event eventt: events){
             storage.addEvent(eventt);

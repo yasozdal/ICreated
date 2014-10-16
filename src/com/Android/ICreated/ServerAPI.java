@@ -1,7 +1,6 @@
 package com.Android.ICreated;
 
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import org.apache.http.HttpResponse;
@@ -23,9 +22,7 @@ import org.json.JSONObject;
 
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,6 +67,7 @@ public class ServerAPI {
         Response(){}
         Response(HttpResponse response){
             this.response = response;
+            type = response.getStatusLine().getReasonPhrase();
             getResult();
         }
         protected void getResult() {
@@ -85,7 +83,6 @@ public class ServerAPI {
                 } catch (JSONException e){
                     this.resultArray = new JSONArray(result.toString());
                 }
-                type = response.getStatusLine().getReasonPhrase();
                 Log.d("Response", result.toString());
             } catch (Exception e) {
 
@@ -164,10 +161,6 @@ public class ServerAPI {
                     Log.d("Exception", ex.getMessage());
                     return new Response();
                 }
-                finally
-                {
-//                    httpClient.getConnectionManager().shutdown();
-                }
         }
     }
 
@@ -198,10 +191,6 @@ public class ServerAPI {
             {
                 Log.d("Token doInBackground", ex.toString());
                 return new Token();
-            }
-            finally
-            {
-//                httpClient.getConnectionManager().shutdown();
             }
         }
     }
@@ -269,9 +258,7 @@ public class ServerAPI {
     public static void setUser(String name, String password){
         user = new User(name, password);
     }
-    public static void setUser(String name, String password, String confirmPassword){
-        user = new User(name, password, confirmPassword);
-    }
+    public static void setUser(String name, String password, String confirmPassword){ user = new User(name, password, confirmPassword); }
 
     public static Response RegistrationNewUser()
     {
