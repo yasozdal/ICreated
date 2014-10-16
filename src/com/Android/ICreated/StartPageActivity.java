@@ -102,7 +102,9 @@ public class StartPageActivity extends Activity{
         password = (EditText) findViewById(R.id.password);
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
-        if (ServerAPI.signIn()) {
+        if (ServerAPI.signIn())
+        {
+            storage.getEventsFromServer();
             ToMap();
         }
         //Log.d("signInS", Boolean.toString(ServerAPI.signIn()));

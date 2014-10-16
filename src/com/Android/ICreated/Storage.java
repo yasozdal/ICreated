@@ -26,6 +26,11 @@ public final class Storage extends Application
         listeners = new ArrayList<StorageListener>();
     }
 
+    public void getEventsFromServer()
+    {
+        events = ServerAPI.getEvents();
+    }
+
     public void addListener(StorageListener listener)
     {
         listeners.add(listener);

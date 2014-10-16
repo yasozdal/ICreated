@@ -45,6 +45,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
 
         mapInit();
         drawerInit();
+        loadEvents();
     }
 
     private void mapInit()
@@ -64,6 +65,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
+
 
     private void drawerInit()
     {
@@ -95,6 +97,17 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         drawerLayout.setDrawerListener(drawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void loadEvents()
+    {
+        Event[] events = storage.getAllEvents();
+        for (int i = 0; i < storage.getSize(); ++i)
+        {
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(events[i].getLatLng())
+                    .title(events[i].getTitle()));
+        }
     }
 
     @Override
