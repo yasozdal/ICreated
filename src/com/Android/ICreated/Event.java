@@ -12,16 +12,21 @@ public class Event
     private long id;
     private Calendar time;
     private LatLng latLng;
-    private String title;
     private String description;
+    private Category category;
 
-    public Event(Calendar time, LatLng latLng, String title, String description)
+    public enum Category
+    {
+        PARTY,
+    }
+
+    public Event(Calendar time, LatLng latLng, String description, Category category)
     {
         id = -1;
         this.time = time;
         this.latLng = latLng;
-        this.title = title;
         this.description = description;
+        this.category = category;
     }
 
     public void setId(long id)
@@ -44,9 +49,9 @@ public class Event
         return latLng;
     }
 
-    public String getTitle()
+    public Category getCategory()
     {
-        return title;
+        return category;
     }
 
     public String getDescription()

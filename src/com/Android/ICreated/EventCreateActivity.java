@@ -41,11 +41,9 @@ public class EventCreateActivity extends Activity implements TextWatcher
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         storage = (Storage)getApplication();
-        etTitle = (EditText) findViewById(R.id.etTitle);
         etDescription = (EditText) findViewById(R.id.etDescription);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnCancel = (Button) findViewById(R.id.btnCancel);
-        etTitle.addTextChangedListener(this);
         etDescription.addTextChangedListener(this);
         drawerInit();
     }
@@ -89,9 +87,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
     @Override
     public void afterTextChanged(Editable s)
     {
-        String title = etTitle.getText().toString();
         String description = etDescription.getText().toString();
-        if (title.matches("") || description.matches(("")))
+        if (description.matches(("")))
         {
             btnSave.setEnabled(false);
         }
@@ -122,17 +119,14 @@ public class EventCreateActivity extends Activity implements TextWatcher
 
     public void saving(View view)
     {
-        String title = etTitle.getText().toString();
         String description = etDescription.getText().toString();
-        Event event = new Event(Calendar.getInstance(), storage.getCurLatLng(), title, description);
+        Event event = new Event(Calendar.getInstance(), storage.getCurLatLng(), description, Event.Category.PARTY);
         storage.addEvent(event);
         ServerAPI.addEvent(Double.toString(event.getLatLng().latitude), Double.toString(event.getLatLng().longitude), description, "doesntmatter");
         // решить в каком формате передавать время события
-        ArrayList<Event> events = ServerAPI.getEvents();
-        for (Event eventt: events){
-            storage.addEvent(eventt);
-        }
+        storage.getEventsFromServer();
         // потом сделать, чтобы в storage добавлялось после подтверждения добавления с сервера
+        // добавлялось в Storage в любом случае, а оно само посылало на сервер.
         finish();
     }
 
