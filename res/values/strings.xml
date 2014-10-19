@@ -8,6 +8,7 @@
     <string name="event_title">Название события</string>
     <string name="event_description">Описание события</string>
     <string name="action_new">Новое событие</string>
+    <string name="save_event">Сохранить событие</string>
     <string name="events">События</string>
     <string name="friends">Друзья</string>
     <string name="close">Закрыть</string>

@@ -8,4 +8,5 @@
     <dimen name="drawer_left_padding">20dp</dimen>
     <dimen name="drawer_icon_margin">40dp</dimen>
     <dimen name="drawer_divider_margin">20dp</dimen>
+    <dimen name="text_icons_size">30sp</dimen>
 </resources>

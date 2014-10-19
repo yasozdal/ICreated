@@ -1,77 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             xmlns:android="http://schemas.android.com/apk/res/android">
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/event_title"
-                android:inputType="textCapSentences"
-                android:maxLength="@integer/max_title_length"
-                android:id="@+id/etTitle"
-                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/event_description"
+                android:inputType="textCapSentences|textMultiLine"
+                android:id="@+id/etDescription"
+                android:scrollbars="vertical"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:isScrollContainer="true"
+                android:gravity="left|top"
+                android:layout_above="@+id/footer"/>
+
+        <LinearLayout android:id="@+id/footer"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:layout_alignParentBottom="true"
+                      style="@android:style/ButtonBar">
+
+            <TextView android:id="@+id/btnCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/tag"
+                    android:onClick="onClick"
+                    android:clickable="true"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_icons_size"/>
+
+            <TextView android:id="@+id/btnPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/place"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_icons_size"/>
+
+            <TextView android:id="@+id/btnDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/date"
+                    android:clickable="true"
+                    android:onClick="add_date"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_icons_size"/>
+
+            <TextView android:id="@+id/btnPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/photo"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_icons_size"/>
+
+            <TextView android:id="@+id/btnLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/lock"
+                    android:clickable="true"
+                    android:onClick="locking"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_icons_size"/>
+        </LinearLayout>
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/etTitle">
+                android:id="@+id/rlDate"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:visibility="invisible"
+                android:layout_above="@+id/footer"
+                android:clickable="true"
+                android:background="#ffbdc3c7">
             <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/standard_height"
-                    android:text="@string/save"
-                    android:enabled="false"
-                    android:id="@+id/btnSave"
-                    android:textSize="@dimen/button_text_height"
-                    android:onClick="saving"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:id="@+id/dateSave"
+                    android:onClick="save_date"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/description_hider"
-                    android:isScrollContainer="true"/>
+                    android:layout_alignRight="@+id/timePicker"/>
             <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/standard_height"
-                    android:text="@string/cancel"
-                    android:id="@+id/btnCancel"
-                    android:textSize="@dimen/button_text_height"
-                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:id="@+id/dateCancel"
+                    android:layout_alignTop="@+id/dateSave"
                     android:layout_alignParentLeft="true"
-                    android:isScrollContainer="true"
-                    android:onClick="cancel"/>
-            <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_above="@+id/btnCancel"
-                    android:id="@+id/description_hider">
-                <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/event_description"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:id="@+id/etDescription"
-                        android:layout_below="@+id/etTitle"
-                        android:scrollbars="vertical"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:isScrollContainer="true"
-                        android:gravity="left|top"/>
-            </FrameLayout>
+                    android:onClick="cancel_data"/>
+            <TimePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timePicker"
+                    android:layout_above="@+id/dateSave"
+                    android:layout_alignParentRight="true"/>
+            <DatePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/datePicker"
+                    android:calendarViewShown="false"
+                    android:layout_alignTop="@+id/timePicker"
+                    android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/timePicker"/>
         </RelativeLayout>
     </RelativeLayout>
-    <ListView android:id="@+id/left_drawer"
-              android:layout_width="@dimen/drawer_width"
-              android:layout_height="match_parent"
-              android:layout_gravity="start"
-              android:choiceMode="singleChoice"
-              android:divider="@drawable/divider_repeat"
-              android:dividerHeight="4px"
-              android:background="@drawable/drawer_bg_repeat"/>
+        <ListView android:id="@+id/left_drawer"
+                  android:layout_width="@dimen/drawer_width"
+                  android:layout_height="match_parent"
+                  android:layout_gravity="start"
+                  android:choiceMode="singleChoice"
+                  android:divider="@drawable/divider_repeat"
+                  android:dividerHeight="4px"
+                  android:background="@drawable/drawer_bg_repeat"/>
 </android.support.v4.widget.DrawerLayout>
