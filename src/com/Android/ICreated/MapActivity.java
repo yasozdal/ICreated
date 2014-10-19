@@ -105,8 +105,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         for (int i = 0; i < storage.getSize(); ++i)
         {
             Marker marker = map.addMarker(new MarkerOptions()
-                    .position(events[i].getLatLng())
-                    .title(events[i].getTitle()));
+                    .position(events[i].getLatLng()));
         }
     }
 
@@ -190,8 +189,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     public void onEventAdded(Event event)
     {
         Marker marker = map.addMarker(new MarkerOptions()
-                .position(event.getLatLng())
-                .title(event.getTitle()));
+                .position(event.getLatLng()));
         marker.showInfoWindow();
     }
 }

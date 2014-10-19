@@ -29,15 +29,12 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter
     public View getInfoContents(Marker marker)
     {
         Storage storage = (Storage)context.getApplicationContext();
-        String title = storage.getEvent(storage.getCurLatLng()).getTitle();
         String description = storage.getEvent(storage.getCurLatLng()).getDescription();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View view = inflater.inflate(R.layout.info_window, null);
 
-        TextView tv = (TextView)view.findViewById(R.id.tvTitle);
-        tv.setText(title);
-        tv = (TextView)view.findViewById(R.id.tvDescription);
+        TextView tv = (TextView)view.findViewById(R.id.tvDescription);
         tv.setText(description);
 
         return view;

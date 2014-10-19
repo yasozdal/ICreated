@@ -22,10 +22,21 @@ public class EventShowActivity extends Activity {
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.description);
+        actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.show);
+        storage = (Storage) getApplication();
+        drawerInit();
+        eventShow();
+    }
+
     private void eventShow()
     {
         Event event = storage.getEvent(storage.getCurLatLng());
-        TextView EventTittle = (TextView) findViewById(R.id.EventTittle);
         TextView EventDescription = (TextView) findViewById(R.id.EventDescription);
 
         if (event == null)
@@ -34,8 +45,6 @@ public class EventShowActivity extends Activity {
         }
         else
         {
-            actionBar.setTitle(event.getTitle());
-            EventTittle.setText(event.getTitle());
             EventDescription.setText(event.getDescription());
         }
 
@@ -61,17 +70,6 @@ public class EventShowActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.description);
-        actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        storage = (Storage) getApplication();
-        drawerInit();
-        eventShow();
     }
 
     private void drawerInit()
