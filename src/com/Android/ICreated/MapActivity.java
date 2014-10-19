@@ -167,6 +167,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar, menu);
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
