@@ -56,6 +56,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
     Calendar date = null;
     boolean btnSaveEnabled;
     Typeface tf;
+    int latitude = 0, longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -323,6 +324,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
         String description = etDescription.getText().toString();
         Event event = new Event(date, storage.getCurLatLng(), description, Event.Category.PARTY);
         storage.addEvent(event);
+        ServerAPI.addEvent("0","0",description,date.toString());
+        storage.getEventsFromServer();
         finish();
     }
 
