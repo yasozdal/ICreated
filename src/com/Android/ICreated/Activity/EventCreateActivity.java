@@ -1,4 +1,4 @@
-package com.Android.ICreated;
+package com.Android.ICreated.Activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,6 +19,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.Android.ICreated.CustomAdapter;
+import com.Android.ICreated.Event;
+import com.Android.ICreated.R;
+import com.Android.ICreated.Storage;
+
 import java.util.Calendar;
 
 /**
@@ -164,8 +169,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
             }
         }
     };
-
-////////////////////////////////action bar
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * Created by Mikhail on 12.10.2014.
  */
-class CustomAdapter extends ArrayAdapter<CharSequence>
+public class CustomAdapter extends ArrayAdapter<CharSequence>
 {
 
     Context context;
