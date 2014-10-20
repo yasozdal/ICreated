@@ -68,7 +68,7 @@ public class StartPageActivity extends Activity {
         startActivity(intent);
         finish();
     }
-
+// ВНИМАНИЕ, Register и signIn работают неожидаемым способом, ПЕРЕДЕЛАТЬ!
     private void Register() {
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
@@ -76,7 +76,7 @@ public class StartPageActivity extends Activity {
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
         ServerAPI.Response response = ServerAPI.RegistrationNewUser();
-        if (response.type.equals("OK")) {
+        if (response.type.equals(ServerAPI.ResponseType.SUCCES)) {
             signIn();
         }
 
@@ -87,10 +87,10 @@ public class StartPageActivity extends Activity {
         password = (EditText) findViewById(R.id.password);
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
-        if (ServerAPI.signIn()) {
-            storage.getEventsFromServer();
-            ToMap();
-        }
+        ServerAPI.signIn();
+        storage.getEventsFromServer();
+        ToMap();
+
     }
 }
 

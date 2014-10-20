@@ -24,6 +24,7 @@ public final class Storage extends Application
         curID = 0;
         curLatLng = null;
         listeners = new ArrayList<StorageListener>();
+        getEventsFromServer();
     }
 
     public void getEventsFromServer()

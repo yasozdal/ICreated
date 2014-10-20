@@ -74,18 +74,29 @@ public class ServerAPI {
         }
     }
 
+    public enum ResponseType{
+        SUCCES,
+        CANNOT_CONNECT_TO_SERVER,
+        BAD_REQUEST,
+
+    }
     public static class Response{
 
         protected HttpResponse response;
         protected JSONObject result;
         protected JSONArray resultArray;
-        public String type;
+        public ResponseType type;
         Response() {
-            this.type = "Can't connect to server";
+            this.type = ResponseType.CANNOT_CONNECT_TO_SERVER;
         }
         Response(HttpResponse response){
             this.response = response;
-            type = response.getStatusLine().getReasonPhrase();
+            if (response.getStatusLine().getReasonPhrase().equals("OK")) {
+                type = ResponseType.SUCCES;
+            }
+            else {
+                type = ResponseType.BAD_REQUEST;
+            }
             getResult();
         }
         protected void getResult() {
@@ -96,6 +107,9 @@ public class ServerAPI {
                 while ((line = rd.readLine()) != null) {
                     result.append(line);
                 }
+                if (result.length() == 0){
+                    return;
+                }
                 try {
                     this.result = new JSONObject(result.toString());
                 } catch (JSONException e){
@@ -103,7 +117,7 @@ public class ServerAPI {
                 }
 
             } catch (Exception e) {
-                Log.d(debugTag, "getResult exception" + e.getMessage());
+                Log.d(debugTag, "getResult exception " + e.toString());
             }
         }
     }
@@ -241,7 +255,7 @@ public class ServerAPI {
 
             request.addHeader("Content-Type", "application/json");
 
-            request.addHeader("Authorization", "Bearer " + user.getToken());
+            //request.addHeader("Authorization", "Bearer " + user.getToken());
             HttpResponse response = httpClient.execute(request);
 
 
@@ -364,6 +378,7 @@ public class ServerAPI {
     public static ArrayList<Event> getEvents(){
         try {
             Response test = new getEvents().execute().get();
+            Log.d(debugTag, "Events from server " + test.resultArray.toString());
             return createEvents(test.resultArray);
         } catch (Exception e){
             Log.d(debugTag, "getEvents " + e.getMessage());
