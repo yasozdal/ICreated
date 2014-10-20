@@ -352,7 +352,6 @@ public class ServerAPI {
             ArrayList<Event> events = new ArrayList<Event>();
             JSONObject eventInJSONE;
             String description;
-            String title; // пока будет то же самое что и decription, ибо с сервера приходит только description
             double latitude;
             double longitude;
             Calendar date;
@@ -362,11 +361,10 @@ public class ServerAPI {
             for(int i = 0; i < eventsInJSONE.length(); ++i){
                 eventInJSONE = eventsInJSONE.getJSONObject(i);
                 description = eventInJSONE.getString("Description");
-                title = description;
                 latitude = eventInJSONE.getDouble("Latitude");
                 longitude = eventInJSONE.getDouble("Longitude");
                 date =  convertStringDateToCalendar(eventInJSONE.getString("EventDate"));
-                event = new Event(date, new LatLng(latitude, longitude), description, Event.Category.PARTY);
+                event = new Event(date, new LatLng(latitude, longitude), description, 0);
                 events.add(event);
             }
             return events;

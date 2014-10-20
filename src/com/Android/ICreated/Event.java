@@ -13,14 +13,9 @@ public class Event
     private Calendar time;
     private LatLng latLng;
     private String description;
-    private Category category;
+    private int category;
 
-    public enum Category
-    {
-        PARTY,
-    }
-
-    public Event(Calendar time, LatLng latLng, String description, Category category)
+    public Event(Calendar time, LatLng latLng, String description, int category)
     {
         id = -1;
         this.time = time;
@@ -49,7 +44,7 @@ public class Event
         return latLng;
     }
 
-    public Category getCategory()
+    public int getCategory()
     {
         return category;
     }

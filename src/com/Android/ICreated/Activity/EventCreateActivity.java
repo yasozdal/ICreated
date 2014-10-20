@@ -19,10 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import com.Android.ICreated.CustomAdapter;
-import com.Android.ICreated.Event;
-import com.Android.ICreated.R;
-import com.Android.ICreated.Storage;
+import com.Android.ICreated.*;
 
 import java.util.Calendar;
 
@@ -325,9 +322,9 @@ public class EventCreateActivity extends Activity implements TextWatcher
     public void saving()
     {
         String description = etDescription.getText().toString();
-        Event event = new Event(date, storage.getCurLatLng(), description, Event.Category.PARTY);
+        Event event = new Event(date, storage.getCurLatLng(), description, 0);
         storage.addEvent(event);
-        ServerAPI.addEvent("0","0",description,date.toString());
+        ServerAPI.addEvent("0", "0", description, date.toString());
         storage.getEventsFromServer();
         finish();
     }

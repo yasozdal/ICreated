@@ -1,7 +1,9 @@
 package com.Android.ICreated;
 
 import android.app.Application;
-import android.util.Log;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -15,6 +17,11 @@ public final class Storage extends Application
     private LatLng curLatLng;
     private long curID;
     private ArrayList<StorageListener> listeners;
+    private DBHelper dbHelper;
+    private ContentValues cv;
+    private SQLiteDatabase db;
+    private Cursor cursor;
+    private String[] columns;
 
     @Override
     public void onCreate()
@@ -43,6 +50,23 @@ public final class Storage extends Application
         {
             listener.onEventAdded(event);
         }
+    }
+
+    private void addEventToDataBase(Event event)
+    {
+        cv = new ContentValues();
+        dbHelper = new DBHelper(this);
+        db = dbHelper.getWritableDatabase();
+
+        cv.put("description", event.getDescription());
+        cv.put("lat", event.getLatLng().latitude);
+        cv.put("lng", event.getLatLng().longitude);
+        cv.put("time", event.getTime().getTimeInMillis());
+        cv.put("category", event.getCategory());
+
+        db.insert(getString(R.string.db_name), null, cv);
+
+        dbHelper.close();
     }
 
     public void addEvent(Event event)
