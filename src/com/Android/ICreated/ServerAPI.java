@@ -33,11 +33,27 @@ import java.util.*;
 
 public class ServerAPI {
 
-    public static class User{ // потом сделать private
+    public static User user; // потом сделать private
+    private static final HttpParams params;
+    private static final HttpClient httpClient;
+    private static final String serverURL = "http://customer87-001-site1.myasp.net/";
+    private static final String registration = "api/Account/Register";
+    private static final String token = "Token";
+    private static final String events = "api/Events";
+    private static final String eventsComment = "api/eventComments";
+    private static final String follow = "";
+    private static final String unfollow = "";
+    private static final String friendList = "";
+    private static final String correctRequest = "OK";
+    private static final String badRequest = "Bad Request";
+
+    private static final String debugTag = "DEBUG";
+
+    protected static class User{
         private static String name;
-        private String password;
-        private String confirmPassword;
-        public static String token;
+        private static String password;
+        private static String confirmPassword;
+        private static String token;
         User(String name, String password){
             this.name = name;
             this.password = password;
@@ -58,16 +74,29 @@ public class ServerAPI {
         }
     }
 
+    public enum ResponseType{
+        SUCCES,
+        CANNOT_CONNECT_TO_SERVER,
+        BAD_REQUEST,
+
+    }
     public static class Response{
 
         protected HttpResponse response;
         protected JSONObject result;
         protected JSONArray resultArray;
-        public String type;
-        Response(){}
+        public ResponseType type;
+        Response() {
+            this.type = ResponseType.CANNOT_CONNECT_TO_SERVER;
+        }
         Response(HttpResponse response){
             this.response = response;
-            type = response.getStatusLine().getReasonPhrase();
+            if (response.getStatusLine().getReasonPhrase().equals("OK")) {
+                type = ResponseType.SUCCES;
+            }
+            else {
+                type = ResponseType.BAD_REQUEST;
+            }
             getResult();
         }
         protected void getResult() {
@@ -78,15 +107,17 @@ public class ServerAPI {
                 while ((line = rd.readLine()) != null) {
                     result.append(line);
                 }
+                if (result.length() == 0){
+                    return;
+                }
                 try {
                     this.result = new JSONObject(result.toString());
                 } catch (JSONException e){
                     this.resultArray = new JSONArray(result.toString());
                 }
-                Log.d("Response", result.toString());
-            } catch (Exception e) {
 
-                Log.d("getResult()", e.getMessage());
+            } catch (Exception e) {
+                Log.d(debugTag, "getResult exception " + e.toString());
             }
         }
     }
@@ -104,28 +135,16 @@ public class ServerAPI {
                 this.token = super.result.getString("access_token");
 
             } catch (Exception e){
-                Log.d("setToken", e.getMessage());
+
             }
         }
         public boolean correct(){
-            Log.d("Token.correct", super.type);
+
             return (super.type.equals("OK"));
         }
     }
 
-    public static User user; // потом сделать private
-    private static final HttpParams params;
-    private static final HttpClient httpClient;
-    private static final String serverURL = "http://customer87-001-site1.myasp.net/";
-    private static final String registration = "api/Account/Register";
-    private static final String token = "Token";
-    private static final String events = "api/Events";
-    private static final String eventsComment = "api/eventComments";
-    private static final String follow = "";
-    private static final String unfollow = "";
-    private static final String friendList = "";
-    private static final String correctRequest = "OK";
-    private static final String badRequest = "Bad Request";
+
 
     static{
         params = new BasicHttpParams();
@@ -158,7 +177,7 @@ public class ServerAPI {
                 }
                 catch (Exception ex)
                 {
-                    Log.d("Exception", ex.getMessage());
+                    Log.d(debugTag, "RegistretionNewUser, doInBackground " +  ex.getMessage());
                     return new Response();
                 }
         }
@@ -177,19 +196,19 @@ public class ServerAPI {
                 params.add(new BasicNameValuePair("grant_type", "password"));
                 params.add(new BasicNameValuePair("username", user[0]));
                 params.add(new BasicNameValuePair("password", user[1]));
-                Log.d("Token doInBackground params", params.toString());
+
                 request.setEntity(new UrlEncodedFormEntity(params));
                 request.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
                 HttpResponse response = httpClient.execute(request);
-                Log.d("Token doInB response", response.getStatusLine().getReasonPhrase());
+
                 //return new Response(response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase());
                 return new Token(response);
 
             }
             catch (Exception ex)
             {
-                Log.d("Token doInBackground", ex.toString());
+                Log.d(debugTag, "Get Token, doInBackground " + ex.getMessage());
                 return new Token();
             }
         }
@@ -209,7 +228,7 @@ public class ServerAPI {
             userInJSON.put("Longitude", event[1]);
             userInJSON.put("Description", event[2]);
             userInJSON.put("EventDate", event[3]);
-            Log.d("JSON", userInJSON.toString());
+
             request.setEntity(new ByteArrayEntity(userInJSON.toString().getBytes("UTF8")));
             request.addHeader("Content-Type", "application/json");
             request.addHeader("Authorization", "Bearer " + user.getToken());
@@ -220,9 +239,8 @@ public class ServerAPI {
             return new Response(response);
 
         }
-        catch (Exception ex)
-        {
-            Log.d("addEvent class", ex.getMessage());
+        catch (Exception ex) {
+            Log.d(debugTag, "addEvent, doInBackground " + ex.getMessage());
             return new Response();
         }
         }
@@ -235,20 +253,18 @@ public class ServerAPI {
         {   try {
             HttpGet request = new HttpGet(serverURL + events);
 
-//            JSONObject userInJSON = new JSONObject();
-//
             request.addHeader("Content-Type", "application/json");
-            Log.d("Token when getEvents", user.getToken());
-            request.addHeader("Authorization", "Bearer " + user.getToken());
+
+            //request.addHeader("Authorization", "Bearer " + user.getToken());
             HttpResponse response = httpClient.execute(request);
-            Log.d("getEvBackground", response.getStatusLine().getReasonPhrase());
+
 
             return new Response(response);
 
         }
         catch (Exception ex)
         {
-            Log.d("addEvent class", ex.getMessage());
+            Log.d(debugTag, "getEvents, doInBackgorund " + ex.getMessage());
             return new Response();
         }
         }
@@ -269,7 +285,7 @@ public class ServerAPI {
         }
         catch (Exception e)
         {
-            Log.d("RegisrationNewUser", e.toString());
+            Log.d(debugTag, "RegistrationNewUser " + e.getMessage());
             return new Response();
         }
     }
@@ -282,7 +298,7 @@ public class ServerAPI {
         }
         catch (Exception e)
         {
-            Log.d("getToken excp", e.getMessage());
+            Log.d(debugTag, "getToken " + e.getMessage());
             return new Token();
         }
     }
@@ -300,7 +316,7 @@ public class ServerAPI {
 
 
         } catch (Exception e){
-            Log.d("signIn Excp", e.toString());
+            Log.d(debugTag, "signIn " + e.getMessage());
             return false;
         }
     }
@@ -309,14 +325,14 @@ public class ServerAPI {
         try {
             return ((new addEvent().execute(Latitude, Longitude, Description, "05.10.2014 21:44:36").get()).type).equals("Created");
         } catch (Exception e) {
-            Log.d("addEvent", e.toString());
+            Log.d(debugTag, "addEvent " + e.getMessage());
             return false;
         }
     }
 
     public static Calendar convertStringDateToCalendar(String strDate) {
         Calendar cal = null;
-        Log.d("convertStrDTC", strDate);
+
         if (strDate != null) {
             try {
                 strDate = strDate.replace("T", " ");
@@ -325,7 +341,7 @@ public class ServerAPI {
                 cal = Calendar.getInstance();
                 cal.setTime(date);
             } catch (Exception e) {
-                Log.d("convertStrDTC", e.toString());
+                Log.d(debugTag, "convertStringDateToCalendar " + e.getMessage());
             }
         }
 
@@ -350,25 +366,22 @@ public class ServerAPI {
                 latitude = eventInJSONE.getDouble("Latitude");
                 longitude = eventInJSONE.getDouble("Longitude");
                 date =  convertStringDateToCalendar(eventInJSONE.getString("EventDate"));
-//                events.add(new Event(date, new LatLng(latitude, longitude), description, description));
                 event = new Event(date, new LatLng(latitude, longitude), description, Event.Category.PARTY);
                 events.add(event);
             }
             return events;
         } catch (JSONException e){
-            Log.d("createEvent Ex ", e.toString());
+            Log.d(debugTag, "createEvents " + e.getMessage());
         }
         return null;
     }
     public static ArrayList<Event> getEvents(){
         try {
             Response test = new getEvents().execute().get();
-
-            Log.d("getEvents", test.resultArray.toString());
-     //       createEvents(test.resultArray);
+            Log.d(debugTag, "Events from server " + test.resultArray.toString());
             return createEvents(test.resultArray);
         } catch (Exception e){
-            Log.d("getEvents", e.toString());
+            Log.d(debugTag, "getEvents " + e.getMessage());
             return null;
         }
     }

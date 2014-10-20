@@ -1,4 +1,4 @@
-package com.Android.ICreated;
+package com.Android.ICreated.Activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.Android.ICreated.CustomAdapter;
+import com.Android.ICreated.Event;
+import com.Android.ICreated.R;
+import com.Android.ICreated.Storage;
 
 /**
  * Created by Филипп on 05.10.2014.
