@@ -24,10 +24,10 @@ public class DBHelper extends SQLiteOpenHelper
         db.execSQL("create table " + context.getString(R.string.db_name) + "("
                 + "id integer primary key autoincrement,"
                 + "description text,"
-                + "long time,"
-                + "double lat,"
-                + "double lng,"
-                + "int category" + ");");
+                + "time long,"
+                + "lat double,"
+                + "lng double,"
+                + "category int" + ");");
     }
 
     @Override
