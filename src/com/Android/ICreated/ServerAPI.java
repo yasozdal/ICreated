@@ -151,7 +151,7 @@ public class ServerAPI {
                     latitude = eventInJSONE.getDouble("Latitude");
                     longitude = eventInJSONE.getDouble("Longitude");
                     date =  convertStringDateToCalendar(eventInJSONE.getString("EventDate"));
-                    event = new Event(date, new LatLng(latitude, longitude), description, Event.Category.PARTY);
+                    event = new Event(date, new LatLng(latitude, longitude), description, 1);
                     events.add(event);
                 }
                 this.events = events;
