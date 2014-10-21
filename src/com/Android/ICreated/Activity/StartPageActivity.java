@@ -3,6 +3,7 @@ package com.Android.ICreated.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,9 +88,13 @@ public class StartPageActivity extends Activity {
         password = (EditText) findViewById(R.id.password);
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
-        ServerAPI.signIn();
-        storage.getEventsFromServer();
-        ToMap();
+        if (ServerAPI.signIn()) {
+            storage.getEventsFromServer();
+            ToMap();
+        }
+        else {
+            Log.d("StartPageActivity", "YOU SHALL NOT PASS");
+        }
 
     }
 }

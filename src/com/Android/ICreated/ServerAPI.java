@@ -33,7 +33,7 @@ import java.util.*;
 
 public class ServerAPI {
 
-    public static User user; // потом сделать private
+    private static User user; // потом сделать private
     private static final HttpParams params;
     private static final HttpClient httpClient;
     private static final String serverURL = "http://customer87-001-site1.myasp.net/";
@@ -50,10 +50,10 @@ public class ServerAPI {
     private static final String debugTag = "DEBUG";
 
     protected static class User{
-        private static String name;
-        private static String password;
-        private static String confirmPassword;
-        private static String token;
+        public static String name;
+        public static String password;
+        public static String confirmPassword;
+        public static String token;
         User(String name, String password){
             this.name = name;
             this.password = password;
@@ -63,13 +63,13 @@ public class ServerAPI {
             this.password = password;
             this.confirmPassword = confirmPassword;
         }
-        public void setToken(String token){
+        protected void setToken(String token){
             this.token = token;
         }
-        public String getToken(){
+        protected String getToken(){
             return this.token;
         }
-        public String getName(){
+        protected String getName(){
             return this.name;
         }
     }
@@ -82,24 +82,34 @@ public class ServerAPI {
     }
     public static class Response{
 
-        protected HttpResponse response;
-        protected JSONObject result;
-        protected JSONArray resultArray;
+        private HttpResponse response;
+        private JSONObject result;
+        private JSONArray resultArray;
+        private boolean empty;
+        private ArrayList<Event> events;
+
         public ResponseType type;
+
         Response() {
+            empty = true;
             this.type = ResponseType.CANNOT_CONNECT_TO_SERVER;
         }
         Response(HttpResponse response){
+            empty = true;
             this.response = response;
             if (response.getStatusLine().getReasonPhrase().equals("OK")) {
                 type = ResponseType.SUCCES;
+
             }
             else {
                 type = ResponseType.BAD_REQUEST;
             }
             getResult();
         }
-        protected void getResult() {
+        public boolean isEmpty(){
+            return empty;
+        }
+        private void getResult() {
             try {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(this.response.getEntity().getContent()));
                 StringBuffer result = new StringBuffer();
@@ -115,10 +125,47 @@ public class ServerAPI {
                 } catch (JSONException e){
                     this.resultArray = new JSONArray(result.toString());
                 }
+                empty = false;
 
             } catch (Exception e) {
                 Log.d(debugTag, "getResult exception " + e.toString());
             }
+        }
+
+        private void createEvents(){
+            JSONArray eventsInJSONE = this.resultArray;
+            ArrayList<Event> events = new ArrayList<Event>();
+            JSONObject eventInJSONE;
+            String description;
+            String title; // пока будет то же самое что и decription, ибо с сервера приходит только description
+            double latitude;
+            double longitude;
+            Calendar date;
+            Event event;
+
+            try {
+                for(int i = 0; i < eventsInJSONE.length(); ++i){
+                    eventInJSONE = eventsInJSONE.getJSONObject(i);
+                    description = eventInJSONE.getString("Description");
+                    title = description;
+                    latitude = eventInJSONE.getDouble("Latitude");
+                    longitude = eventInJSONE.getDouble("Longitude");
+                    date =  convertStringDateToCalendar(eventInJSONE.getString("EventDate"));
+                    event = new Event(date, new LatLng(latitude, longitude), description, Event.Category.PARTY);
+                    events.add(event);
+                }
+                this.events = events;
+            } catch (JSONException e){
+                Log.d(debugTag, "createEvents " + e.getMessage());
+                this.events = null;
+            } catch (Exception e){
+                Log.d(debugTag, "createEvets" + e.getMessage());
+                this.events = null;
+            }
+        }
+        public ArrayList<Event> getEvents(){
+            this.createEvents();
+            return this.events;
         }
     }
 
@@ -135,12 +182,11 @@ public class ServerAPI {
                 this.token = super.result.getString("access_token");
 
             } catch (Exception e){
-
+                Log.d(debugTag, "setToken " + e.toString());
             }
         }
         public boolean correct(){
-
-            return (super.type.equals("OK"));
+            return (super.type.equals(ResponseType.SUCCES));
         }
     }
 
@@ -273,8 +319,12 @@ public class ServerAPI {
 
     public static void setUser(String name, String password){
         user = new User(name, password);
+        Log.d(debugTag, "User set");
     }
-    public static void setUser(String name, String password, String confirmPassword){ user = new User(name, password, confirmPassword); }
+    public static void setUser(String name, String password, String confirmPassword){
+        user = new User(name, password, confirmPassword);
+        Log.d(debugTag, "User set");
+    }
 
     public static Response RegistrationNewUser()
     {
@@ -294,7 +344,9 @@ public class ServerAPI {
     {
         try
         {
-            return (new getToken().execute(user.name, user.password)).get();
+            Token test = (new getToken().execute(user.name, user.password)).get();
+            Log.d(debugTag, "getToken " + test.token);
+            return test;
         }
         catch (Exception e)
         {
@@ -347,42 +399,17 @@ public class ServerAPI {
 
         return cal;
     }
-    private static ArrayList<Event> createEvents(JSONArray eventsInJSONE){
 
-            ArrayList<Event> events = new ArrayList<Event>();
-            JSONObject eventInJSONE;
-            String description;
-            String title; // пока будет то же самое что и decription, ибо с сервера приходит только description
-            double latitude;
-            double longitude;
-            Calendar date;
-            Event event;
-
-        try {
-            for(int i = 0; i < eventsInJSONE.length(); ++i){
-                eventInJSONE = eventsInJSONE.getJSONObject(i);
-                description = eventInJSONE.getString("Description");
-                title = description;
-                latitude = eventInJSONE.getDouble("Latitude");
-                longitude = eventInJSONE.getDouble("Longitude");
-                date =  convertStringDateToCalendar(eventInJSONE.getString("EventDate"));
-                event = new Event(date, new LatLng(latitude, longitude), description, Event.Category.PARTY);
-                events.add(event);
-            }
-            return events;
-        } catch (JSONException e){
-            Log.d(debugTag, "createEvents " + e.getMessage());
-        }
-        return null;
-    }
-    public static ArrayList<Event> getEvents(){
+    public static Response getEvents(){
         try {
             Response test = new getEvents().execute().get();
+            Log.d(debugTag, "Events Created");
             Log.d(debugTag, "Events from server " + test.resultArray.toString());
-            return createEvents(test.resultArray);
+            return test;
         } catch (Exception e){
             Log.d(debugTag, "getEvents " + e.getMessage());
-            return null;
+            return new Response();
         }
+
     }
 }

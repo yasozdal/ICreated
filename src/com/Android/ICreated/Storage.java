@@ -29,7 +29,13 @@ public final class Storage extends Application
 
     public void getEventsFromServer()
     {
-        events = ServerAPI.getEvents();
+        ServerAPI.Response response = ServerAPI.getEvents();
+        if (!response.isEmpty()) {
+            events = response.getEvents();
+        }
+        else {
+
+        }
     }
 
     public void addListener(StorageListener listener)
