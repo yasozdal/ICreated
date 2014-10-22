@@ -89,7 +89,6 @@ public class StartPageActivity extends Activity {
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
         if (ServerAPI.signIn()) {
-            storage.getEventsFromServer();
             ToMap();
         }
         else {

@@ -9,25 +9,31 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHelper extends SQLiteOpenHelper
 {
-    Context context;
+    String name;
 
-    public DBHelper(Context context)
+    public DBHelper(Context context, String name)
     {
-
-        super(context, context.getString(R.string.db_name), null, 1);
-        this.context = context;
+        super(context, name, null, 1);
+        this.name = name;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL("create table " + context.getString(R.string.db_name) + "("
-                + "id integer primary key autoincrement,"
-                + "description text,"
-                + "time long,"
-                + "lat double,"
-                + "lng double,"
-                + "category int" + ");");
+        switch (name)
+        {
+            case EventsDataBase.NAME:
+                db.execSQL("create table " + EventsDataBase.NAME + "("
+                        + EventsDataBase.ID + " integer primary key autoincrement,"
+                        + EventsDataBase.DESCRIPTION + " text,"
+                        + EventsDataBase.TIME + " long,"
+                        + EventsDataBase.LATITUDE + " double,"
+                        + EventsDataBase.LONGITUDE + " double,"
+                        + EventsDataBase.CATEGORY + " int" + ");");
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

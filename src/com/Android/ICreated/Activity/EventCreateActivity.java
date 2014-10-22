@@ -324,7 +324,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
         String description = etDescription.getText().toString();
         Event event = new Event(date, storage.getCurLatLng(), description, 0);
         storage.addEvent(event);
-        storage.getEventsFromServer();
         finish();
     }
 
