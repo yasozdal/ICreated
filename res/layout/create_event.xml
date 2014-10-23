@@ -45,7 +45,7 @@
                     android:layout_weight="1"
                     android:text="@string/place"
                     android:clickable="true"
-                    android:onClick="onClick"
+                    android:onClick="chooseLocation"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_icons_size"/>
@@ -56,7 +56,7 @@
                     android:layout_weight="1"
                     android:text="@string/date"
                     android:clickable="true"
-                    android:onClick="add_date"
+                    android:onClick="onClick"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_icons_size"/>
@@ -81,48 +81,9 @@
                     android:onClick="locking"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_icons_size"/>
+                    android:textSize="@dimen/text_icons_size"
+                    android:longClickable="true"/>
         </LinearLayout>
-        <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/rlDate"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:visibility="invisible"
-                android:layout_above="@+id/footer"
-                android:clickable="true"
-                android:background="#ffbdc3c7">
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Save"
-                    android:id="@+id/dateSave"
-                    android:onClick="save_date"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignRight="@+id/timePicker"/>
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel"
-                    android:id="@+id/dateCancel"
-                    android:layout_alignTop="@+id/dateSave"
-                    android:layout_alignParentLeft="true"
-                    android:onClick="cancel_data"/>
-            <TimePicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/timePicker"
-                    android:layout_above="@+id/dateSave"
-                    android:layout_alignParentRight="true"/>
-            <DatePicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/datePicker"
-                    android:calendarViewShown="false"
-                    android:layout_alignTop="@+id/timePicker"
-                    android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/timePicker"/>
-        </RelativeLayout>
     </RelativeLayout>
         <ListView android:id="@+id/left_drawer"
                   android:layout_width="@dimen/drawer_width"

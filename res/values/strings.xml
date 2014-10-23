@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">ЯСоздал</string>
     <string name="menu_font">Roboto-Regular.ttf</string>
+    <string name="db_name">ICreatedDB</string>
     <string name="icon_font">FontAwesome.ttf</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
@@ -19,4 +20,10 @@
     <string name="log_in">Войти</string>
     <string name="error">Ошибка</string>
     <string name="show">Просмотр</string>
+    <string name="past_event_toast">Ты опоздал! Попробуй еще раз :)</string>
+    <string name="dialog_photo">Откуда взять фото?</string>
+    <string name="dialog_category">Выбери категорию события</string>
+    <string name="dialog_date">Укажите дату</string>
+    <string name="dialog_time">А теперь время</string>
+    <string name="OK_button">OK</string>
 </resources>

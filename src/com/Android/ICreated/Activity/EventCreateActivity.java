@@ -1,11 +1,9 @@
 package com.Android.ICreated.Activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.*;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -19,8 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import com.Android.ICreated.*;
+import com.Android.ICreated.CustomAdapter;
+import com.Android.ICreated.Event;
+import com.Android.ICreated.R;
+import com.Android.ICreated.Storage;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 /**
@@ -34,31 +37,21 @@ public class EventCreateActivity extends Activity implements TextWatcher
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
-    TimePicker timePicker;
-    DatePicker datePicker;
     TextView btnCategory;
     TextView btnPlace;
     TextView btnDate;
     TextView btnPhoto;
     TextView btnLock;
-    RelativeLayout rlDate;
-    Button dateSave;
-    Button dateCancel;
-    int minute = Time.MINUTE;
-    int hour = Time.HOUR;
-    int day = Time.MONTH_DAY;
-    int month = Time.MONTH;
-    int year = Time.YEAR;
+    int minute, hour, day, month, year;
     final int DIALOG_CATEGORY = 1;
-    final int DIALOG_PLACE = 2;
+    final int DIALOG_TIME = 2;
     final int DIALOG_PHOTO = 3;
     String[] categories, place, photo;
-    int other_category;
-    int selected_category;
+    int other_category, selected_category;
     Calendar date = null;
     boolean btnSaveEnabled;
+    LatLng latLng;
     Typeface tf;
-    int latitude = 0, longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,9 +65,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
         actionBar.setDisplayHomeAsUpEnabled(true);
         storage = (Storage)getApplication();
         etDescription = (EditText) findViewById(R.id.etDescription);
-        timePicker = (TimePicker) findViewById(R.id.timePicker);
-        datePicker = (DatePicker) findViewById(R.id.datePicker);
-        timePicker.setIs24HourView(true);
         etDescription.addTextChangedListener(this);
         btnCategory = (TextView) findViewById(R.id.btnCategory);
         btnCategory.setTypeface(tf);
@@ -86,61 +76,113 @@ public class EventCreateActivity extends Activity implements TextWatcher
         btnPhoto.setTypeface(tf);
         btnLock = (TextView) findViewById(R.id.btnLock);
         btnLock.setTypeface(tf);
-        rlDate = (RelativeLayout) findViewById(R.id.rlDate);
-        dateSave = (Button) findViewById(R.id.dateSave);
-        dateCancel = (Button) findViewById(R.id.dateCancel);
         categories = getResources().getStringArray(R.array.categories);
         place = getResources().getStringArray(R.array.place);
         photo = getResources().getStringArray(R.array.photo);
         other_category = categories.length - 1;
         btnSaveEnabled = false;
+        selected_category = other_category;
         drawerInit();
     }
 
-////////////////////////////////dialogs of category, place and photos
+////////////////////////////////dialogs of category, time and photos
 
     public void onClick(View view)
     {
         switch (view.getId())
         {
             case R.id.btnCategory:
-                rlDate.setVisibility(View.INVISIBLE);
-                showDialog(DIALOG_CATEGORY);
+                showMyDialog(DIALOG_CATEGORY);
                 break;
-            case R.id.btnPlace:
-                rlDate.setVisibility(View.INVISIBLE);
-                showDialog(DIALOG_PLACE);
+            case R.id.btnDate:
+                showMyDialog(DIALOG_TIME);
                 break;
             case R.id.btnPhoto:
-                rlDate.setVisibility(View.INVISIBLE);
-                showDialog(DIALOG_PHOTO);
+                showMyDialog(DIALOG_PHOTO);
                 break;
             default:
                 break;
         }
     }
 
-    protected Dialog onCreateDialog(int id) {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        switch (id) {
-            case DIALOG_CATEGORY:
-                adb.setTitle("Select category");
-                adb.setSingleChoiceItems(categories, other_category, dialogClickListener);
-                adb.setPositiveButton("OK", btnOkClickListener);
-                break;
-            case DIALOG_PLACE:
-                adb.setTitle("Select place");
-                adb.setItems(place, dialogClickListener);
-                break;
-            case DIALOG_PHOTO:
-                adb.setTitle("Select photo");
-                adb.setItems(photo, dialogClickListener);
-                break;
-            default:
-                break;
+    protected void showMyDialog(int id)
+    {
+        if (id == DIALOG_TIME)
+        {
+            DatePickerDialog dpd = new DatePickerDialog(this, dateCallBack, Calendar.YEAR,
+                                                                            Calendar.MONTH,
+                                                                            Calendar.DAY_OF_MONTH);
+            dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+            dpd.setTitle(R.string.dialog_date);
+            dpd.show();
         }
-        return adb.create();
+        else
+        {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            switch (id) {
+                case DIALOG_CATEGORY:
+                    adb.setTitle(R.string.dialog_category);
+                    adb.setSingleChoiceItems(categories, selected_category, dialogClickListener);
+                    adb.setPositiveButton(R.string.OK_button, btnOkClickListener);
+                    break;
+                case DIALOG_PHOTO:
+                    adb.setTitle(R.string.dialog_photo);
+                    adb.setItems(photo, dialogClickListener);
+                    break;
+                default:
+                    break;
+            }
+            AlertDialog current_dialog = adb.create();
+            current_dialog.show();
+        }
     }
+
+    DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener()
+    {
+        public void onDateSet(DatePicker view, int pickedYear, int pickedMonth, int pickedDay)
+        {
+            year = pickedYear;
+            month = pickedMonth;
+            day = pickedDay;
+
+            callTimePicker();
+        }
+    };
+
+    private void callTimePicker()
+    {
+        Calendar currTime = Calendar.getInstance();
+        TimePickerDialog tpd = new TimePickerDialog(EventCreateActivity.this, timeCallBack,
+                                                    currTime.get(Calendar.HOUR_OF_DAY),
+                                                    currTime.get(Calendar.MINUTE), true);
+        tpd.setTitle(R.string.dialog_time);
+        tpd.show();
+    }
+
+    TimePickerDialog.OnTimeSetListener timeCallBack = new TimePickerDialog.OnTimeSetListener()
+    {
+        public void onTimeSet(TimePicker view, int pickedHour, int pickedMinute)
+        {
+            Calendar currTime = Calendar.getInstance();
+            if (year == currTime.get(Calendar.YEAR) &&
+                month == currTime.get(Calendar.MONTH) &&
+                day == currTime.get(Calendar.DAY_OF_MONTH) &&
+               (pickedHour < currTime.get(Calendar.HOUR_OF_DAY) ||
+               (pickedHour == currTime.get(Calendar.HOUR_OF_DAY) &&
+                pickedMinute < currTime.get(Calendar.MINUTE))))
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),R.string.past_event_toast, Toast.LENGTH_SHORT);
+                toast.show();
+                callTimePicker();
+            }
+            else
+            {
+                hour = pickedHour;
+                minute = pickedMinute;
+                btnDate.setTextColor(getResources().getColor(R.color.main));
+            }
+        }
+    };
 
     OnClickListener dialogClickListener = new OnClickListener()
     {
@@ -167,6 +209,26 @@ public class EventCreateActivity extends Activity implements TextWatcher
             }
         }
     };
+
+////////////////////////////////location
+
+    public void chooseLocation(View view)
+    {
+        Intent intent = new Intent(this, EventSelectLocationActivity.class);
+        startActivityForResult(intent, 1);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (data == null) {return;}
+        double latitude = data.getDoubleExtra("latitude", storage.getCurLatLng().latitude);
+        double longitude = data.getDoubleExtra("longitude", storage.getCurLatLng().longitude);
+        latLng = new LatLng(latitude, longitude);
+    }
+
+////////////////////////////////action bars
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -268,39 +330,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
         }
     }
 
-////////////////////////////////date_changing
-
-    public void add_date (View view)
-    {
-        if (rlDate.getVisibility() == View.INVISIBLE)
-        {
-            rlDate.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            rlDate.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    public void save_date (View view)
-    {
-        rlDate.setVisibility(View.INVISIBLE);
-        minute = timePicker.getCurrentMinute();
-        hour = timePicker.getCurrentHour();
-        day = datePicker.getDayOfMonth();
-        month = datePicker.getMonth();
-        year = datePicker.getYear();
-        date = Calendar.getInstance();
-        date.set(year, month, day, hour, minute); //the same value actually...
-        btnDate.setTextColor(getResources().getColor(R.color.main));
-    }
-
-
-    public void cancel_data (View view)
-    {
-        rlDate.setVisibility(View.INVISIBLE);
-    }
-
 ////////////////////////////////lock changing
 
     public void locking (View view)
@@ -322,8 +351,17 @@ public class EventCreateActivity extends Activity implements TextWatcher
     public void saving()
     {
         String description = etDescription.getText().toString();
-        Event event = new Event(date, storage.getCurLatLng(), description, 0);
+        if (date == null)
+        {
+            date = Calendar.getInstance();
+        }
+        if (latLng == null)
+        {
+            latLng = storage.getCurLatLng();
+        }
+        Event event = new Event(date, latLng, description, selected_category);
         storage.addEvent(event);
+        storage.getEventsFromServer();
         finish();
     }
 

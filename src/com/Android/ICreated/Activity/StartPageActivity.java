@@ -69,7 +69,7 @@ public class StartPageActivity extends Activity {
         startActivity(intent);
         finish();
     }
-// ВНИМАНИЕ, Register и signIn работают неожидаемым способом, ПЕРЕДЕЛАТЬ!
+    // ВНИМАНИЕ, Register и signIn работают неожидаемым способом, ПЕРЕДЕЛАТЬ!
     private void Register() {
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
@@ -97,4 +97,3 @@ public class StartPageActivity extends Activity {
 
     }
 }
-
