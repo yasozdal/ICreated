@@ -269,7 +269,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         drawerList = (ListView) findViewById(R.id.left_drawer);
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
-        drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
+        drawerList.setAdapter(new CustomAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
         {

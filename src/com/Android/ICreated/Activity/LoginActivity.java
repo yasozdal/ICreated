@@ -15,7 +15,7 @@ import com.Android.ICreated.Storage;
  * Created by Филипп on 07.10.2014.
  */
 
-public class StartPageActivity extends Activity {
+public class LoginActivity extends Activity {
 
     EditText userName;
     EditText password;
@@ -25,7 +25,7 @@ public class StartPageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_page);
+        setContentView(R.layout.login);
         storage = (Storage) getApplication();
         showStartPage();
 

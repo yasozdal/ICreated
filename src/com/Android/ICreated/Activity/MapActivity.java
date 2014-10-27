@@ -35,7 +35,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.events_map);
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(R.string.events);
 
@@ -43,8 +43,9 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         storage.addListener(this);
 
         mapInit();
-        drawerInit();
         loadEvents();
+        tabInit();
+        drawerInit();
     }
 
     private void mapInit()
@@ -65,6 +66,11 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         uiSettings.setCompassEnabled(false);
     }
 
+    private void tabInit()
+    {
+
+    }
+
 
     private void drawerInit()
     {
@@ -73,7 +79,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         drawerList = (ListView) findViewById(R.id.left_drawer);
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
-        drawerList.setAdapter(new CustomAdapter(this, R.layout.list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
+        drawerList.setAdapter(new CustomAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.lines, R.string.app_name, R.string.events)
         {
@@ -179,6 +185,9 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         switch (item.getItemId())
         {
             case R.id.action_new_event:
+                storage.setCurLatLng(null);
+                Intent intent = new Intent(this, EventCreateActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
