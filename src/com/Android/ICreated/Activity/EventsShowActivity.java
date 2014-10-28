@@ -1,30 +1,31 @@
 package com.Android.ICreated.Activity;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.Android.ICreated.*;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, StorageListener, GoogleMap.OnInfoWindowClickListener
+/**
+ * Created by Mikhail on 27.10.2014.
+ */
+public class EventsShowActivity extends Activity
 {
-    SupportMapFragment mapFragment;
-    GoogleMap map;
-    UiSettings uiSettings;
     Storage storage;
     String[] drawerTitles;
     DrawerLayout drawerLayout;
@@ -35,40 +36,30 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.events_map);
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle(R.string.events);
-
+        setContentView(R.layout.events_show);
         storage = (Storage) getApplication();
-        storage.addListener(this);
 
-        mapInit();
-        loadEvents();
-        tabInit();
+        actionBarInit();
         drawerInit();
     }
 
-    private void mapInit()
+    private void actionBarInit()
     {
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        map = mapFragment.getMap();
-        if (map == null)
-        {
-            finish();
-            return;
-        }
-        map.setOnMapLongClickListener(this);
-        map.setOnMarkerClickListener(this);
-        map.setOnInfoWindowClickListener(this);
-        map.setInfoWindowAdapter(new InfoWindowAdapter(this));
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle(R.string.events);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        uiSettings = map.getUiSettings();
-        uiSettings.setCompassEnabled(false);
-    }
+        ActionBar.Tab mapTab = actionBar.newTab().setText(R.string.map);
+        ActionBar.Tab listTab = actionBar.newTab().setText(R.string.list);
 
-    private void tabInit()
-    {
+        Fragment mapFragment = new MapEvents();
+        Fragment listFragment = new ListEvents();
 
+        mapTab.setTabListener(new TabsListener(mapFragment));
+        listTab.setTabListener(new TabsListener(listFragment));
+
+        actionBar.addTab(mapTab);
+        actionBar.addTab(listTab);
     }
 
 
@@ -80,7 +71,6 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
         drawerList.setAdapter(new CustomAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
-
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.lines, R.string.app_name, R.string.events)
         {
 
@@ -104,22 +94,19 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
         getActionBar().setHomeButtonEnabled(true);
     }
 
-    private void loadEvents()
-    {
-        Event[] events = storage.getAllEvents();
-        for (int i = 0; i < storage.getSize(); ++i)
-        {
-            Marker marker = map.addMarker(new MarkerOptions()
-                    .position(events[i].getLatLng()));
-        }
-    }
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
     }
 
     @Override
@@ -144,34 +131,11 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng)
-    {
-        storage.setCurLatLng(latLng);
-        Intent intent = new Intent(this, EventCreateActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker)
-    {
-        storage.setCurLatLng(marker.getPosition());
-        return false;
-    }
-
-    @Override
-    public void onInfoWindowClick(Marker marker)
-    {
-        storage.setCurLatLng(marker.getPosition());
-        Intent intent = new Intent(this, EventShowActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
 
     }
 
@@ -193,12 +157,32 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnMapLong
                 return super.onOptionsItemSelected(item);
         }
     }
+}
+
+class TabsListener implements ActionBar.TabListener
+{
+    public Fragment fragment;
+
+    public TabsListener(Fragment fragment)
+    {
+        this.fragment = fragment;
+    }
 
     @Override
-    public void onEventAdded(Event event)
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
     {
-        Marker marker = map.addMarker(new MarkerOptions()
-                .position(event.getLatLng()));
-        marker.showInfoWindow();
     }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        ft.replace(R.id.fragment_container, fragment);
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        ft.remove(fragment);
+    }
+
 }

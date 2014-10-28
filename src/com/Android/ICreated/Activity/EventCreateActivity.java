@@ -123,7 +123,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
                 case DIALOG_CATEGORY:
                     adb.setTitle(R.string.dialog_category);
                     adb.setSingleChoiceItems(categories, selected_category, dialogClickListener);
-                    adb.setPositiveButton(R.string.OK_button, btnOkClickListener);
+                    adb.setPositiveButton(R.string.ok, btnOkClickListener);
                     break;
                 case DIALOG_PHOTO:
                     adb.setTitle(R.string.dialog_photo);

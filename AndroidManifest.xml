@@ -17,24 +17,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MapActivity"
+        <activity android:name=".Activity.EventsShowActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop"
                   android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".Activity.EventCreateActivity"
                   android:label="@string/app_name"
-                  android:parentActivityName=".Activity.MapActivity"
+                  android:parentActivityName=".Activity.EventsShowActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".Activity.EventSelectLocationActivity"
                   android:label="@string/app_name"
-                  android:parentActivityName=".Activity.MapActivity"
+                  android:parentActivityName=".Activity.EventsShowActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".Activity.EventShowActivity"
                   android:label="@string/app_name"
-                  android:parentActivityName=".Activity.MapActivity"
+                  android:parentActivityName=".Activity.EventsShowActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
 
@@ -46,8 +46,9 @@
                 android:value="@integer/google_play_services_version">
         </meta-data>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-feature

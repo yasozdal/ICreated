@@ -25,5 +25,7 @@
     <string name="dialog_category">Выбери категорию события</string>
     <string name="dialog_date">Укажите дату</string>
     <string name="dialog_time">А теперь время</string>
-    <string name="OK_button">OK</string>
+    <string name="ok">OK</string>
+    <string name="map">Карта</string>
+    <string name="list">Список</string>
 </resources>

@@ -23,7 +23,8 @@ public class LoginActivity extends Activity {
     Storage storage;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         storage = (Storage) getApplication();
@@ -31,7 +32,8 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void showStartPage() {
+    private void showStartPage()
+    {
         Button btnToMap = (Button) findViewById(R.id.btnToMap);
         View.OnClickListener oclBtnToMapButton = new View.OnClickListener() {
             @Override
@@ -65,7 +67,7 @@ public class LoginActivity extends Activity {
 
     private void ToMap()
     {
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, EventsShowActivity.class);
         startActivity(intent);
         finish();
     }
