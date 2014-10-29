@@ -3,6 +3,7 @@
     <style name="action_bar_style"
            parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/main_style</item>
+        <item name="android:actionBarTabBarStyle">@style/main_style</item>
     </style>
     <style name="main_style"
            parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
