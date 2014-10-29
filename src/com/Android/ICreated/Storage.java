@@ -46,6 +46,11 @@ public final class Storage extends Application
         return names;
     }
 
+    public Event getEvent(int index)
+    {
+        return  events.get(index);
+    }
+
     public void getEventsFromServer()
     {
         ServerAPI.Response response = ServerAPI.getEvents();

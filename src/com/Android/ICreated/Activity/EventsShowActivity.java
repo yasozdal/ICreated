@@ -31,6 +31,8 @@ public class EventsShowActivity extends Activity
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
+    ActionBar.Tab mapTab;
+    ActionBar.Tab listTab;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,8 +51,8 @@ public class EventsShowActivity extends Activity
         actionBar.setTitle(R.string.events);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab mapTab = actionBar.newTab().setText(R.string.map);
-        ActionBar.Tab listTab = actionBar.newTab().setText(R.string.list);
+        mapTab = actionBar.newTab().setText(R.string.map);
+        listTab = actionBar.newTab().setText(R.string.list);
 
         Fragment mapFragment = new MapEvents();
         Fragment listFragment = new ListEvents();
