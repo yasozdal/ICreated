@@ -397,5 +397,4 @@ public class EventCreateActivity extends Activity implements TextWatcher
         finish();
     }
 
-
 }

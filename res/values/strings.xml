@@ -28,6 +28,6 @@
     <string name="ok">OK</string>
     <string name="map">Карта</string>
     <string name="list">Список</string>
-    <string name="open_event">Открытое событие</string>
     <string name="friends_event">Только для друзей</string>
+    <string name="open_event">Открытое событие</string>
 </resources>
