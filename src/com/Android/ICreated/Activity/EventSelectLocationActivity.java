@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.R;
@@ -33,14 +35,14 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
-    double latitude;
-    double longitude;
+    Menu barMenu;
+    double latitude, longitude;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.events_map);
+        setContentView(R.layout.location_map);
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(R.string.events);
 
@@ -51,8 +53,11 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        barMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.create_action_bar, menu);
+        menu.findItem(R.id.btnSaveEvent).setEnabled(false);
+        barMenu.findItem(R.id.btnSaveEvent).setIcon(R.drawable.complete_grey);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -62,7 +67,7 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
-
+        Log.d("Logs", "" + drawerList);
         drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
@@ -118,11 +123,16 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
     @Override
     public void onMapClick(LatLng latLng)
     {
-        map.clear();
-        latitude = latLng.latitude;
-        longitude = latLng.longitude;
-        Marker marker = map.addMarker(new MarkerOptions().position(latLng));
-        marker.showInfoWindow();
+        if (latLng != null)
+        {
+            map.clear();
+            latitude = latLng.latitude;
+            longitude = latLng.longitude;
+            Marker marker = map.addMarker(new MarkerOptions().position(latLng));
+            marker.showInfoWindow();
+            barMenu.findItem(R.id.btnSaveEvent).setEnabled(true);
+            barMenu.findItem(R.id.btnSaveEvent).setIcon(R.drawable.complete);
+        }
     }
 
     private void returnLatLng()

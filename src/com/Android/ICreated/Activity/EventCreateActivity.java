@@ -12,7 +12,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
@@ -22,9 +21,6 @@ import com.Android.ICreated.Event;
 import com.Android.ICreated.R;
 import com.Android.ICreated.Storage;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.lang.reflect.Array;
-import java.sql.Date;
 import java.util.Calendar;
 
 /**
@@ -47,9 +43,11 @@ public class EventCreateActivity extends Activity implements TextWatcher
     String[] categories, place, photo;
     int other_category, selected_category;
     Calendar date = null;
-    boolean btnSaveEnabled;
+    boolean isBtnSaveEnabledByDescription;
+    boolean isBtnSaveEnabledByLocation;
     LatLng latLng;
     Typeface tf;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -88,7 +86,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
         place = getResources().getStringArray(R.array.place);
         photo = getResources().getStringArray(R.array.photo);
         other_category = categories.length - 1;
-        btnSaveEnabled = false;
+        isBtnSaveEnabledByDescription = false;
+        isBtnSaveEnabledByLocation = false;
         selected_category = other_category;
         drawerInit();
     }
@@ -242,9 +241,18 @@ public class EventCreateActivity extends Activity implements TextWatcher
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (data == null) {return;}
-        double latitude = data.getDoubleExtra("latitude", storage.getCurLatLng().latitude);
-        double longitude = data.getDoubleExtra("longitude", storage.getCurLatLng().longitude);
+        double latitude = data.getDoubleExtra("latitude", 0);
+        double longitude = data.getDoubleExtra("longitude", 0);
         latLng = new LatLng(latitude, longitude);
+        if (latLng == null)
+        {
+            isBtnSaveEnabledByLocation = false;
+        }
+        else
+        {
+            isBtnSaveEnabledByLocation = true;
+        }
+        btnLocation.setTextColor(getResources().getColor(R.color.main));
         tvLocation.setText(getResources().getString(R.string.place) + "  " + "Курлык");
         tvLocation.setVisibility(View.VISIBLE);
     }
@@ -270,7 +278,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         {
             menu.findItem(R.id.btnSaveEvent).setVisible(true);
         }
-        if (btnSaveEnabled)
+        if (isBtnSaveEnabledByDescription && isBtnSaveEnabledByLocation)
         {
             menu.findItem(R.id.btnSaveEvent).setEnabled(true);
             menu.findItem(R.id.btnSaveEvent).setIcon(R.drawable.complete);
@@ -323,14 +331,14 @@ public class EventCreateActivity extends Activity implements TextWatcher
     public void afterTextChanged(Editable s)
     {
         String description = etDescription.getText().toString();
-        if (description.matches("") || latLng == null)
+        if (description.matches(""))
         {
-            btnSaveEnabled = false;
+            isBtnSaveEnabledByDescription = false;
             invalidateOptionsMenu();
         }
         else
         {
-            btnSaveEnabled = true;
+            isBtnSaveEnabledByDescription = true;
             invalidateOptionsMenu();
         }
     }
