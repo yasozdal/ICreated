@@ -1,9 +1,11 @@
 package com.Android.ICreated.Activity;
 
 import android.app.*;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -12,10 +14,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.Android.ICreated.CustomAdapter;
 import com.Android.ICreated.Event;
@@ -23,6 +23,7 @@ import com.Android.ICreated.R;
 import com.Android.ICreated.Storage;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.lang.reflect.Array;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -37,11 +38,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
-    TextView btnCategory;
-    TextView btnPlace;
-    TextView btnDate;
-    TextView btnPhoto;
-    TextView btnLock;
+    TextView btnCategory, btnLocation, btnDate, btnPhoto, btnLock;
+    TextView tvCategory, tvLocation, tvDate, tvPhoto, tvLock;
     int minute, hour, day, month, year;
     final int DIALOG_CATEGORY = 1;
     final int DIALOG_TIME = 2;
@@ -67,15 +65,25 @@ public class EventCreateActivity extends Activity implements TextWatcher
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDescription.addTextChangedListener(this);
         btnCategory = (TextView) findViewById(R.id.btnCategory);
+        tvCategory = (TextView) findViewById(R.id.tvCategory);
         btnCategory.setTypeface(tf);
-        btnPlace = (TextView) findViewById(R.id.btnPlace);
-        btnPlace.setTypeface(tf);
+        tvCategory.setTypeface(tf);
+        btnLocation = (TextView) findViewById(R.id.btnLocation);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        btnLocation.setTypeface(tf);
+        tvLocation.setTypeface(tf);
         btnDate = (TextView) findViewById(R.id.btnDate);
+        tvDate = (TextView) findViewById(R.id.tvDate);
         btnDate.setTypeface(tf);
+        tvDate.setTypeface(tf);
         btnPhoto = (TextView) findViewById(R.id.btnPhoto);
+        tvPhoto = (TextView) findViewById(R.id.tvPhoto);
         btnPhoto.setTypeface(tf);
+        tvPhoto.setTypeface(tf);
         btnLock = (TextView) findViewById(R.id.btnLock);
+        tvLock = (TextView) findViewById(R.id.tvLock);
         btnLock.setTypeface(tf);
+        tvLock.setTypeface(tf);
         categories = getResources().getStringArray(R.array.categories);
         place = getResources().getStringArray(R.array.place);
         photo = getResources().getStringArray(R.array.photo);
@@ -163,6 +171,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
     {
         public void onTimeSet(TimePicker view, int pickedHour, int pickedMinute)
         {
+            String hourView = "";
+            String minuteView = "";
             Calendar currTime = Calendar.getInstance();
             if (year == currTime.get(Calendar.YEAR) &&
                 month == currTime.get(Calendar.MONTH) &&
@@ -180,6 +190,11 @@ public class EventCreateActivity extends Activity implements TextWatcher
                 hour = pickedHour;
                 minute = pickedMinute;
                 btnDate.setTextColor(getResources().getColor(R.color.main));
+                if (hour < 10) { hourView = "0"; }
+                if (minute < 10) { minuteView = "0"; }
+                tvDate.setText(getResources().getString(R.string.date) + "  " + day + "." + month + "." + year + "   "
+                        + hourView + hour + ":" + minuteView + minute);
+                tvDate.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -196,17 +211,21 @@ public class EventCreateActivity extends Activity implements TextWatcher
     {
         public void onClick(DialogInterface dialog, int which)
         {
+            TypedArray cat = getResources().obtainTypedArray(R.array.categories);
             ListView lv = ((AlertDialog) dialog).getListView();
             selected_category = lv.getCheckedItemPosition();
             btnCategory.setTextColor(getResources().getColor(R.color.main));
             if (selected_category == other_category)
             {
                 btnCategory.setText(getResources().getString(R.string.tag));
+                tvCategory.setText(getResources().getString(R.string.tag) + "  " + cat.getString(selected_category));
             }
             else
             {
                 btnCategory.setText(getResources().getString(R.string.category));
+                tvCategory.setText(getResources().getString(R.string.category) + " " + cat.getString(selected_category));
             }
+            tvCategory.setVisibility(View.VISIBLE);
         }
     };
 
@@ -226,6 +245,8 @@ public class EventCreateActivity extends Activity implements TextWatcher
         double latitude = data.getDoubleExtra("latitude", storage.getCurLatLng().latitude);
         double longitude = data.getDoubleExtra("longitude", storage.getCurLatLng().longitude);
         latLng = new LatLng(latitude, longitude);
+        tvLocation.setText(getResources().getString(R.string.place) + "  " + "Курлык");
+        tvLocation.setVisibility(View.VISIBLE);
     }
 
 ////////////////////////////////action bars
@@ -302,7 +323,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
     public void afterTextChanged(Editable s)
     {
         String description = etDescription.getText().toString();
-        if (description.matches(("")))
+        if (description.matches("") || latLng == null)
         {
             btnSaveEnabled = false;
             invalidateOptionsMenu();
@@ -330,6 +351,14 @@ public class EventCreateActivity extends Activity implements TextWatcher
         }
     }
 
+    public void switchToTE(View view)
+    {
+        etDescription.requestFocus();
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(etDescription, InputMethodManager.SHOW_IMPLICIT);
+    }
+
 ////////////////////////////////lock changing
 
     public void locking (View view)
@@ -339,11 +368,14 @@ public class EventCreateActivity extends Activity implements TextWatcher
         if (currLock.matches(getResources().getString(R.string.lock)))
         {
             btnLock.setText(getResources().getString(R.string.unlock));
+            tvLock.setText(getResources().getString(R.string.unlock) + "  " + getResources().getString(R.string.open_event));
         }
         else
         {
             btnLock.setText(getResources().getString(R.string.lock));
+            tvLock.setText(getResources().getString(R.string.lock) + "  " + getResources().getString(R.string.friends_event));
         }
+        tvLock.setVisibility(View.VISIBLE);
     }
 
 ////////////////////////////////event saving

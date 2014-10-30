@@ -7,26 +7,90 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            xmlns:android="http://schemas.android.com/apk/res/android">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:clickable="true"
+            android:onClick="switchToTE">
         <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/event_description"
                 android:inputType="textCapSentences|textMultiLine"
                 android:id="@+id/etDescription"
                 android:scrollbars="vertical"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
                 android:isScrollContainer="true"
+                android:background="#00000000"
                 android:gravity="left|top"
-                android:layout_above="@+id/footer"/>
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:padding="@dimen/text_padding"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvCategory"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/etDescription"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvLocation"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvCategory"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvDate"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvLocation"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvPhoto"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvLock"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvPhoto"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
 
         <LinearLayout android:id="@+id/footer"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal"
                       android:layout_alignParentBottom="true"
-                      style="@android:style/ButtonBar">
+                      android:background="@color/e6"
+                      android:layout_alignParentStart="false">
 
             <TextView android:id="@+id/btnCategory"
                     android:layout_width="wrap_content"
@@ -37,9 +101,10 @@
                     android:clickable="true"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
+                    android:padding="@dimen/button_padding"
                     android:textSize="@dimen/text_icons_size"/>
 
-            <TextView android:id="@+id/btnPlace"
+            <TextView android:id="@+id/btnLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
@@ -48,6 +113,7 @@
                     android:onClick="chooseLocation"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
+                    android:padding="@dimen/button_padding"
                     android:textSize="@dimen/text_icons_size"/>
 
             <TextView android:id="@+id/btnDate"
@@ -59,6 +125,7 @@
                     android:onClick="onClick"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
+                    android:padding="@dimen/button_padding"
                     android:textSize="@dimen/text_icons_size"/>
 
             <TextView android:id="@+id/btnPhoto"
@@ -70,17 +137,19 @@
                     android:onClick="onClick"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
+                    android:padding="@dimen/button_padding"
                     android:textSize="@dimen/text_icons_size"/>
 
             <TextView android:id="@+id/btnLock"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:text="@string/lock"
+                    android:text="@string/unlock"
                     android:clickable="true"
                     android:onClick="locking"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/gray"
+                    android:padding="@dimen/button_padding"
                     android:textSize="@dimen/text_icons_size"
                     android:longClickable="true"/>
         </LinearLayout>
