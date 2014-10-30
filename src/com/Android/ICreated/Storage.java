@@ -34,6 +34,23 @@ public final class Storage extends Application
         getEventsFromServer();
     }
 
+    public String[] getEventsNames()
+    {
+        String[] names = new String[events.size()];
+
+        for (int i = 0; i < events.size(); ++i)
+        {
+            names[i] = events.get(i).getDescription();
+        }
+
+        return names;
+    }
+
+    public Event getEvent(int index)
+    {
+        return  events.get(index);
+    }
+
     public void getEventsFromServer()
     {
         ServerAPI.Response response = ServerAPI.getEvents();

@@ -38,13 +38,13 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
         storage = (Storage) getActivity().getApplication();
         storage.addListener(this);
 
-        mapInit(v);
+        mapInit();
         loadEvents();
 
         return v;
     }
 
-    private void mapInit(View v)
+    private void mapInit()
     {
         map = mapView.getMap();
         map.getUiSettings().setMyLocationButtonEnabled(false);

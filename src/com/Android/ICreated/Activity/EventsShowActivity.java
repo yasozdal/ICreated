@@ -31,6 +31,8 @@ public class EventsShowActivity extends Activity
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
+    ActionBar.Tab mapTab;
+    ActionBar.Tab listTab;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,8 +51,8 @@ public class EventsShowActivity extends Activity
         actionBar.setTitle(R.string.events);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab mapTab = actionBar.newTab().setText(R.string.map);
-        ActionBar.Tab listTab = actionBar.newTab().setText(R.string.list);
+        mapTab = actionBar.newTab().setText(R.string.map);
+        listTab = actionBar.newTab().setText(R.string.list);
 
         Fragment mapFragment = new MapEvents();
         Fragment listFragment = new ListEvents();
@@ -70,7 +72,7 @@ public class EventsShowActivity extends Activity
         drawerList = (ListView) findViewById(R.id.left_drawer);
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
-        drawerList.setAdapter(new CustomAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
+        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.lines, R.string.app_name, R.string.events)
         {
 

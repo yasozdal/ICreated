@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * Created by Mikhail on 12.10.2014.
  */
-public class CustomAdapter extends ArrayAdapter<CharSequence>
+public class DrawerAdapter extends ArrayAdapter<CharSequence>
 {
 
     Context context;
@@ -22,20 +22,7 @@ public class CustomAdapter extends ArrayAdapter<CharSequence>
     int textViewId;
     int iconId;
 
-    public CustomAdapter(Context context, int layoutResourceId, int textViewId,  CharSequence[] data, String FONT)
-    {
-        super(context, layoutResourceId, data);
-
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.data = data;
-        this.icons = null;
-        this.textViewId = textViewId;
-        this.iconId = -1;
-        tf = Typeface.createFromAsset(context.getAssets(), FONT);
-    }
-
-    public CustomAdapter(Context context, int layoutResourceId, int textViewId, int iconId,  CharSequence[] data, String[] icons, String FONT)
+    public DrawerAdapter(Context context, int layoutResourceId, int textViewId, int iconId,  CharSequence[] data, String[] icons, String FONT)
     {
         super(context, layoutResourceId, data);
 
@@ -55,12 +42,9 @@ public class CustomAdapter extends ArrayAdapter<CharSequence>
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(layoutResourceId, null);
-        if (icons != null)
-        {
-            TextView tvIcon = (TextView) v.findViewById(iconId);
-            tvIcon.setText(icons[position]);
-            tvIcon.setTypeface(Typeface.createFromAsset(context.getAssets(), context.getResources().getString(R.string.icon_font)));
-        }
+        TextView tvIcon = (TextView) v.findViewById(iconId);
+        tvIcon.setText(icons[position]);
+        tvIcon.setTypeface(Typeface.createFromAsset(context.getAssets(), context.getResources().getString(R.string.icon_font)));
         TextView tvTitle = (TextView) v.findViewById(textViewId);
         tvTitle.setText(data[position]);
         tvTitle.setTypeface(tf);
