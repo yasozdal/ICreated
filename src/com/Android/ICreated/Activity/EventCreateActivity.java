@@ -47,6 +47,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
     boolean isBtnSaveEnabledByLocation;
     LatLng latLng;
     Typeface tf;
+    Menu barMenu;
 
 
     @Override
@@ -89,6 +90,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         isBtnSaveEnabledByDescription = false;
         isBtnSaveEnabledByLocation = false;
         selected_category = other_category;
+        latLng = storage.getCurLatLng();
         drawerInit();
     }
 
@@ -247,14 +249,18 @@ public class EventCreateActivity extends Activity implements TextWatcher
         if (latLng == null)
         {
             isBtnSaveEnabledByLocation = false;
+            btnLocation.setTextColor(getResources().getColor(R.color.gray));
+            tvLocation.setVisibility(View.INVISIBLE);
         }
         else
         {
             isBtnSaveEnabledByLocation = true;
+            storage.setCurLatLng(latLng);
+            onPrepareOptionsMenu(barMenu);
+            btnLocation.setTextColor(getResources().getColor(R.color.main));
+            tvLocation.setText(getResources().getString(R.string.place) + "  " + "Курлык");
+            tvLocation.setVisibility(View.VISIBLE);
         }
-        btnLocation.setTextColor(getResources().getColor(R.color.main));
-        tvLocation.setText(getResources().getString(R.string.place) + "  " + "Курлык");
-        tvLocation.setVisibility(View.VISIBLE);
     }
 
 ////////////////////////////////action bars
@@ -270,6 +276,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
+        barMenu = menu;
         if (drawerLayout.isDrawerOpen(drawerList))
         {
             menu.findItem(R.id.btnSaveEvent).setVisible(false);
