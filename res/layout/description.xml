@@ -12,9 +12,65 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text=""
                 android:id="@+id/EventDescription"
                 />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvCategory"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/EventDescription"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvLocation"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvCategory"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvDate"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvLocation"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvPhoto"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ups..."
+                android:id="@+id/tvLock"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvPhoto"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"/>
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
