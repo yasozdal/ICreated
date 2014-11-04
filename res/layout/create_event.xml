@@ -23,6 +23,20 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:padding="@dimen/text_padding"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/category"
+                android:gravity="center"
+                android:id="@+id/tvCategoryIcon"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/etDescription"
+                android:layout_toLeftOf="@+id/tvCategory"
+                android:layout_alignParentLeft="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,8 +47,22 @@
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/etDescription"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/place"
+                android:gravity="center"
+                android:id="@+id/tvLocationIcon"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvCategoryIcon"
+                android:layout_toLeftOf="@+id/tvLocation"
+                android:layout_alignParentLeft="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,8 +73,22 @@
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvCategory"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/date"
+                android:gravity="center"
+                android:id="@+id/tvDateIcon"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvLocationIcon"
+                android:layout_toLeftOf="@+id/tvDate"
+                android:layout_alignParentLeft="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,8 +99,22 @@
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvLocation"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/photo"
+                android:gravity="center"
+                android:id="@+id/tvPhotoIcon"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvDateIcon"
+                android:layout_toLeftOf="@+id/tvPhoto"
+                android:layout_alignParentLeft="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,8 +125,22 @@
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvDate"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/lock"
+                android:gravity="center"
+                android:id="@+id/tvLockIcon"
+                android:visibility="gone"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvPhotoIcon"
+                android:layout_toLeftOf="@+id/tvLock"
+                android:layout_alignParentLeft="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,8 +151,19 @@
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvPhoto"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/category"
+                android:id="@+id/equalizer"
+                android:visibility="invisible"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvLockIcon"
+                android:layout_alignParentLeft="true"/>
 
         <LinearLayout android:id="@+id/footer"
                       android:layout_width="fill_parent"
@@ -153,6 +234,7 @@
                     android:textSize="@dimen/text_icons_size"
                     android:longClickable="true"/>
         </LinearLayout>
+
     </RelativeLayout>
         <ListView android:id="@+id/left_drawer"
                   android:layout_width="@dimen/drawer_width"

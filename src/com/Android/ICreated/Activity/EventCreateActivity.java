@@ -36,6 +36,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
     ActionBarDrawerToggle drawerToggle;
     TextView btnCategory, btnLocation, btnDate, btnPhoto, btnLock;
     TextView tvCategory, tvLocation, tvDate, tvPhoto, tvLock;
+    TextView tvCategoryIcon, tvLocationIcon, tvDateIcon, tvPhotoIcon, tvLockIcon, equalizer;
     int minute, hour, day, month, year;
     final int DIALOG_CATEGORY = 1;
     final int DIALOG_TIME = 2;
@@ -65,24 +66,36 @@ public class EventCreateActivity extends Activity implements TextWatcher
         etDescription.addTextChangedListener(this);
         btnCategory = (TextView) findViewById(R.id.btnCategory);
         tvCategory = (TextView) findViewById(R.id.tvCategory);
+        tvCategoryIcon = (TextView) findViewById(R.id.tvCategoryIcon);
         btnCategory.setTypeface(tf);
         tvCategory.setTypeface(tf);
+        tvCategoryIcon.setTypeface(tf);
         btnLocation = (TextView) findViewById(R.id.btnLocation);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
+        tvLocationIcon = (TextView) findViewById(R.id.tvLocationIcon);
         btnLocation.setTypeface(tf);
         tvLocation.setTypeface(tf);
+        tvLocationIcon.setTypeface(tf);
         btnDate = (TextView) findViewById(R.id.btnDate);
         tvDate = (TextView) findViewById(R.id.tvDate);
+        tvDateIcon = (TextView) findViewById(R.id.tvDateIcon);
         btnDate.setTypeface(tf);
         tvDate.setTypeface(tf);
+        tvDateIcon.setTypeface(tf);
         btnPhoto = (TextView) findViewById(R.id.btnPhoto);
         tvPhoto = (TextView) findViewById(R.id.tvPhoto);
+        tvPhotoIcon = (TextView) findViewById(R.id.tvPhotoIcon);
         btnPhoto.setTypeface(tf);
         tvPhoto.setTypeface(tf);
+        tvPhotoIcon.setTypeface(tf);
         btnLock = (TextView) findViewById(R.id.btnLock);
         tvLock = (TextView) findViewById(R.id.tvLock);
+        tvLockIcon = (TextView) findViewById(R.id.tvLockIcon);
         btnLock.setTypeface(tf);
         tvLock.setTypeface(tf);
+        tvLockIcon.setTypeface(tf);
+        equalizer = (TextView) findViewById(R.id.equalizer);
+        equalizer.setTypeface(tf);
         categories = getResources().getStringArray(R.array.categories);
         place = getResources().getStringArray(R.array.place);
         photo = getResources().getStringArray(R.array.photo);
@@ -193,8 +206,9 @@ public class EventCreateActivity extends Activity implements TextWatcher
                 btnDate.setTextColor(getResources().getColor(R.color.main));
                 if (hour < 10) { hourView = "0"; }
                 if (minute < 10) { minuteView = "0"; }
-                tvDate.setText(getResources().getString(R.string.date) + "  " + day + "." + month + "." + year + "   "
+                tvDate.setText(day + "." + month + "." + year + "   "
                         + hourView + hour + ":" + minuteView + minute);
+                tvDateIcon.setVisibility(View.VISIBLE);
                 tvDate.setVisibility(View.VISIBLE);
             }
         }
@@ -219,13 +233,16 @@ public class EventCreateActivity extends Activity implements TextWatcher
             if (selected_category == other_category)
             {
                 btnCategory.setText(getResources().getString(R.string.tag));
-                tvCategory.setText(getResources().getString(R.string.tag) + "  " + cat.getString(selected_category));
+                tvCategoryIcon.setText(getResources().getString(R.string.tag));
+                tvCategory.setText(cat.getString(selected_category));
             }
             else
             {
                 btnCategory.setText(getResources().getString(R.string.category));
-                tvCategory.setText(getResources().getString(R.string.category) + " " + cat.getString(selected_category));
+                tvCategoryIcon.setText(getResources().getString(R.string.category));
+                tvCategory.setText(cat.getString(selected_category));
             }
+            tvCategoryIcon.setVisibility(View.VISIBLE);
             tvCategory.setVisibility(View.VISIBLE);
         }
     };
@@ -246,21 +263,13 @@ public class EventCreateActivity extends Activity implements TextWatcher
         double latitude = data.getDoubleExtra("latitude", 0);
         double longitude = data.getDoubleExtra("longitude", 0);
         latLng = new LatLng(latitude, longitude);
-        if (latLng == null)
-        {
-            isBtnSaveEnabledByLocation = false;
-            btnLocation.setTextColor(getResources().getColor(R.color.gray));
-            tvLocation.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            isBtnSaveEnabledByLocation = true;
-            storage.setCurLatLng(latLng);
-            onPrepareOptionsMenu(barMenu);
-            btnLocation.setTextColor(getResources().getColor(R.color.main));
-            tvLocation.setText(getResources().getString(R.string.place) + "  " + "Курлык");
-            tvLocation.setVisibility(View.VISIBLE);
-        }
+        isBtnSaveEnabledByLocation = true;
+        storage.setCurLatLng(latLng);
+        onPrepareOptionsMenu(barMenu);
+        btnLocation.setTextColor(getResources().getColor(R.color.main));
+        tvLocation.setText("Курлык");
+        tvLocationIcon.setVisibility(View.VISIBLE);
+        tvLocation.setVisibility(View.VISIBLE);
     }
 
 ////////////////////////////////action bars
@@ -383,13 +392,16 @@ public class EventCreateActivity extends Activity implements TextWatcher
         if (currLock.matches(getResources().getString(R.string.lock)))
         {
             btnLock.setText(getResources().getString(R.string.unlock));
-            tvLock.setText(getResources().getString(R.string.unlock) + "  " + getResources().getString(R.string.open_event));
+            tvLockIcon.setText(getResources().getString(R.string.unlock));
+            tvLock.setText(getResources().getString(R.string.open_event));
         }
         else
         {
             btnLock.setText(getResources().getString(R.string.lock));
-            tvLock.setText(getResources().getString(R.string.lock) + "  " + getResources().getString(R.string.friends_event));
+            tvLockIcon.setText(getResources().getString(R.string.lock));
+            tvLock.setText(getResources().getString(R.string.friends_event));
         }
+        tvLockIcon.setVisibility(View.VISIBLE);
         tvLock.setVisibility(View.VISIBLE);
     }
 
