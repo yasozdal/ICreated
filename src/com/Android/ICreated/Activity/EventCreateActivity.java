@@ -206,8 +206,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
                 btnDate.setTextColor(getResources().getColor(R.color.main));
                 if (hour < 10) { hourView = "0"; }
                 if (minute < 10) { minuteView = "0"; }
-                tvDate.setText(day + "." + month + "." + year + "   "
-                        + hourView + hour + ":" + minuteView + minute);
+                tvDate.setText(day + "." + month + "." + year + "   " + hourView + hour + ":" + minuteView + minute);
                 tvDateIcon.setVisibility(View.VISIBLE);
                 tvDate.setVisibility(View.VISIBLE);
             }
@@ -234,14 +233,13 @@ public class EventCreateActivity extends Activity implements TextWatcher
             {
                 btnCategory.setText(getResources().getString(R.string.tag));
                 tvCategoryIcon.setText(getResources().getString(R.string.tag));
-                tvCategory.setText(cat.getString(selected_category));
             }
             else
             {
                 btnCategory.setText(getResources().getString(R.string.category));
                 tvCategoryIcon.setText(getResources().getString(R.string.category));
-                tvCategory.setText(cat.getString(selected_category));
             }
+            tvCategory.setText(cat.getString(selected_category));
             tvCategoryIcon.setVisibility(View.VISIBLE);
             tvCategory.setVisibility(View.VISIBLE);
         }

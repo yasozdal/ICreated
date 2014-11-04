@@ -20,57 +20,134 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="ups..."
+                android:text="@string/category"
+                android:gravity="center"
+                android:id="@+id/tvCategoryIcon"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/EventDescription"
+                android:layout_toLeftOf="@+id/tvCategory"
+                android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/unexpected_error"
                 android:id="@+id/tvCategory"
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/EventDescription"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="ups..."
+                android:text="@string/place"
+                android:gravity="center"
+                android:id="@+id/tvLocationIcon"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvCategoryIcon"
+                android:layout_toLeftOf="@+id/tvLocation"
+                android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/unexpected_error"
                 android:id="@+id/tvLocation"
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvCategory"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="ups..."
+                android:text="@string/date"
+                android:gravity="center"
+                android:id="@+id/tvDateIcon"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvLocationIcon"
+                android:layout_toLeftOf="@+id/tvDate"
+                android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/unexpected_error"
                 android:id="@+id/tvDate"
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvLocation"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="ups..."
+                android:text="@string/photo"
+                android:gravity="center"
+                android:id="@+id/tvPhotoIcon"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvDateIcon"
+                android:layout_toLeftOf="@+id/tvPhoto"
+                android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/unexpected_error"
                 android:id="@+id/tvPhoto"
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvDate"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="ups..."
+                android:text="@string/lock"
+                android:gravity="center"
+                android:id="@+id/tvLockIcon"
+                android:textColor="@color/main"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvPhotoIcon"
+                android:layout_toLeftOf="@+id/tvLock"
+                android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/unexpected_error"
                 android:id="@+id/tvLock"
                 android:textColor="@color/main"
                 android:padding="@dimen/text_padding"
                 android:layout_below="@+id/tvPhoto"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/equalizer"
                 android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/category"
+                android:id="@+id/equalizer"
+                android:visibility="invisible"
+                android:padding="@dimen/text_padding"
+                android:layout_below="@+id/tvLockIcon"
+                android:layout_alignParentLeft="true"/>
+
+
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

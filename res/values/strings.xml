@@ -19,6 +19,7 @@
     <string name="register">Создаться</string>
     <string name="log_in">Войти</string>
     <string name="error">Ошибка</string>
+    <string name="unexpected_error">ups...</string>
     <string name="show">Просмотр</string>
     <string name="past_event_toast">Ты опоздал! Попробуй еще раз :)</string>
     <string name="dialog_photo">Откуда взять фото?</string>

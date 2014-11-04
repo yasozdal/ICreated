@@ -2,6 +2,8 @@ package com.Android.ICreated.Activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +17,8 @@ import com.Android.ICreated.Event;
 import com.Android.ICreated.R;
 import com.Android.ICreated.Storage;
 
+import java.util.Calendar;
+
 /**
  * Created by Филипп on 05.10.2014.
  */
@@ -25,6 +29,11 @@ public class EventShowActivity extends Activity {
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
+    TextView tvCategory, tvLocation, tvDate, tvPhoto, tvLock;
+    TextView tvCategoryIcon, tvLocationIcon, tvDateIcon, tvPhotoIcon, tvLockIcon, equalizer;
+    String[] categories;
+    int other_category, selected_category;
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,31 @@ public class EventShowActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.show);
         storage = (Storage) getApplication();
+        tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
+        tvCategory = (TextView) findViewById(R.id.tvCategory);
+        tvCategoryIcon = (TextView) findViewById(R.id.tvCategoryIcon);
+        tvCategory.setTypeface(tf);
+        tvCategoryIcon.setTypeface(tf);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        tvLocationIcon = (TextView) findViewById(R.id.tvLocationIcon);
+        tvLocation.setTypeface(tf);
+        tvLocationIcon.setTypeface(tf);
+        tvDate = (TextView) findViewById(R.id.tvDate);
+        tvDateIcon = (TextView) findViewById(R.id.tvDateIcon);
+        tvDate.setTypeface(tf);
+        tvDateIcon.setTypeface(tf);
+        tvPhoto = (TextView) findViewById(R.id.tvPhoto);
+        tvPhotoIcon = (TextView) findViewById(R.id.tvPhotoIcon);
+        tvPhoto.setTypeface(tf);
+        tvPhotoIcon.setTypeface(tf);
+        tvLock = (TextView) findViewById(R.id.tvLock);
+        tvLockIcon = (TextView) findViewById(R.id.tvLockIcon);
+        tvLock.setTypeface(tf);
+        tvLockIcon.setTypeface(tf);
+        equalizer = (TextView) findViewById(R.id.equalizer);
+        equalizer.setTypeface(tf);
+        categories = getResources().getStringArray(R.array.categories);
+        other_category = categories.length - 1;
         drawerInit();
         eventShow();
     }
@@ -41,6 +75,9 @@ public class EventShowActivity extends Activity {
     private void eventShow()
     {
         Event event = storage.getEvent(storage.getCurLatLng());
+        String hourView = "";
+        String minuteView = "";
+        TypedArray cat = getResources().obtainTypedArray(R.array.categories);
         TextView EventDescription = (TextView) findViewById(R.id.EventDescription);
 
         if (event == null)
@@ -49,7 +86,28 @@ public class EventShowActivity extends Activity {
         }
         else
         {
+            Calendar time = event.getTime();
+            int day = time.get(Calendar.DAY_OF_MONTH);
+            int month = time.get(Calendar.MONTH);
+            int year = time.get(Calendar.YEAR);
+            int hour = time.get(Calendar.HOUR_OF_DAY);
+            int minute = time.get(Calendar.MINUTE);
             EventDescription.setText(event.getDescription());
+
+            selected_category = event.getCategory();
+            if (selected_category == other_category)
+            {
+                tvCategoryIcon.setText(getResources().getString(R.string.tag));
+            }
+            else
+            {
+                tvCategoryIcon.setText(getResources().getString(R.string.category));
+            }
+            tvCategory.setText(cat.getString(selected_category));
+
+            tvLocation.setText("Курлык");
+
+            tvDate.setText(day + "." + month + "." + year + "   " + hourView + hour + ":" + minuteView + minute);
         }
 
 
