@@ -16,10 +16,7 @@ import android.widget.ListView;
 import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.R;
 import com.Android.ICreated.Storage;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -112,7 +109,8 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
             return;
         }
         map.setOnMapClickListener(this);
-
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(storage.getCurLatLng());
+        map.animateCamera(cameraUpdate);
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
