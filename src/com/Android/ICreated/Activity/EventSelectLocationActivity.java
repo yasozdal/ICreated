@@ -109,8 +109,11 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
             return;
         }
         map.setOnMapClickListener(this);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(storage.getCurLatLng());
-        map.animateCamera(cameraUpdate);
+        if (storage.getCurLatLng() != null)
+        {
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(storage.getCurLatLng());
+            map.animateCamera(cameraUpdate);
+        }
         uiSettings = map.getUiSettings();
         uiSettings.setCompassEnabled(false);
     }
@@ -138,6 +141,8 @@ public class EventSelectLocationActivity extends FragmentActivity implements Goo
             latitude = latLng.latitude;
             longitude = latLng.longitude;
             map.addMarker(new MarkerOptions().position(latLng));
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
+            map.animateCamera(cameraUpdate);
             barMenu.findItem(R.id.btnSaveEvent).setEnabled(true);
             barMenu.findItem(R.id.btnSaveEvent).setIcon(R.drawable.complete);
         }
