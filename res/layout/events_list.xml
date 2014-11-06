@@ -7,7 +7,7 @@
               android:background="@color/gray">
 
     <ListView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lvEvents"
             android:background="@color/e6"

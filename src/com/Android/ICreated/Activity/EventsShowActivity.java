@@ -48,8 +48,8 @@ public class EventsShowActivity extends Activity
     private void actionBarInit()
     {
         ActionBar actionBar = getActionBar();
-        actionBar.setTitle(R.string.events);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setTitle(R.string.events);
 
         mapTab = actionBar.newTab().setText(R.string.map);
         listTab = actionBar.newTab().setText(R.string.list);
@@ -121,13 +121,9 @@ public class EventsShowActivity extends Activity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
-        if (drawerLayout.isDrawerOpen(drawerList))
+        for(int i = 0; i < menu.size(); i++)
         {
-            menu.findItem(R.id.action_new_event).setVisible(false);
-        }
-        else
-        {
-            menu.findItem(R.id.action_new_event).setVisible(true);
+            menu.getItem(i).setVisible(!drawerLayout.isDrawerOpen(drawerList));
         }
         return super.onPrepareOptionsMenu(menu);
     }

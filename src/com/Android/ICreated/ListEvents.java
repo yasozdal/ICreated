@@ -30,6 +30,7 @@ public class ListEvents extends Fragment implements StorageListener
 
         context = getActivity();
         storage = (Storage) getActivity().getApplication();
+        storage.addListener(this);
 
         lvEvents = (ListView) v.findViewById(R.id.lvEvents);
         upd();
@@ -57,6 +58,6 @@ public class ListEvents extends Fragment implements StorageListener
     @Override
     public void onEventAdded(Event event)
     {
-
+        upd();
     }
 }
