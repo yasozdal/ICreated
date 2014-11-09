@@ -64,6 +64,29 @@ public class EventCreateActivity extends Activity implements TextWatcher
         storage = (Storage)getApplication();
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDescription.addTextChangedListener(this);
+        btnInit();
+        categories = getResources().getStringArray(R.array.categories);
+        place = getResources().getStringArray(R.array.place);
+        photo = getResources().getStringArray(R.array.photo);
+        other_category = categories.length - 1;
+        latLng = storage.getCurLatLng();
+        isBtnSaveEnabledByDescription = false;
+        if (latLng == null)
+        {
+            isBtnSaveEnabledByLocation = false;
+        }
+        else
+        {
+            showLocation();
+        }
+        selected_category = other_category;
+        drawerInit();
+    }
+
+///////////////////////////////buttons initialization
+
+    private void btnInit()
+    {
         btnCategory = (TextView) findViewById(R.id.btnCategory);
         tvCategory = (TextView) findViewById(R.id.tvCategory);
         tvCategoryIcon = (TextView) findViewById(R.id.tvCategoryIcon);
@@ -96,15 +119,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
         tvLockIcon.setTypeface(tf);
         equalizer = (TextView) findViewById(R.id.equalizer);
         equalizer.setTypeface(tf);
-        categories = getResources().getStringArray(R.array.categories);
-        place = getResources().getStringArray(R.array.place);
-        photo = getResources().getStringArray(R.array.photo);
-        other_category = categories.length - 1;
-        isBtnSaveEnabledByDescription = false;
-        isBtnSaveEnabledByLocation = false;
-        selected_category = other_category;
-        latLng = storage.getCurLatLng();
-        drawerInit();
     }
 
 ////////////////////////////////dialogs of category, time and photos
@@ -261,15 +275,19 @@ public class EventCreateActivity extends Activity implements TextWatcher
         double latitude = data.getDoubleExtra("latitude", 0);
         double longitude = data.getDoubleExtra("longitude", 0);
         latLng = new LatLng(latitude, longitude);
-        isBtnSaveEnabledByLocation = true;
+        showLocation();
         storage.setCurLatLng(latLng);
         onPrepareOptionsMenu(barMenu);
+    }
+
+    private void showLocation()
+    {
+        isBtnSaveEnabledByLocation = true;
         btnLocation.setTextColor(getResources().getColor(R.color.main));
         tvLocation.setText("Курлык");
         tvLocationIcon.setVisibility(View.VISIBLE);
         tvLocation.setVisibility(View.VISIBLE);
     }
-
 ////////////////////////////////action bars
 
     @Override
