@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,7 +28,7 @@ import java.util.Calendar;
 /**
  * Created by Ник on 05.10.2014.
  */
-public class EventCreateActivity extends Activity implements TextWatcher
+public class EventCreateActivity extends ActionBarActivity implements TextWatcher
 {
     Storage storage;
     EditText etDescription;
@@ -57,10 +59,6 @@ public class EventCreateActivity extends Activity implements TextWatcher
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Новое событие");
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
         storage = (Storage)getApplication();
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDescription.addTextChangedListener(this);
@@ -80,10 +78,29 @@ public class EventCreateActivity extends Activity implements TextWatcher
             showLocation();
         }
         selected_category = other_category;
-        drawerInit();
+
+        Toolbar toolbar = toolbarInit();
+        if (toolbar != null)
+        {
+            drawerInit();
+        }
     }
 
 ///////////////////////////////buttons initialization
+
+    private Toolbar toolbarInit()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+
+        if (toolbar != null)
+        {
+            toolbar.setTitle(R.string.new_event);
+            setSupportActionBar(toolbar);
+            toolbar.setLogo(R.drawable.bar_icon);
+        }
+
+        return toolbar;
+    }
 
     private void btnInit()
     {
@@ -331,25 +348,26 @@ public class EventCreateActivity extends Activity implements TextWatcher
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
         drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
-
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.events)
         {
 
             public void onDrawerClosed(View view)
             {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(R.string.events);
+                getSupportActionBar().setTitle(R.string.events);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView)
             {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(R.string.app_name);
+                getSupportActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu();
             }
         };
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
     }
 
@@ -381,7 +399,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         switch (item.getItemId())
         {
             case android.R.id.home:
-                finish();
+                supportNavigateUpTo(new Intent(this, EventsShowActivity.class));
                 return true;
             case R.id.btnSaveEvent:
                 saving();
@@ -409,7 +427,7 @@ public class EventCreateActivity extends Activity implements TextWatcher
         {
             btnLock.setText(getResources().getString(R.string.unlock));
             tvLockIcon.setText(getResources().getString(R.string.unlock));
-            tvLock.setText(getResources().getString(R.string.open_event));
+            tvLock.setText(getResources().getString(R.string.new_event));
         }
         else
         {

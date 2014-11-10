@@ -6,7 +6,6 @@
     <string name="icon_font">FontAwesome.ttf</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
-    <string name="event_title">Название события</string>
     <string name="event_description">Описание события</string>
     <string name="action_new">Новое событие</string>
     <string name="save_event">Сохранить событие</string>
@@ -30,5 +29,7 @@
     <string name="map">Карта</string>
     <string name="list">Список</string>
     <string name="friends_event">Только для друзей</string>
-    <string name="open_event">Открытое событие</string>
+    <string name="show_event">Просмотр события</string>
+    <string name="choose_event_location">Выбор местоположения события</string>
+    <string name="new_event">Новое событие</string>
 </resources>

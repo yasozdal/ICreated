@@ -3,9 +3,10 @@
           package="com.Android.ICreated"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="14"
+              android:targetSdkVersion="19"/>
     <application
-            android:theme="@style/action_bar_style"
+            android:theme="@style/app_main_style"
             android:name=".Storage"
             android:label="@string/app_name"
             android:icon="@drawable/logo">
@@ -29,7 +30,7 @@
         </activity>
         <activity android:name=".Activity.EventSelectLocationActivity"
                   android:label="@string/app_name"
-                  android:parentActivityName=".Activity.EventsShowActivity"
+                  android:parentActivityName=".Activity.EventCreateActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".Activity.EventShowActivity"

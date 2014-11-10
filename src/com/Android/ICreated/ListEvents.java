@@ -1,9 +1,9 @@
 package com.Android.ICreated;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.Android.ICreated.Activity.EventShowActivity;
-import com.Android.ICreated.Activity.EventsShowActivity;
 
 /**
  * Created by Mikhail on 28.10.2014.

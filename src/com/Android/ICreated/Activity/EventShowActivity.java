@@ -1,12 +1,14 @@
 package com.Android.ICreated.Activity;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +24,8 @@ import java.util.Calendar;
 /**
  * Created by Филипп on 05.10.2014.
  */
-public class EventShowActivity extends Activity {
+public class EventShowActivity extends ActionBarActivity
+{
     Storage storage;
     ActionBar actionBar;
     String[] drawerTitles;
@@ -39,9 +42,7 @@ public class EventShowActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.description);
-        actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.show);
+
         storage = (Storage) getApplication();
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         tvCategory = (TextView) findViewById(R.id.tvCategory);
@@ -68,8 +69,26 @@ public class EventShowActivity extends Activity {
         equalizer.setTypeface(tf);
         categories = getResources().getStringArray(R.array.categories);
         other_category = categories.length - 1;
-        drawerInit();
+        Toolbar toolbar = toolbarInit();
+        if (toolbar != null)
+        {
+            drawerInit();
+        }
         eventShow();
+    }
+
+    private Toolbar toolbarInit()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+
+        if (toolbar != null)
+        {
+            toolbar.setTitle(R.string.show_event);
+            setSupportActionBar(toolbar);
+            toolbar.setLogo(R.drawable.bar_icon);
+        }
+
+        return toolbar;
     }
 
     private void eventShow()
@@ -142,25 +161,26 @@ public class EventShowActivity extends Activity {
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
         drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
-
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.bar_icon, R.string.app_name, R.string.events)
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.events)
         {
 
             public void onDrawerClosed(View view)
             {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(R.string.events);
+                getSupportActionBar().setTitle(R.string.show_event);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView)
             {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(R.string.app_name);
+                getSupportActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu();
             }
         };
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
     }
 }

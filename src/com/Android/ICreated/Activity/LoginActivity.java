@@ -1,8 +1,8 @@
 package com.Android.ICreated.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +10,14 @@ import android.widget.EditText;
 import com.Android.ICreated.R;
 import com.Android.ICreated.ServerAPI;
 import com.Android.ICreated.Storage;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * Created by Филипп on 07.10.2014.
  */
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends ActionBarActivity
+{
 
     EditText userName;
     EditText password;
@@ -29,7 +31,20 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
         storage = (Storage) getApplication();
         showStartPage();
+        toolbarInit();
+    }
 
+    private Toolbar toolbarInit()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+
+        if (toolbar != null)
+        {
+            setSupportActionBar(toolbar);
+            toolbar.setLogo(R.drawable.bar_icon);
+        }
+
+        return toolbar;
     }
 
     private void showStartPage()

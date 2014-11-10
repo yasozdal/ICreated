@@ -1,38 +1,33 @@
 package com.Android.ICreated.Activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 import com.Android.ICreated.*;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Mikhail on 27.10.2014.
  */
-public class EventsShowActivity extends Activity
+public class EventsShowActivity extends ActionBarActivity
 {
     Storage storage;
     String[] drawerTitles;
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
-    ActionBar.Tab mapTab;
-    ActionBar.Tab listTab;
+    private FragmentTabHost tabHost;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -41,31 +36,46 @@ public class EventsShowActivity extends Activity
         setContentView(R.layout.events_show);
         storage = (Storage) getApplication();
 
-        actionBarInit();
-        drawerInit();
+        Toolbar toolbar = toolbarInit();
+        if (toolbar != null)
+        {
+            tabHostInit();
+            drawerInit(toolbar);
+        }
     }
 
-    private void actionBarInit()
+    private Toolbar toolbarInit()
     {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setTitle(R.string.events);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
 
-        mapTab = actionBar.newTab().setText(R.string.map);
-        listTab = actionBar.newTab().setText(R.string.list);
+        if (toolbar != null)
+        {
+            toolbar.setTitle(R.string.events);
+            setSupportActionBar(toolbar);
+            toolbar.setLogo(R.drawable.bar_icon);
+        }
 
-        Fragment mapFragment = new MapEvents();
-        Fragment listFragment = new ListEvents();
+        return toolbar;
+    }
 
-        mapTab.setTabListener(new TabsListener(mapFragment));
-        listTab.setTabListener(new TabsListener(listFragment));
+    private void tabHostInit()
+    {
+        tabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        actionBar.addTab(mapTab);
-        actionBar.addTab(listTab);
+        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.map)).setIndicator(getResources().getString(R.string.map)),
+                MapEvents.class, null);
+        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.list)).setIndicator(getResources().getString(R.string.list)),
+                ListEvents.class, null);
+        for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++)
+        {
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(getResources().getColor(R.color.white));
+        }
     }
 
 
-    private void drawerInit()
+    private void drawerInit(Toolbar toolbar)
     {
         drawerTitles = getResources().getStringArray(R.array.drawer_titles);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -73,34 +83,33 @@ public class EventsShowActivity extends Activity
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
         drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.lines, R.string.app_name, R.string.events)
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.events)
         {
 
             public void onDrawerClosed(View view)
             {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(R.string.events);
+                getSupportActionBar().setTitle(R.string.events);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView)
             {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(R.string.app_name);
+                getSupportActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu();
             }
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
 
@@ -108,7 +117,6 @@ public class EventsShowActivity extends Activity
     protected void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
-        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
     }
 
     @Override
@@ -155,32 +163,4 @@ public class EventsShowActivity extends Activity
                 return super.onOptionsItemSelected(item);
         }
     }
-}
-
-class TabsListener implements ActionBar.TabListener
-{
-    public Fragment fragment;
-
-    public TabsListener(Fragment fragment)
-    {
-        this.fragment = fragment;
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
-    {
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
-    {
-        ft.replace(R.id.fragment_container, fragment);
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
-    {
-        ft.remove(fragment);
-    }
-
 }
