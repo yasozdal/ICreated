@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.Android.ICreated.Activity.EventCreateActivity;
 import com.Android.ICreated.Activity.EventShowActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -37,26 +39,42 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
         storage = (Storage) getActivity().getApplication();
         storage.addListener(this);
 
-        mapInit();
-        loadEvents();
+        if (mapInit())
+        {
+            loadEvents();
+        }
 
         return v;
     }
 
-    private void mapInit()
+    private boolean mapInit()
     {
         map = mapView.getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(false);
 
-        MapsInitializer.initialize(this.getActivity()); // Для CameraUpdate
+        if (map != null)
+        {
+            map.getUiSettings().setMyLocationButtonEnabled(false);
 
-        map.setOnMapLongClickListener(this);
-        map.setOnMarkerClickListener(this);
-        map.setOnInfoWindowClickListener(this);
-        map.setInfoWindowAdapter(new InfoWindowAdapter(context));
+            MapsInitializer.initialize(this.getActivity()); // Для CameraUpdate
 
-        uiSettings = map.getUiSettings();
-        uiSettings.setCompassEnabled(false);
+            map.setOnMapLongClickListener(this);
+            map.setOnMarkerClickListener(this);
+            map.setOnInfoWindowClickListener(this);
+            map.setInfoWindowAdapter(new InfoWindowAdapter(context));
+
+            uiSettings = map.getUiSettings();
+            uiSettings.setCompassEnabled(false);
+            return true;
+        }
+        else
+        {
+            int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getActivity());
+            if (checkGooglePlayServices != ConnectionResult.SUCCESS)
+            {
+                GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices, this.getActivity(), 0).show();
+            }
+            return false;
+        }
     }
 
     private void loadEvents()
