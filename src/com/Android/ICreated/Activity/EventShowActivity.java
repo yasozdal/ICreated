@@ -101,7 +101,7 @@ public class EventShowActivity extends ActionBarActivity
 
         if (event == null)
         {
-            actionBar.setTitle("Ошибка");
+            getSupportActionBar().setTitle("Ошибка");
         }
         else
         {

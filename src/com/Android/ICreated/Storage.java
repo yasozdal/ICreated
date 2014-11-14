@@ -1,15 +1,10 @@
 package com.Android.ICreated;
 
 import android.app.Application;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by Mikhail on 04.10.2014.
@@ -84,8 +79,11 @@ public final class Storage extends Application
         event.setId(curID);
         events.add(event);
         dataBase.addEvent(event);
-        ServerAPI.addEvent("0", "0", event.getDescription(), event.getTime().toString());
         fireListeners(event);
+        if (ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString()))
+        {
+            getEventsFromServer();
+        }
     }
 
     public Event getEvent(LatLng latLng)

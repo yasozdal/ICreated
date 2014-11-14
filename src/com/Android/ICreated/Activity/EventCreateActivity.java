@@ -454,7 +454,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         }
         Event event = new Event(date, latLng, description, selected_category);
         storage.addEvent(event);
-        storage.getEventsFromServer();
         finish();
     }
 
