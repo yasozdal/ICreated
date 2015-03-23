@@ -63,10 +63,10 @@ public class EventsShowActivity extends ActionBarActivity
         tabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.map)).setIndicator(getResources().getString(R.string.map)),
-                MapEvents.class, null);
-        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.list)).setIndicator(getResources().getString(R.string.list)),
-                ListEvents.class, null);
+        String map = getResources().getString(R.string.map);
+        String list = getResources().getString(R.string.list);
+        tabHost.addTab(tabHost.newTabSpec(map).setIndicator(map), MapEvents.class, null);
+        tabHost.addTab(tabHost.newTabSpec(list).setIndicator(list), ListEvents.class, null);
         for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++)
         {
             TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
@@ -82,7 +82,8 @@ public class EventsShowActivity extends ActionBarActivity
         drawerList = (ListView) findViewById(R.id.left_drawer);
         String[] icons = getResources().getStringArray(R.array.drawer_icons);
 
-        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
+        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles,
+                icons, getResources().getString(R.string.menu_font)));
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.events)
         {
 
@@ -129,11 +130,16 @@ public class EventsShowActivity extends ActionBarActivity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
+        hideMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void hideMenu(Menu menu)
+    {
         for(int i = 0; i < menu.size(); i++)
         {
             menu.getItem(i).setVisible(!drawerLayout.isDrawerOpen(drawerList));
         }
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
