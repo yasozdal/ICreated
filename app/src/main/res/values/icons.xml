@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category">&#xf1d7;</string>
+    <string name="tag">&#xf02b;</string>
+    <string name="place">&#xf041;</string>
+    <string name="date">&#xf017;</string>
+    <string name="photo">&#xf030;</string>
+    <string name="lock">&#xf023;</string>
+    <string name="unlock">&#xf13e;</string>
+</resources>

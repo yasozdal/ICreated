@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="drawer_titles">
+        <item>@string/events</item>
+        <item>@string/friends</item>
+    </array>
+    <array name="drawer_icons">
+        <item>&#xf12a;</item>
+        <item>&#xf0c0;</item>
+    </array>
+    <array name="categories">
+        <item>рас</item>
+        <item>два</item>
+        <item>три</item>
+        <item>щетыре</item>
+        <item>пять</item>
+        <item>шэсть</item>
+    </array>
+    <array name="place">
+        <item>мое местоположение</item>
+        <item>указать на карте</item>
+    </array>
+    <array name="photo">
+        <item>загрузить из галереи</item>
+        <item>сделать снимок</item>
+    </array>
+</resources>

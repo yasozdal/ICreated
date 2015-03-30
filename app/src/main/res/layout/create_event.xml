@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/toolbar"/>
+        <android.support.v4.widget.DrawerLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/drawer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:clickable="true"
+                android:onClick="switchToTE">
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event_description"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:id="@+id/etDescription"
+                    android:scrollbars="vertical"
+                    android:isScrollContainer="true"
+                    android:background="#00000000"
+                    android:gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:padding="@dimen/text_padding"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/category"
+                    android:gravity="center"
+                    android:id="@+id/tvCategoryIcon"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/etDescription"
+                    android:layout_toLeftOf="@+id/tvCategory"
+                    android:layout_alignParentLeft="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/unexpected_error"
+                    android:id="@+id/tvCategory"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/etDescription"
+                    android:layout_toRightOf="@+id/equalizer"
+                    android:layout_alignParentRight="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/place"
+                    android:gravity="center"
+                    android:id="@+id/tvLocationIcon"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvCategoryIcon"
+                    android:layout_toLeftOf="@+id/tvLocation"
+                    android:layout_alignParentLeft="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/unexpected_error"
+                    android:id="@+id/tvLocation"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvCategory"
+                    android:layout_toRightOf="@+id/equalizer"
+                    android:layout_alignParentRight="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/date"
+                    android:gravity="center"
+                    android:id="@+id/tvDateIcon"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvLocationIcon"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_alignParentLeft="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/unexpected_error"
+                    android:id="@+id/tvDate"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvLocation"
+                    android:layout_toRightOf="@+id/equalizer"
+                    android:layout_alignParentRight="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/photo"
+                    android:gravity="center"
+                    android:id="@+id/tvPhotoIcon"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvDateIcon"
+                    android:layout_toLeftOf="@+id/tvPhoto"
+                    android:layout_alignParentLeft="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/unexpected_error"
+                    android:id="@+id/tvPhoto"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_toRightOf="@+id/equalizer"
+                    android:layout_alignParentRight="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/lock"
+                    android:gravity="center"
+                    android:id="@+id/tvLockIcon"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvPhotoIcon"
+                    android:layout_toLeftOf="@+id/tvLock"
+                    android:layout_alignParentLeft="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/unexpected_error"
+                    android:id="@+id/tvLock"
+                    android:visibility="gone"
+                    android:textColor="@color/main"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvPhoto"
+                    android:layout_toRightOf="@+id/equalizer"
+                    android:layout_alignParentRight="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/category"
+                    android:id="@+id/equalizer"
+                    android:visibility="invisible"
+                    android:padding="@dimen/text_padding"
+                    android:layout_below="@+id/tvLockIcon"
+                    android:layout_alignParentLeft="true"/>
+
+            <LinearLayout android:id="@+id/footer"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_alignParentBottom="true"
+                          android:background="@color/e6"
+                          android:layout_alignParentStart="false"
+                          android:layout_alignParentLeft="false">
+
+                <TextView android:id="@+id/btnCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/tag"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@color/gray"
+                        android:padding="@dimen/button_padding"
+                        android:textSize="@dimen/text_icons_size"/>
+
+                <TextView android:id="@+id/btnLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/place"
+                        android:clickable="true"
+                        android:onClick="chooseLocation"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@color/gray"
+                        android:padding="@dimen/button_padding"
+                        android:textSize="@dimen/text_icons_size"/>
+
+                <TextView android:id="@+id/btnDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/date"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@color/gray"
+                        android:padding="@dimen/button_padding"
+                        android:textSize="@dimen/text_icons_size"/>
+
+                <TextView android:id="@+id/btnPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/photo"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@color/gray"
+                        android:padding="@dimen/button_padding"
+                        android:textSize="@dimen/text_icons_size"/>
+
+                <TextView android:id="@+id/btnLock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/unlock"
+                        android:clickable="true"
+                        android:onClick="locking"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@color/gray"
+                        android:padding="@dimen/button_padding"
+                        android:textSize="@dimen/text_icons_size"
+                        android:longClickable="true"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+            <ListView android:id="@+id/left_drawer"
+                      android:layout_width="@dimen/drawer_width"
+                      android:layout_height="match_parent"
+                      android:layout_gravity="start"
+                      android:choiceMode="singleChoice"
+                      android:divider="@drawable/divider_repeat"
+                      android:dividerHeight="4px"
+                      android:background="@drawable/drawer_bg_repeat"/>
+        </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
