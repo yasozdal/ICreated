@@ -121,6 +121,7 @@ public class ServerAPI {
                     return;
                 }
                 try {
+                    Log.d(debugTag, result.toString());
                     this.result = new JSONObject(result.toString());
                 } catch (JSONException e){
                     this.resultArray = new JSONArray(result.toString());

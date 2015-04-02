@@ -19,6 +19,11 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/ASL2.0'
     }
     compileSdkVersion 22
     buildToolsVersion "21.1.2"
@@ -49,4 +54,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.0.0'
     compile 'com.octo.android.robospice:robospice:1.4.14'
     compile 'com.octo.android.robospice:robospice-okhttp:1.4.14'
+//    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.11'
+    compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.2'
 }
