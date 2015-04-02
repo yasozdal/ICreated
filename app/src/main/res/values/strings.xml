@@ -29,6 +29,7 @@
     <string name="map">Карта</string>
     <string name="list">Список</string>
     <string name="friends_event">Только для друзей</string>
+    <string name="for_all_event">Для всех</string>
     <string name="show_event">Просмотр события</string>
     <string name="choose_event_location">Выбор местоположения события</string>
     <string name="new_event">Новое событие</string>

@@ -427,12 +427,13 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         {
             btnLock.setText(getResources().getString(R.string.unlock));
             tvLockIcon.setText(getResources().getString(R.string.unlock));
-            tvLock.setText(getResources().getString(R.string.new_event));
+            tvLock.setText(getResources().getString(R.string.for_all_event));
         }
         else
         {
             btnLock.setText(getResources().getString(R.string.lock));
             tvLockIcon.setText(getResources().getString(R.string.lock));
+            tvLock.setText(getResources().getString(R.string.friends_event));
             tvLock.setText(getResources().getString(R.string.friends_event));
         }
         tvLockIcon.setVisibility(View.VISIBLE);
