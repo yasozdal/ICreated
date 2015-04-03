@@ -1,4 +1,4 @@
-package com.Android.ICreated.network.requests;
+package com.Android.ICreated.network.requests.models;
 
 /**
  * Created by Филипп on 03.04.2015.

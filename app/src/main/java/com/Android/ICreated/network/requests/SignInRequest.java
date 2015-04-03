@@ -12,6 +12,8 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by Филипп on 02.04.2015.
@@ -36,6 +38,7 @@ public class SignInRequest extends SpiceRequest<String> {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
         HttpEntity<String> entity = new HttpEntity<>(requestBody, httpHeaders);
 
