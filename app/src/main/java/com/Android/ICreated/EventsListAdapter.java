@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.Android.ICreated.Activity.EventShowActivity;
 
-import java.util.ArrayList;
-
 /**
  * Created by Mikhail on 03.04.2015.
  */
@@ -27,28 +25,21 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         this.storage = (Storage) context.getApplicationContext();
     }
 
-    // Replace the contents of a view (invoked by the layout manager
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         holder.txtViewTitle.setText(itemsData[position]);
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_list_elem, parent, false);
 
-        // create ViewHolder
-
-        ViewHolder viewHolder = new ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
-    // inner class to hold a reference to each item of RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         public TextView txtViewTitle;
@@ -71,7 +62,6 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
     }
 
-    // Return the size of your itemsData (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return itemsData.length;

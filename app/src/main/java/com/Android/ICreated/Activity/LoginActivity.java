@@ -59,7 +59,7 @@ public class LoginActivity extends ActionBarActivity
 ///////////////////////////////////////////////////////////////////////////////////
     private Toolbar toolbarInit()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null)
         {

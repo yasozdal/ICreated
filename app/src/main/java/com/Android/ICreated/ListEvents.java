@@ -1,18 +1,12 @@
 package com.Android.ICreated;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import com.Android.ICreated.Activity.EventShowActivity;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -39,22 +33,11 @@ public class ListEvents extends Fragment implements StorageListener
         rvEvents.setLayoutManager(new LinearLayoutManager(context));
         upd();
 
-        /*rvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                storage.setCurLatLng(storage.getEvent(position).getLatLng());
-                Intent intent = new Intent(context, EventShowActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
         return  v;
     }
 
     private void upd()
     {
-        String[] names = storage.getEventsNames();
         EventsListAdapter adapter = new EventsListAdapter(storage.getEventsNames(), context);
         rvEvents.setAdapter(adapter);
     }

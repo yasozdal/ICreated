@@ -9,8 +9,11 @@
     <dimen name="drawer_icon_margin">40dp</dimen>
     <dimen name="drawer_divider_margin">20dp</dimen>
     <dimen name="text_icons_size">35sp</dimen>
-    <dimen name="events_list_padding">10dp</dimen>
-    <dimen name="events_list_text_size">16sp</dimen>
     <dimen name="text_padding">5dp</dimen>
     <dimen name="button_padding">2dp</dimen>
+    <dimen name="card_height">220dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_corner_radius">3dp</dimen>
+    <dimen name="card_content_padding">10dp</dimen>
+    <dimen name="card_elevation">5dp</dimen>
 </resources>
