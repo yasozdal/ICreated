@@ -1,4 +1,4 @@
-package com.Android.ICreated.Activity;
+package com.Android.ICreated.Activity.eventCreate;
 
 import android.app.*;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.Android.ICreated.Activity.EventSelectLocationActivity;
+import com.Android.ICreated.Activity.EventsShowActivity;
 import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.Event;
 import com.Android.ICreated.R;
@@ -30,7 +32,10 @@ import java.util.Calendar;
  */
 public class EventCreateActivity extends ActionBarActivity implements TextWatcher
 {
+    final String TAG_WORKER = "TAG_WORKER";
+
     Storage storage;
+    Event event;
     EditText etDescription;
     String[] drawerTitles;
     DrawerLayout drawerLayout;
@@ -39,16 +44,13 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     TextView btnCategory, btnLocation, btnDate, btnPhoto, btnLock;
     TextView tvCategory, tvLocation, tvDate, tvPhoto, tvLock;
     TextView tvCategoryIcon, tvLocationIcon, tvDateIcon, tvPhotoIcon, tvLockIcon, equalizer;
-    int minute, hour, day, month, year;
     final int DIALOG_CATEGORY = 1;
     final int DIALOG_TIME = 2;
     final int DIALOG_PHOTO = 3;
     String[] categories, place, photo;
-    int other_category, selected_category;
-    Calendar date = null;
+    int other_category;
     boolean isBtnSaveEnabledByDescription;
     boolean isBtnSaveEnabledByLocation;
-    LatLng latLng;
     Typeface tf;
     Menu barMenu;
 
@@ -56,20 +58,20 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         super.onCreate(savedInstanceState);
+        tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         setContentView(R.layout.create_event);
-        storage = (Storage)getApplication();
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDescription.addTextChangedListener(this);
         btnInit();
         categories = getResources().getStringArray(R.array.categories);
         place = getResources().getStringArray(R.array.place);
         photo = getResources().getStringArray(R.array.photo);
-        other_category = categories.length - 1;
-        latLng = storage.getCurLatLng();
         isBtnSaveEnabledByDescription = false;
-        if (latLng == null)
+
+        initWorkerFragment();
+
+        if (event.getLatLng() == null)
         {
             isBtnSaveEnabledByLocation = false;
         }
@@ -77,16 +79,65 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         {
             showLocation();
         }
-        selected_category = other_category;
 
         Toolbar toolbar = toolbarInit();
         if (toolbar != null)
         {
             drawerInit();
         }
+
     }
 
-///////////////////////////////buttons initialization
+    private void initWorkerFragment()
+    {
+        final EventCreateWorkerFragment retainedWorkerFragment =
+                (EventCreateWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
+
+        if (retainedWorkerFragment != null)
+        {
+            event = retainedWorkerFragment.getEvent();
+            restoreFromEvent();
+        } else
+        {
+            final EventCreateWorkerFragment workerFragment = new EventCreateWorkerFragment();
+
+            getFragmentManager().beginTransaction()
+                    .add(workerFragment, TAG_WORKER)
+                    .commit();
+
+            event = workerFragment.getEvent();
+        }
+    }
+
+    private void restoreFromEvent()
+    {
+        if (event.getTime() != null)
+        {
+            showDate();
+        }
+        if (event.getLatLng() != null)
+        {
+            showLocation();
+        }
+        if (event.getCategory() != -1)
+        {
+            showCategory();
+        }
+        if (event.getLockType() != null)
+        {
+            locking(null);
+        }
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        storage = (Storage)getApplication();
+        event.setLatLng(storage.getCurLatLng());
+    }
+
+    ///////////////////////////////buttons initialization
 
     private Toolbar toolbarInit()
     {
@@ -175,7 +226,7 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
             switch (id) {
                 case DIALOG_CATEGORY:
                     adb.setTitle(R.string.dialog_category);
-                    adb.setSingleChoiceItems(categories, selected_category, dialogClickListener);
+                    adb.setSingleChoiceItems(categories, event.getCategory(), dialogClickListener);
                     adb.setPositiveButton(R.string.ok, btnOkClickListener);
                     break;
                 case DIALOG_PHOTO:
@@ -194,9 +245,10 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     {
         public void onDateSet(DatePicker view, int pickedYear, int pickedMonth, int pickedDay)
         {
-            year = pickedYear;
-            month = pickedMonth;
-            day = pickedDay;
+            event.setTime(Calendar.getInstance());
+            event.getTime().set(Calendar.YEAR, pickedYear);
+            event.getTime().set(Calendar.MONTH, pickedMonth);
+            event.getTime().set(Calendar.DAY_OF_MONTH, pickedDay);
 
             callTimePicker();
         }
@@ -216,12 +268,10 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     {
         public void onTimeSet(TimePicker view, int pickedHour, int pickedMinute)
         {
-            String hourView = "";
-            String minuteView = "";
             Calendar currTime = Calendar.getInstance();
-            if (year == currTime.get(Calendar.YEAR) &&
-                month == currTime.get(Calendar.MONTH) &&
-                day == currTime.get(Calendar.DAY_OF_MONTH) &&
+            if (event.getTime().get(Calendar.YEAR) == currTime.get(Calendar.YEAR) &&
+                event.getTime().get(Calendar.MONTH) == currTime.get(Calendar.MONTH) &&
+                event.getTime().get(Calendar.DAY_OF_MONTH) == currTime.get(Calendar.DAY_OF_MONTH) &&
                (pickedHour < currTime.get(Calendar.HOUR_OF_DAY) ||
                (pickedHour == currTime.get(Calendar.HOUR_OF_DAY) &&
                 pickedMinute < currTime.get(Calendar.MINUTE))))
@@ -232,17 +282,26 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
             }
             else
             {
-                hour = pickedHour;
-                minute = pickedMinute;
-                btnDate.setTextColor(getResources().getColor(R.color.main));
-                if (hour < 10) { hourView = "0"; }
-                if (minute < 10) { minuteView = "0"; }
-                tvDate.setText(day + "." + month + "." + year + "   " + hourView + hour + ":" + minuteView + minute);
-                tvDateIcon.setVisibility(View.VISIBLE);
-                tvDate.setVisibility(View.VISIBLE);
+                event.getTime().set(Calendar.HOUR_OF_DAY, pickedHour);
+                event.getTime().set(Calendar.MINUTE, pickedMinute);
+                showDate();
             }
         }
     };
+
+    private void showDate()
+    {
+        String hourView = "";
+        String minuteView = "";
+        btnDate.setTextColor(getResources().getColor(R.color.main));
+        if (event.getTime().get(Calendar.HOUR_OF_DAY) < 10) { hourView = "0"; }
+        if (event.getTime().get(Calendar.MINUTE) < 10) { minuteView = "0"; }
+        tvDate.setText(event.getTime().get(Calendar.DAY_OF_MONTH) + "." + event.getTime().get(Calendar.MONTH)
+                + "." + event.getTime().get(Calendar.YEAR) + "   " + hourView + event.getTime().get(Calendar.HOUR_OF_DAY)
+                + ":" + minuteView + event.getTime().get(Calendar.MINUTE));
+        tvDateIcon.setVisibility(View.VISIBLE);
+        tvDate.setVisibility(View.VISIBLE);
+    }
 
     OnClickListener dialogClickListener = new OnClickListener()
     {
@@ -256,25 +315,30 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     {
         public void onClick(DialogInterface dialog, int which)
         {
-            TypedArray cat = getResources().obtainTypedArray(R.array.categories);
             ListView lv = ((AlertDialog) dialog).getListView();
-            selected_category = lv.getCheckedItemPosition();
-            btnCategory.setTextColor(getResources().getColor(R.color.main));
-            if (selected_category == other_category)
-            {
-                btnCategory.setText(getResources().getString(R.string.tag));
-                tvCategoryIcon.setText(getResources().getString(R.string.tag));
-            }
-            else
-            {
-                btnCategory.setText(getResources().getString(R.string.category));
-                tvCategoryIcon.setText(getResources().getString(R.string.category));
-            }
-            tvCategory.setText(cat.getString(selected_category));
-            tvCategoryIcon.setVisibility(View.VISIBLE);
-            tvCategory.setVisibility(View.VISIBLE);
+            event.setCategory(lv.getCheckedItemPosition());
+            showCategory();
         }
     };
+
+    private void showCategory()
+    {
+        TypedArray cat = getResources().obtainTypedArray(R.array.categories);
+        btnCategory.setTextColor(getResources().getColor(R.color.main));
+        if (event.getCategory() == other_category)
+        {
+            btnCategory.setText(getResources().getString(R.string.tag));
+            tvCategoryIcon.setText(getResources().getString(R.string.tag));
+        }
+        else
+        {
+            btnCategory.setText(getResources().getString(R.string.category));
+            tvCategoryIcon.setText(getResources().getString(R.string.category));
+        }
+        tvCategory.setText(cat.getString(event.getCategory()));
+        tvCategoryIcon.setVisibility(View.VISIBLE);
+        tvCategory.setVisibility(View.VISIBLE);
+    }
 
 ////////////////////////////////location
 
@@ -291,9 +355,9 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         if (data == null) {return;}
         double latitude = data.getDoubleExtra("latitude", 0);
         double longitude = data.getDoubleExtra("longitude", 0);
-        latLng = new LatLng(latitude, longitude);
+        event.setLatLng(new LatLng(latitude, longitude));
         showLocation();
-        storage.setCurLatLng(latLng);
+        storage.setCurLatLng(event.getLatLng());
         onPrepareOptionsMenu(barMenu);
     }
 
@@ -422,15 +486,16 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     public void locking (View view)
     {
         btnLock.setTextColor(getResources().getColor(R.color.main));
-        String currLock = btnLock.getText().toString();
-        if (currLock.matches(getResources().getString(R.string.lock)))
+        if ((event.getLockType() == Event.LockType.PRIVATE))
         {
+            event.setLockType(Event.LockType.PUBLIC);
             btnLock.setText(getResources().getString(R.string.unlock));
             tvLockIcon.setText(getResources().getString(R.string.unlock));
             tvLock.setText(getResources().getString(R.string.for_all_event));
         }
         else
         {
+            event.setLockType(Event.LockType.PRIVATE);
             btnLock.setText(getResources().getString(R.string.lock));
             tvLockIcon.setText(getResources().getString(R.string.lock));
             tvLock.setText(getResources().getString(R.string.friends_event));
@@ -445,17 +510,22 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     public void saving()
     {
         String description = etDescription.getText().toString();
-        if (date == null)
+        if (event.getTime() == null)
         {
-            date = Calendar.getInstance();
+            event.setTime(Calendar.getInstance());
         }
-        if (latLng == null)
+        if (event.getTime() == null)
         {
-            latLng = storage.getCurLatLng();
+            event.setLatLng(storage.getCurLatLng());
         }
-        Event event = new Event(date, latLng, description, selected_category);
+
         storage.addEvent(event);
         finish();
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
 }

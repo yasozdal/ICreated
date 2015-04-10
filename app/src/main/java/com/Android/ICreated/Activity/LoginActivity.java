@@ -40,7 +40,7 @@ public class LoginActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        storage = (Storage) getApplication();
+
         showStartPage();
         toolbarInit();
     }
@@ -49,6 +49,7 @@ public class LoginActivity extends ActionBarActivity
     protected void onStart() {
         spiceManager.start(this);
         super.onStart();
+        storage = (Storage) getApplication();
     }
 
     @Override

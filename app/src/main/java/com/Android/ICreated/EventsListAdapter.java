@@ -58,8 +58,6 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             Intent intent = new Intent(context, EventShowActivity.class);
             context.startActivity(intent);
         }
-
-
     }
 
     @Override

@@ -14,6 +14,22 @@ public class Event
     private LatLng latLng;
     private String description;
     private int category;
+    private LockType lockType;
+
+    public enum LockType
+    {
+        PRIVATE,
+        PUBLIC
+    }
+
+    public Event()
+    {
+        time = null;
+        latLng = null;
+        description = null;
+        category = -1;
+        lockType = null;
+    }
 
     public Event(Calendar time, LatLng latLng, String description, int category)
     {
@@ -34,9 +50,19 @@ public class Event
         return id;
     }
 
+    public void setTime(Calendar time)
+    {
+        this.time = time;
+    }
+
     public Calendar getTime()
     {
         return time;
+    }
+
+    public void setLatLng(LatLng latLng)
+    {
+        this.latLng = latLng;
     }
 
     public LatLng getLatLng()
@@ -44,13 +70,33 @@ public class Event
         return latLng;
     }
 
+    public void setCategory(int category)
+    {
+        this.category = category;
+    }
+
     public int getCategory()
     {
         return category;
     }
 
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
     public String getDescription()
     {
         return description;
+    }
+
+    public void setLockType(LockType type)
+    {
+        this.lockType = type;
+    }
+
+    public LockType getLockType()
+    {
+        return lockType;
     }
 }

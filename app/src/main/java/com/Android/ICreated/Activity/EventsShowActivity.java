@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.Android.ICreated.*;
+import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 
 /**
  * Created by Mikhail on 27.10.2014.
