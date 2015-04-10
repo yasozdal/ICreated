@@ -1,4 +1,4 @@
-package com.Android.ICreated.Activity;
+package com.Android.ICreated.Activity.selectLocation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +15,7 @@ import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.R;
 import com.Android.ICreated.Storage;
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class EventSelectLocationActivity extends ActionBarActivity implements GoogleMap.OnMapClickListener
 {
+    final String TAG_WORKER = "TAG_WORKER";
+
     SupportMapFragment mapFragment;
     Storage storage;
     GoogleMap map;
@@ -62,6 +64,18 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
         }
 
         return toolbar;
+    }
+
+    private void initWorkerFragment()
+    {
+        final SelectLocationWorkerFragment retainedWorkerFragment =
+                (SelectLocationWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
+
+        if (retainedWorkerFragment != null)
+        {
+            CameraPosition cameraPosition = retainedWorkerFragment.getCameraPosition();
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
     }
 
     @Override
@@ -173,4 +187,15 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
         finish();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        final SelectLocationWorkerFragment workerFragment = new SelectLocationWorkerFragment();
+        workerFragment.setCameraPosition(map.getCameraPosition());
+
+        getFragmentManager().beginTransaction()
+                .add(workerFragment, TAG_WORKER)
+                .commit();
+        super.onSaveInstanceState(outState);
+    }
 }

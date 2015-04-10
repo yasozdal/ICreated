@@ -18,7 +18,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import com.Android.ICreated.Activity.EventSelectLocationActivity;
+import com.Android.ICreated.Activity.selectLocation.EventSelectLocationActivity;
 import com.Android.ICreated.Activity.EventsShowActivity;
 import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.Event;
