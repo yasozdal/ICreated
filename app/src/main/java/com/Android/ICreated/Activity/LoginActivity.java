@@ -16,6 +16,7 @@ import com.Android.ICreated.network.MyOkHttpSpiceService;
 import com.Android.ICreated.network.requests.RegisterRequest;
 import com.Android.ICreated.network.requests.SignInRequest;
 import com.Android.ICreated.network.responses.RegisterResponse;
+import com.Android.ICreated.network.responses.SignInResponse;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -31,6 +32,7 @@ public class LoginActivity extends ActionBarActivity
     EditText password;
     EditText passwordConfirm;
     Storage storage;
+
     /////////////////////////////////for test//////////////////////////////////////
     private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
     //////////////////////////////////////////////////////////////////////////////
@@ -110,7 +112,7 @@ public class LoginActivity extends ActionBarActivity
         startActivity(intent);
         finish();
     }
-    // ВНИМАНИЕ, Register и signIn работают неожидаемым способом, ПЕРЕДЕЛАТЬ!
+
     private void Register() {
 
         userName = (EditText) findViewById(R.id.userName);
@@ -138,8 +140,20 @@ public class LoginActivity extends ActionBarActivity
 
         @Override
         public void onRequestSuccess(RegisterResponse result) {
-//            String test = result;
+            RegisterResponse test = result;
+        }
+    }
 
+    private final class SignInRequestListener implements RequestListener<SignInResponse> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d("REQUEST FAIL", spiceException.getMessage());
+        }
+
+        @Override
+        public void onRequestSuccess(SignInResponse result) {
+            SignInResponse test = result;
         }
     }
 
@@ -170,8 +184,8 @@ public class LoginActivity extends ActionBarActivity
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
         //////////////////////////////////////
-//        spiceManager.execute(new SignInRequest(userName.getText().toString(), password.getText().toString()), new RegisterRequestListener());
-        //просто ужас для тестирования
+        SignInRequest request = new SignInRequest(userName.getText().toString(), password.getText().toString());
+        spiceManager.execute(request, new SignInRequestListener());
         /////////////////////////////////////
         if (ServerAPI.signIn()) {
             ToMap();
