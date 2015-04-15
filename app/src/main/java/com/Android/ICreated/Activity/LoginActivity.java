@@ -15,8 +15,11 @@ import android.support.v7.app.ActionBarActivity;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
 import com.Android.ICreated.network.requests.RegisterRequest;
 import com.Android.ICreated.network.requests.SignInRequest;
+import com.Android.ICreated.network.requests.UserInfoRequest;
 import com.Android.ICreated.network.responses.RegisterResponse;
 import com.Android.ICreated.network.responses.SignInResponse;
+import com.Android.ICreated.network.responses.UserInfoResponse;
+import com.Android.ICreated.network.responses.models.UserInfoModel;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -158,6 +161,20 @@ public class LoginActivity extends ActionBarActivity
     }
 
 
+    private final class UserInfoListener implements RequestListener<UserInfoResponse> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d("REQUEST FAIL", spiceException.getMessage());
+        }
+
+        @Override
+        public void onRequestSuccess(UserInfoResponse result) {
+            UserInfoResponse test = result;
+        }
+    }
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 //        String result = resultTextView.getText().toString();
@@ -187,6 +204,11 @@ public class LoginActivity extends ActionBarActivity
         SignInRequest request = new SignInRequest(userName.getText().toString(), password.getText().toString());
         spiceManager.execute(request, new SignInRequestListener());
         /////////////////////////////////////
+
+        //
+        // for test
+        spiceManager.execute(new UserInfoRequest(), new UserInfoListener());
+        //
         if (ServerAPI.signIn()) {
             ToMap();
         }
