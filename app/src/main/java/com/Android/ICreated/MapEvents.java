@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 import com.Android.ICreated.Activity.EventShowActivity;
+import com.Android.ICreated.Activity.eventCreate.EventCreateWorkerFragment;
+import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
+import com.Android.ICreated.Activity.eventsShow.EventsShowWorkerFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -19,13 +23,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by Mikhail on 28.10.2014.
  */
-public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, StorageListener, GoogleMap.OnInfoWindowClickListener
+public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, EventsShowModel.Observer, GoogleMap.OnInfoWindowClickListener
 {
+    private final String TAG_WORKER = "TAG_WORKER";
     private MapView mapView;
     private GoogleMap map;
-    private Storage storage;
     private Context context;
     private UiSettings uiSettings;
+    private EventsShowModel eventsShowModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -35,15 +40,44 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
         mapView.onCreate(savedInstanceState);
 
         context = getActivity();
-        storage = (Storage) getActivity().getApplication();
-        storage.addListener(this);
-
-        if (mapInit())
+        boolean result = mapInit();
+        initWorkerFragment();
+        eventsShowModel.addObserver(this);
+        if (result)
         {
             loadEvents();
         }
 
         return v;
+    }
+
+    private void initWorkerFragment()
+    {
+        final EventsShowWorkerFragment retainedWorkerFragment =
+                (EventsShowWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
+
+        if (retainedWorkerFragment != null)
+        {
+            eventsShowModel = retainedWorkerFragment.getEventsShowModel();
+            eventsShowModel.setContext(context);
+            CameraPosition cameraPosition = eventsShowModel.getCameraPosition();
+            if (eventsShowModel.getCameraPosition() != null)
+            {
+                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+
+        } else
+        {
+            final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
+
+            getFragmentManager().beginTransaction()
+                    .add(workerFragment, TAG_WORKER)
+                    .commit();
+
+            eventsShowModel = workerFragment.getEventsShowModel();
+            eventsShowModel.setContext(context);
+        }
+        map.setInfoWindowAdapter(new InfoWindowAdapter(eventsShowModel, context));
     }
 
     private boolean mapInit()
@@ -59,7 +93,6 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
             map.setOnMapLongClickListener(this);
             map.setOnMarkerClickListener(this);
             map.setOnInfoWindowClickListener(this);
-            map.setInfoWindowAdapter(new InfoWindowAdapter(context));
 
             uiSettings = map.getUiSettings();
             uiSettings.setCompassEnabled(false);
@@ -78,11 +111,12 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
 
     private void loadEvents()
     {
-        Event[] events = storage.getAllEvents();
-        for (int i = 0; i < storage.getSize(); ++i)
+        Event[] events = eventsShowModel.getEvents();
+        for (int i = 0; i < eventsShowModel.getSize(); ++i)
         {
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(events[i].getLatLng()));
+            eventsShowModel.addMarkerId(marker);
         }
     }
 
@@ -94,39 +128,51 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
     }
 
     @Override
+    public void onPause()
+    {
+        eventsShowModel.setCameraPosition(map.getCameraPosition());
+        super.onPause();
+    }
+
+    @Override
     public void onDestroy()
     {
         super.onDestroy();
-        mapView.onDestroy();
+        if (mapView != null)
+        {
+            mapView.onDestroy();
+        }
     }
 
     @Override
     public void onLowMemory()
     {
         super.onLowMemory();
-        mapView.onLowMemory();
+        if (mapView != null)
+        {
+            mapView.onLowMemory();
+        }
     }
 
     @Override
     public void onMapLongClick(LatLng latLng)
     {
-        storage.setCurLatLng(latLng);
         Intent intent = new Intent(context, EventCreateActivity.class);
+        intent.putExtra("LatLng", latLng);
         startActivity(intent);
     }
 
     @Override
     public boolean onMarkerClick(Marker marker)
     {
-        storage.setCurLatLng(marker.getPosition());
         return false;
     }
 
     @Override
     public void onInfoWindowClick(Marker marker)
     {
-        storage.setCurLatLng(marker.getPosition());
         Intent intent = new Intent(context, EventShowActivity.class);
+        intent.putExtra("Event", eventsShowModel.findEventByMarker(marker));
         startActivity(intent);
     }
 
@@ -135,6 +181,7 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
     {
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(event.getLatLng()));
+        eventsShowModel.addMarkerId(marker);
         marker.showInfoWindow();
     }
 }

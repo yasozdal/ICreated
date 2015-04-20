@@ -8,13 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
 import com.Android.ICreated.R;
 import com.Android.ICreated.ServerAPI;
-import com.Android.ICreated.Storage;
 import android.support.v7.app.ActionBarActivity;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
 import com.Android.ICreated.network.requests.RegisterRequest;
-import com.Android.ICreated.network.requests.SignInRequest;
 import com.Android.ICreated.network.responses.RegisterResponse;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -30,7 +29,6 @@ public class LoginActivity extends ActionBarActivity
     EditText userName;
     EditText password;
     EditText passwordConfirm;
-    Storage storage;
     /////////////////////////////////for test//////////////////////////////////////
     private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
     //////////////////////////////////////////////////////////////////////////////
@@ -49,7 +47,6 @@ public class LoginActivity extends ActionBarActivity
     protected void onStart() {
         spiceManager.start(this);
         super.onStart();
-        storage = (Storage) getApplication();
     }
 
     @Override

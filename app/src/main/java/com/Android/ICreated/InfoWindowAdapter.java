@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
@@ -12,11 +13,13 @@ import com.google.android.gms.maps.model.Marker;
  */
 public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter
 {
+    private EventsShowModel eventsShowModel;
     private Context context;
 
-    public InfoWindowAdapter(Context context)
+    public InfoWindowAdapter(EventsShowModel eventsShowModel, Context context)
     {
         this.context = context;
+        this.eventsShowModel = eventsShowModel;
     }
 
     @Override
@@ -28,14 +31,13 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter
     @Override
     public View getInfoContents(Marker marker)
     {
-        Storage storage = (Storage)context.getApplicationContext();
-        String description = storage.getEvent(storage.getCurLatLng()).getDescription();
+        Event event = eventsShowModel.findEventByMarker(marker);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View view = inflater.inflate(R.layout.info_window, null);
 
         TextView tv = (TextView)view.findViewById(R.id.tvDescription);
-        tv.setText(description);
+        tv.setText(event.getDescription());
 
         return view;
     }

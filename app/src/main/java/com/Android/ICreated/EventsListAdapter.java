@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.Android.ICreated.Activity.EventShowActivity;
+import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
 
 /**
  * Created by Mikhail on 03.04.2015.
@@ -15,14 +16,14 @@ import com.Android.ICreated.Activity.EventShowActivity;
 public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder>
 {
     private String[] itemsData;
-    private Storage storage;
     private Context context;
+    private EventsShowModel eventsShowModel;
 
-    public EventsListAdapter(String[] itemsData, Context context)
+    public EventsListAdapter(String[] itemsData, Context context, EventsShowModel eventsShowModel)
     {
         this.itemsData = itemsData;
         this.context = context;
-        this.storage = (Storage) context.getApplicationContext();
+        this.eventsShowModel = eventsShowModel;
     }
 
     @Override
@@ -54,8 +55,8 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         @Override
         public void onClick(View v)
         {
-            storage.setCurLatLng(storage.getEvent(getAdapterPosition()).getLatLng());
             Intent intent = new Intent(context, EventShowActivity.class);
+            intent.putExtra("Event", eventsShowModel.getEvent(getAdapterPosition()));
             context.startActivity(intent);
         }
     }

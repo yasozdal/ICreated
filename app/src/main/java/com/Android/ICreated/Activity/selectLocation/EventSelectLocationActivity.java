@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ListView;
 import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.R;
-import com.Android.ICreated.Storage;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -27,7 +26,6 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
     final String TAG_WORKER = "TAG_WORKER";
 
     SupportMapFragment mapFragment;
-    Storage storage;
     GoogleMap map;
     UiSettings uiSettings;
     String[] drawerTitles;
@@ -35,21 +33,22 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
     Menu barMenu;
-    double latitude, longitude;
+    LatLng latLng;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_map);
-        storage = (Storage)getApplication();
 
         Toolbar toolbar = toolbarInit();
         if (toolbar != null)
         {
             drawerInit();
         }
+        latLng = getIntent().getParcelableExtra("LatLng");
         mapInit();
+        initWorkerFragment();
     }
 
     private Toolbar toolbarInit()
@@ -84,9 +83,9 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
         barMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.create_action_bar, menu);
-        if (storage.getCurLatLng() != null)
+        if (latLng != null)
         {
-            map.addMarker(new MarkerOptions().position(storage.getCurLatLng()));
+            map.addMarker(new MarkerOptions().position(latLng));
             barMenu.findItem(R.id.btnSaveEvent).setEnabled(true);
             barMenu.findItem(R.id.btnSaveEvent).setIcon(R.drawable.complete);
         }
@@ -139,9 +138,9 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
             return;
         }
         map.setOnMapClickListener(this);
-        if (storage.getCurLatLng() != null)
+        if (latLng != null)
         {
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(storage.getCurLatLng());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
             map.animateCamera(cameraUpdate);
         }
         uiSettings = map.getUiSettings();
@@ -168,8 +167,7 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
         if (latLng != null)
         {
             map.clear();
-            latitude = latLng.latitude;
-            longitude = latLng.longitude;
+            this.latLng = latLng;
             map.addMarker(new MarkerOptions().position(latLng));
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
             map.animateCamera(cameraUpdate);
@@ -181,8 +179,8 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
     private void returnLatLng()
     {
         Intent intent = new Intent();
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
+        intent.putExtra("latitude", latLng.latitude);
+        intent.putExtra("longitude", latLng.longitude);
         setResult(RESULT_OK, intent);
         finish();
     }

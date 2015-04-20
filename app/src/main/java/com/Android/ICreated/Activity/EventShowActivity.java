@@ -1,6 +1,5 @@
 package com.Android.ICreated.Activity;
 
-import android.app.ActionBar;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import com.Android.ICreated.DrawerAdapter;
 import com.Android.ICreated.Event;
 import com.Android.ICreated.R;
-import com.Android.ICreated.Storage;
 
 import java.util.Calendar;
 
@@ -26,8 +23,6 @@ import java.util.Calendar;
  */
 public class EventShowActivity extends ActionBarActivity
 {
-    Storage storage;
-    ActionBar actionBar;
     String[] drawerTitles;
     DrawerLayout drawerLayout;
     ListView drawerList;
@@ -35,15 +30,15 @@ public class EventShowActivity extends ActionBarActivity
     TextView tvCategory, tvLocation, tvDate, tvPhoto, tvLock;
     TextView tvCategoryIcon, tvLocationIcon, tvDateIcon, tvPhotoIcon, tvLockIcon, equalizer;
     String[] categories;
-    int other_category, selected_category;
+    int other_category;
     Typeface tf;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.description);
 
-        storage = (Storage) getApplication();
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         tvCategory = (TextView) findViewById(R.id.tvCategory);
         tvCategoryIcon = (TextView) findViewById(R.id.tvCategoryIcon);
@@ -74,6 +69,7 @@ public class EventShowActivity extends ActionBarActivity
         {
             drawerInit();
         }
+
         eventShow();
     }
 
@@ -93,7 +89,7 @@ public class EventShowActivity extends ActionBarActivity
 
     private void eventShow()
     {
-        Event event = storage.getEvent(storage.getCurLatLng());
+        Event event = getIntent().getParcelableExtra("Event");
         String hourView = "";
         String minuteView = "";
         TypedArray cat = getResources().obtainTypedArray(R.array.categories);
@@ -113,7 +109,7 @@ public class EventShowActivity extends ActionBarActivity
             int minute = time.get(Calendar.MINUTE);
             EventDescription.setText(event.getDescription());
 
-            selected_category = event.getCategory();
+            int selected_category = event.getCategory();
             if (selected_category == other_category)
             {
                 tvCategoryIcon.setText(getResources().getString(R.string.tag));

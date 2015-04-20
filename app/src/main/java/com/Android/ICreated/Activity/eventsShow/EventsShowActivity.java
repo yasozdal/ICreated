@@ -1,4 +1,4 @@
-package com.Android.ICreated.Activity;
+package com.Android.ICreated.Activity.eventsShow;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,7 +22,6 @@ import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
  */
 public class EventsShowActivity extends ActionBarActivity
 {
-    Storage storage;
     String[] drawerTitles;
     DrawerLayout drawerLayout;
     ListView drawerList;
@@ -34,7 +33,6 @@ public class EventsShowActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_show);
-        storage = (Storage) getApplication();
 
         Toolbar toolbar = toolbarInit();
         if (toolbar != null)
@@ -155,7 +153,6 @@ public class EventsShowActivity extends ActionBarActivity
         switch (item.getItemId())
         {
             case R.id.action_new_event:
-                storage.setCurLatLng(null);
                 Intent intent = new Intent(this, EventCreateActivity.class);
                 startActivity(intent);
                 return true;

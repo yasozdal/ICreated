@@ -8,15 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
+import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
+import com.Android.ICreated.Activity.eventsShow.EventsShowWorkerFragment;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 
 /**
  * Created by Mikhail on 28.10.2014.
  */
-public class ListEvents extends Fragment implements StorageListener
+public class ListEvents extends Fragment implements EventsShowModel.Observer
 {
-    Storage storage;
+    private final String TAG_WORKER = "TAG_WORKER";
     Context context;
     RecyclerView rvEvents;
+    EventsShowModel eventsShowModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -24,8 +29,9 @@ public class ListEvents extends Fragment implements StorageListener
         View v = inflater.inflate(R.layout.events_list, container, false);
 
         context = getActivity();
-        storage = (Storage) getActivity().getApplication();
-        storage.addListener(this);
+
+        initWorkerFragment();
+        eventsShowModel.addObserver(this);
 
         rvEvents = (RecyclerView) v.findViewById(R.id.list);
         rvEvents.setHasFixedSize(true);
@@ -36,9 +42,32 @@ public class ListEvents extends Fragment implements StorageListener
         return  v;
     }
 
+    private void initWorkerFragment()
+    {
+        final EventsShowWorkerFragment retainedWorkerFragment =
+                (EventsShowWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
+
+        if (retainedWorkerFragment != null)
+        {
+            eventsShowModel = retainedWorkerFragment.getEventsShowModel();
+            eventsShowModel.setContext(context);
+
+        } else
+        {
+            final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
+
+            getFragmentManager().beginTransaction()
+                    .add(workerFragment, TAG_WORKER)
+                    .commit();
+
+            eventsShowModel = workerFragment.getEventsShowModel();
+            eventsShowModel.setContext(context);
+        }
+    }
+
     private void upd()
     {
-        EventsListAdapter adapter = new EventsListAdapter(storage.getEventsNames(), context);
+        EventsListAdapter adapter = new EventsListAdapter(eventsShowModel.getEventsNames(), context, eventsShowModel);
         rvEvents.setAdapter(adapter);
     }
 

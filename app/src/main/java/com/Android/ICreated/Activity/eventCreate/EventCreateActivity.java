@@ -18,12 +18,9 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.Android.ICreated.*;
 import com.Android.ICreated.Activity.selectLocation.EventSelectLocationActivity;
-import com.Android.ICreated.Activity.EventsShowActivity;
-import com.Android.ICreated.DrawerAdapter;
-import com.Android.ICreated.Event;
-import com.Android.ICreated.R;
-import com.Android.ICreated.Storage;
+import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.Calendar;
 
@@ -34,7 +31,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
 {
     final String TAG_WORKER = "TAG_WORKER";
 
-    Storage storage;
     Event event;
     EditText etDescription;
     String[] drawerTitles;
@@ -133,8 +129,11 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     protected void onStart()
     {
         super.onStart();
-        storage = (Storage)getApplication();
-        event.setLatLng(storage.getCurLatLng());
+        event.setLatLng((LatLng)getIntent().getParcelableExtra("LatLng"));
+        if (event.getLatLng() != null)
+        {
+            showLocation();
+        }
     }
 
     ///////////////////////////////buttons initialization
@@ -345,8 +344,8 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     public void chooseLocation(View view)
     {
         Intent intent = new Intent(this, EventSelectLocationActivity.class);
+        intent.putExtra("LatLng", event.getLatLng());
         startActivityForResult(intent, 1);
-
     }
 
     @Override
@@ -357,7 +356,7 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         double longitude = data.getDoubleExtra("longitude", 0);
         event.setLatLng(new LatLng(latitude, longitude));
         showLocation();
-        storage.setCurLatLng(event.getLatLng());
+
         onPrepareOptionsMenu(barMenu);
     }
 
@@ -514,12 +513,9 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         {
             event.setTime(Calendar.getInstance());
         }
-        if (event.getTime() == null)
-        {
-            event.setLatLng(storage.getCurLatLng());
-        }
 
-        storage.addEvent(event);
+        (new EventsDataBase(this)).addEvent(event);
+        ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
         finish();
     }
 
