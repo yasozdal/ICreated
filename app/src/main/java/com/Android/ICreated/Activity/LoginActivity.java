@@ -13,8 +13,13 @@ import com.Android.ICreated.R;
 import com.Android.ICreated.ServerAPI;
 import android.support.v7.app.ActionBarActivity;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
+import com.Android.ICreated.network.requests.GetEventsRequest;
 import com.Android.ICreated.network.requests.RegisterRequest;
+import com.Android.ICreated.network.requests.SignInRequest;
+import com.Android.ICreated.network.responses.GetEventsResponse;
 import com.Android.ICreated.network.responses.RegisterResponse;
+import com.Android.ICreated.network.responses.SignInResponse;
+import com.Android.ICreated.network.responses.models.EventModel;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -167,8 +172,8 @@ public class LoginActivity extends ActionBarActivity
 
         ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
         //////////////////////////////////////
-//        spiceManager.execute(new SignInRequest(userName.getText().toString(), password.getText().toString()), new RegisterRequestListener());
-        //просто ужас для тестирования
+        spiceManager.execute(new SignInRequest(userName.getText().toString(), password.getText().toString()),new SignInRequestListener());
+        spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
         /////////////////////////////////////
         if (ServerAPI.signIn()) {
             ToMap();
@@ -177,5 +182,31 @@ public class LoginActivity extends ActionBarActivity
             Log.d("StartPageActivity", "YOU SHALL NOT PASS");
         }
 
+    }
+    private final class SignInRequestListener implements RequestListener<SignInResponse> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d("REQUEST FAIL", spiceException.getMessage());
+        }
+
+        @Override
+        public void onRequestSuccess(SignInResponse result) {
+//            String test = result;
+
+        }
+    }
+    private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d("REQUEST FAIL", spiceException.getMessage());
+        }
+
+        @Override
+        public void onRequestSuccess(GetEventsResponse result) {
+            EventModel[] a = result.getResponse();
+            EventModel b = a[0];
+        }
     }
 }
