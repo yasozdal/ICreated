@@ -30,10 +30,6 @@ public class RegisterRequest extends OkHttpSpiceRequest<RegisterResponse>{
     @Override
     public RegisterResponse loadDataFromNetwork() throws Exception {
 
-        name = "skdjssasasq";
-        password = "sakdlaskasddasd";
-        confirmPassword = password;
-
         RegisterBindingModel registerBindingModel = new RegisterBindingModel();
         registerBindingModel.setUserName(name);
         registerBindingModel.setPassword(password);
@@ -43,7 +39,7 @@ public class RegisterRequest extends OkHttpSpiceRequest<RegisterResponse>{
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<RegisterBindingModel> requestEntity = new HttpEntity<RegisterBindingModel>(registerBindingModel, httpHeaders);
+        HttpEntity<RegisterBindingModel> requestEntity = new HttpEntity<>(registerBindingModel, httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -51,13 +47,14 @@ public class RegisterRequest extends OkHttpSpiceRequest<RegisterResponse>{
         String response = null;
 
         String statusCode = null;
+
         try {
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
             statusCode = responseEntity.getStatusCode().toString();
             response = responseEntity.getBody();
         }
         catch (HttpClientErrorException e) {
-            statusCode = e.getStatusCode().toString();
+            statusCode = Integer.toString(e.getStatusCode().value());
             response = e.getResponseBodyAsString();
         }
 

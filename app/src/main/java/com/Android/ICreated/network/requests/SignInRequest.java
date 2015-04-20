@@ -2,13 +2,17 @@ package com.Android.ICreated.network.requests;
 
 import android.os.Message;
 import android.util.Log;
+import com.Android.ICreated.network.CurrentUser;
 import com.Android.ICreated.network.ServerURLs;
+import com.Android.ICreated.network.responses.SignInResponse;
 import com.Android.ICreated.network.responses.models.SignInModel;
 import com.octo.android.robospice.request.SpiceRequest;
+import com.octo.android.robospice.request.okhttp.OkHttpSpiceRequest;
 import org.apache.http.client.methods.HttpHead;
 import org.springframework.http.*;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -18,19 +22,19 @@ import java.util.Collections;
 /**
  * Created by Филипп on 02.04.2015.
  */
-public class SignInRequest extends SpiceRequest<String> {
+public class SignInRequest extends OkHttpSpiceRequest<SignInResponse> {
 
-    String name;
-    String password;
+    private String name;
+    private String password;
 
     public SignInRequest(String name, String password) {
-        super(String.class);
+        super(SignInResponse.class);
         this.name = name;
         this.password = password;
     }
 
     @Override
-    public String loadDataFromNetwork() throws Exception {
+    public SignInResponse loadDataFromNetwork() throws Exception {
 
         String url = ServerURLs.SERVER_URL + ServerURLs.TOKEN;
 
@@ -45,8 +49,19 @@ public class SignInRequest extends SpiceRequest<String> {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-        SignInModel response = restTemplate.postForObject(url, entity, SignInModel.class);
+        try {
+            SignInModel response = restTemplate.postForObject(url, entity, SignInModel.class);
 
-        return " ";
+            CurrentUser.setUserName(response.getUserName());
+            CurrentUser.setBearerToken(response.getAccessToken());
+
+            return new SignInResponse("200", null);
+        }
+        catch (HttpClientErrorException e) {
+
+            return new SignInResponse(Integer.toString(e.getStatusCode().value()), null);
+        }
+
+
     }
 }
