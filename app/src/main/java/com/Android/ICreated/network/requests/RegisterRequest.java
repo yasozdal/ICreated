@@ -44,17 +44,17 @@ public class RegisterRequest extends OkHttpSpiceRequest<RegisterResponse>{
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        String response = null;
 
-        String statusCode = null;
+        String response = null;
+        Integer statusCode = null;
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
-            statusCode = responseEntity.getStatusCode().toString();
+            statusCode = responseEntity.getStatusCode().value();
             response = responseEntity.getBody();
         }
         catch (HttpClientErrorException e) {
-            statusCode = Integer.toString(e.getStatusCode().value());
+            statusCode = e.getStatusCode().value();
             response = e.getResponseBodyAsString();
         }
 

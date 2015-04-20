@@ -43,10 +43,10 @@ public class UserInfoRequest extends SpiceRequest<UserInfoResponse>{
         try {
             UserInfoModel response = restTemplate.postForObject(url, entity, UserInfoModel.class);
 
-            return new UserInfoResponse("200", response);
+            return new UserInfoResponse(200, response);
         }
         catch (HttpClientErrorException e) {
-            return new UserInfoResponse(Integer.toString(e.getStatusCode().value()), null);
+            return new UserInfoResponse(e.getStatusCode().value(), null);
         }
     }
 }

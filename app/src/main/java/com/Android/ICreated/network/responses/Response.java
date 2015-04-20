@@ -5,18 +5,18 @@ package com.Android.ICreated.network.responses;
  */
 public class Response<T> {
 
-    public Response(String statusCode, T response){
+    public Response(Integer statusCode, T response){
         this.statusCode = statusCode;
         this.response = response;
     }
-    private String statusCode;
+    private Integer statusCode;
     private T response;
 
     public T getResponse() {
         return response;
     }
 
-    public String getStatusCode() {
+    public Integer getStatusCode() {
         return statusCode;
     }
 }

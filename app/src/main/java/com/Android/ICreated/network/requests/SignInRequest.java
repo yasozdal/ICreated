@@ -55,11 +55,11 @@ public class SignInRequest extends OkHttpSpiceRequest<SignInResponse> {
             CurrentUser.setUserName(response.getUserName());
             CurrentUser.setBearerToken(response.getAccessToken());
 
-            return new SignInResponse("200", null);
+            return new SignInResponse(200, null);
         }
         catch (HttpClientErrorException e) {
 
-            return new SignInResponse(Integer.toString(e.getStatusCode().value()), null);
+            return new SignInResponse(e.getStatusCode().value(), null);
         }
 
 

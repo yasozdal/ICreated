@@ -5,7 +5,7 @@ package com.Android.ICreated.network.responses;
  */
 public class RegisterResponse extends Response<String> {
 
-    public RegisterResponse(String statusCode, String response) {
+    public RegisterResponse(Integer statusCode, String response) {
         super(statusCode, response);
     }
 

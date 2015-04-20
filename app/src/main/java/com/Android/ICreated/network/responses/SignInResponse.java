@@ -5,7 +5,7 @@ package com.Android.ICreated.network.responses;
  */
 public class SignInResponse extends Response<String>
 {
-    public SignInResponse(String statusCode, String response) {
+    public SignInResponse(Integer statusCode, String response) {
         super(statusCode, response);
     }
 }
