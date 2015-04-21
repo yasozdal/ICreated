@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 import com.Android.ICreated.Activity.EventShowActivity;
 import com.Android.ICreated.Activity.eventCreate.EventCreateWorkerFragment;
+import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
 import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
 import com.Android.ICreated.Activity.eventsShow.EventsShowWorkerFragment;
 import com.google.android.gms.common.ConnectionResult;
@@ -25,7 +26,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, EventsShowModel.Observer, GoogleMap.OnInfoWindowClickListener
 {
-    private final String TAG_WORKER = "TAG_WORKER";
     private MapView mapView;
     private GoogleMap map;
     private Context context;
@@ -40,44 +40,19 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
         mapView.onCreate(savedInstanceState);
 
         context = getActivity();
-        boolean result = mapInit();
-        initWorkerFragment();
-        eventsShowModel.addObserver(this);
-        if (result)
+        eventsShowModel = ((EventsShowActivity)getActivity()).getModel();
+        if (mapInit())
         {
             loadEvents();
         }
 
-        return v;
-    }
-
-    private void initWorkerFragment()
-    {
-        final EventsShowWorkerFragment retainedWorkerFragment =
-                (EventsShowWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
-
-        if (retainedWorkerFragment != null)
+        CameraPosition cameraPosition = eventsShowModel.getCameraPosition();
+        if (eventsShowModel.getCameraPosition() != null)
         {
-            eventsShowModel = retainedWorkerFragment.getEventsShowModel();
-            eventsShowModel.setContext(context);
-            CameraPosition cameraPosition = eventsShowModel.getCameraPosition();
-            if (eventsShowModel.getCameraPosition() != null)
-            {
-                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-
-        } else
-        {
-            final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
-
-            getFragmentManager().beginTransaction()
-                    .add(workerFragment, TAG_WORKER)
-                    .commit();
-
-            eventsShowModel = workerFragment.getEventsShowModel();
-            eventsShowModel.setContext(context);
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-        map.setInfoWindowAdapter(new InfoWindowAdapter(eventsShowModel, context));
+
+        return v;
     }
 
     private boolean mapInit()
@@ -93,6 +68,7 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
             map.setOnMapLongClickListener(this);
             map.setOnMarkerClickListener(this);
             map.setOnInfoWindowClickListener(this);
+            map.setInfoWindowAdapter(new InfoWindowAdapter(eventsShowModel, context));
 
             uiSettings = map.getUiSettings();
             uiSettings.setCompassEnabled(false);

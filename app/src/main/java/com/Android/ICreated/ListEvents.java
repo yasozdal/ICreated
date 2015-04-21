@@ -1,5 +1,6 @@
 package com.Android.ICreated;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
+import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
 import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
 import com.Android.ICreated.Activity.eventsShow.EventsShowWorkerFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,7 +20,6 @@ import com.google.android.gms.maps.model.CameraPosition;
  */
 public class ListEvents extends Fragment implements EventsShowModel.Observer
 {
-    private final String TAG_WORKER = "TAG_WORKER";
     Context context;
     RecyclerView rvEvents;
     EventsShowModel eventsShowModel;
@@ -29,8 +30,8 @@ public class ListEvents extends Fragment implements EventsShowModel.Observer
         View v = inflater.inflate(R.layout.events_list, container, false);
 
         context = getActivity();
+        eventsShowModel = ((EventsShowActivity)getActivity()).getModel();
 
-        initWorkerFragment();
         eventsShowModel.addObserver(this);
 
         rvEvents = (RecyclerView) v.findViewById(R.id.list);
@@ -42,28 +43,7 @@ public class ListEvents extends Fragment implements EventsShowModel.Observer
         return  v;
     }
 
-    private void initWorkerFragment()
-    {
-        final EventsShowWorkerFragment retainedWorkerFragment =
-                (EventsShowWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
 
-        if (retainedWorkerFragment != null)
-        {
-            eventsShowModel = retainedWorkerFragment.getEventsShowModel();
-            eventsShowModel.setContext(context);
-
-        } else
-        {
-            final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
-
-            getFragmentManager().beginTransaction()
-                    .add(workerFragment, TAG_WORKER)
-                    .commit();
-
-            eventsShowModel = workerFragment.getEventsShowModel();
-            eventsShowModel.setContext(context);
-        }
-    }
 
     private void upd()
     {

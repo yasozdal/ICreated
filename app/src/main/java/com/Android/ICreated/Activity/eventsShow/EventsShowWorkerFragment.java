@@ -2,7 +2,7 @@ package com.Android.ICreated.Activity.eventsShow;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 
 /**
  * Created by Mikhail on 11.04.2015.

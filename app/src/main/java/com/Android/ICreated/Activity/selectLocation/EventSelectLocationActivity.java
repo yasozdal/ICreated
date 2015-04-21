@@ -73,7 +73,7 @@ public class EventSelectLocationActivity extends ActionBarActivity implements Go
         if (retainedWorkerFragment != null)
         {
             CameraPosition cameraPosition = retainedWorkerFragment.getCameraPosition();
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
     }
 

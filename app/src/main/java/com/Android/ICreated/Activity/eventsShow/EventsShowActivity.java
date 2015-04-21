@@ -22,11 +22,13 @@ import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
  */
 public class EventsShowActivity extends ActionBarActivity
 {
+    private final String TAG_WORKER = "TAG_WORKER";
     String[] drawerTitles;
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
     private FragmentTabHost tabHost;
+    private EventsShowModel eventsShowModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -40,6 +42,34 @@ public class EventsShowActivity extends ActionBarActivity
             tabHostInit();
             drawerInit(toolbar);
         }
+        initWorkerFragment();
+    }
+
+    private void initWorkerFragment()
+    {
+        final EventsShowWorkerFragment retainedWorkerFragment =
+                (EventsShowWorkerFragment) getFragmentManager().findFragmentByTag(TAG_WORKER);
+
+        if (retainedWorkerFragment != null)
+        {
+            eventsShowModel = retainedWorkerFragment.getEventsShowModel();
+
+        } else
+        {
+            final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
+
+            getFragmentManager().beginTransaction()
+                    .add(workerFragment, TAG_WORKER)
+                    .commit();
+
+            eventsShowModel = workerFragment.getEventsShowModel();
+            eventsShowModel.setContext(this);
+        }
+    }
+
+    public EventsShowModel getModel()
+    {
+        return eventsShowModel;
     }
 
     private Toolbar toolbarInit()
@@ -103,6 +133,7 @@ public class EventsShowActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
