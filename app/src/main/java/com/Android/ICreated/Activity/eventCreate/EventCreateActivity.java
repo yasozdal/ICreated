@@ -19,7 +19,7 @@ import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.Android.ICreated.*;
-import com.Android.ICreated.Activity.selectLocation.EventSelectLocationActivity;
+import com.Android.ICreated.Activity.selectLocation.SelectLocationActivity;
 import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.Calendar;
@@ -343,7 +343,7 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
 
     public void chooseLocation(View view)
     {
-        Intent intent = new Intent(this, EventSelectLocationActivity.class);
+        Intent intent = new Intent(this, SelectLocationActivity.class);
         intent.putExtra("LatLng", event.getLatLng());
         startActivityForResult(intent, 1);
     }

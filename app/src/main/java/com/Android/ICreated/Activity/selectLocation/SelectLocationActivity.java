@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by Ник on 22.10.2014.
  */
-public class EventSelectLocationActivity extends ActionBarActivity implements GoogleMap.OnMapClickListener
+public class SelectLocationActivity extends ActionBarActivity implements GoogleMap.OnMapClickListener
 {
     final String TAG_WORKER = "TAG_WORKER";
 

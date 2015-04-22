@@ -25,7 +25,7 @@
                   android:label="@string/app_name"
                   android:parentActivityName=".Activity.eventsShow.EventsShowActivity">
         </activity>
-        <activity android:name=".Activity.selectLocation.EventSelectLocationActivity"
+        <activity android:name=".Activity.selectLocation.SelectLocationActivity"
                   android:label="@string/app_name"
                   android:parentActivityName=".Activity.eventCreate.EventCreateActivity">
         </activity>
