@@ -102,6 +102,11 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
                     .commit();
 
             event = workerFragment.getEvent();
+            event.setLatLng((LatLng)getIntent().getParcelableExtra("LatLng"));
+            if (event.getLatLng() != null)
+            {
+                showLocation();
+            }
         }
     }
 
@@ -129,11 +134,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     protected void onStart()
     {
         super.onStart();
-        event.setLatLng((LatLng)getIntent().getParcelableExtra("LatLng"));
-        if (event.getLatLng() != null)
-        {
-            showLocation();
-        }
     }
 
     ///////////////////////////////buttons initialization
@@ -508,13 +508,14 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
 
     public void saving()
     {
-        String description = etDescription.getText().toString();
+        event.setDescription(etDescription.getText().toString());
         if (event.getTime() == null)
         {
             event.setTime(Calendar.getInstance());
         }
 
-        (new EventsDataBase(this)).addEvent(event);
+        EventsDataBase db = (new EventsDataBase(this));
+        db.addEvent(event);
         ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
         finish();
     }

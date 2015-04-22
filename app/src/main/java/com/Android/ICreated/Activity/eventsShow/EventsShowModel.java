@@ -96,12 +96,17 @@ public class EventsShowModel
     public Event findEventByMarker(Marker marker)
     {
         Event event = null;
-        for (int i = 0; i < markersId.size(); ++i)
+        int i = 0;
+        boolean isFound = false;
+
+        while ((i < markersId.size()) && !isFound)
         {
             if (markersId.get(i).equals(marker.getId()))
             {
                 event = events.get(i);
+                isFound = true;
             }
+            ++i;
         }
         return event;
     }
