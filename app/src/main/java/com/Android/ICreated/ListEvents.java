@@ -56,4 +56,11 @@ public class ListEvents extends Fragment implements EventsShowModel.Observer
     {
         upd();
     }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        eventsShowModel.removeObserver(this);
+    }
 }

@@ -74,6 +74,11 @@ public class EventsShowModel
         listeners.add(observer);
     }
 
+    public void removeObserver(Observer observer)
+    {
+        listeners.remove(observer);
+    }
+
     private void fireListeners(Event event)
     {
         for (Observer listener : listeners)
@@ -93,6 +98,11 @@ public class EventsShowModel
         markersId.add(marker.getId());
     }
 
+    public void addMarkerId(int index, Marker marker)
+    {
+        markersId.add(index, marker.getId());
+    }
+
     public Event findEventByMarker(Marker marker)
     {
         Event event = null;
@@ -109,6 +119,14 @@ public class EventsShowModel
             ++i;
         }
         return event;
+    }
+
+    public void addEvent(Event event)
+    {
+        events.add(0, event);
+        fireListeners(event);
+        dataBase.addEvent(event);
+        ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
     }
 
     public int getSize()

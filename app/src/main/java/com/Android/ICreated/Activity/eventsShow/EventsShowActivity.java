@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.Android.ICreated.*;
+import com.Android.ICreated.Activity.EventShowActivity;
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 
 /**
@@ -53,7 +54,6 @@ public class EventsShowActivity extends ActionBarActivity
         if (retainedWorkerFragment != null)
         {
             eventsShowModel = retainedWorkerFragment.getEventsShowModel();
-            //wat
         } else
         {
             final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
@@ -185,10 +185,28 @@ public class EventsShowActivity extends ActionBarActivity
         {
             case R.id.action_new_event:
                 Intent intent = new Intent(this, EventCreateActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            Event event = data.getParcelableExtra("Event");
+            eventsShowModel.addEvent(event);
+            showEvent(event);
+        }
+    }
+
+    public void showEvent(Event event)
+    {
+        Intent intent = new Intent(this, EventShowActivity.class);
+        intent.putExtra("Event", event);
+        startActivity(intent);
     }
 }

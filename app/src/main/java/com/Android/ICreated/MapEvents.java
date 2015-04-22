@@ -41,6 +41,8 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
 
         context = getActivity();
         eventsShowModel = ((EventsShowActivity)getActivity()).getModel();
+        eventsShowModel.addObserver(this);
+
         if (mapInit())
         {
             loadEvents();
@@ -114,6 +116,7 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
     public void onDestroy()
     {
         super.onDestroy();
+        eventsShowModel.removeObserver(this);
         if (mapView != null)
         {
             mapView.onDestroy();
@@ -135,7 +138,7 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
     {
         Intent intent = new Intent(context, EventCreateActivity.class);
         intent.putExtra("LatLng", latLng);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -157,7 +160,9 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
     {
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(event.getLatLng()));
-        eventsShowModel.addMarkerId(marker);
+        CameraPosition cp = map.getCameraPosition();
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(event.getLatLng(), cp.zoom, cp.tilt, cp.bearing)));
+        eventsShowModel.addMarkerId(0, marker);
         marker.showInfoWindow();
     }
 }

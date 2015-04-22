@@ -64,6 +64,7 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         place = getResources().getStringArray(R.array.place);
         photo = getResources().getStringArray(R.array.photo);
         isBtnSaveEnabledByDescription = false;
+        other_category = categories.length - 1;
 
         initWorkerFragment();
 
@@ -350,7 +351,7 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+        {
         if (data == null) {return;}
         double latitude = data.getDoubleExtra("latitude", 0);
         double longitude = data.getDoubleExtra("longitude", 0);
@@ -513,10 +514,13 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         {
             event.setTime(Calendar.getInstance());
         }
-
-        EventsDataBase db = (new EventsDataBase(this));
-        db.addEvent(event);
-        ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
+        if (event.getCategory() == -1)
+        {
+            event.setCategory(other_category);
+        }
+        Intent intent = new Intent();
+        intent.putExtra("Event", event);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
