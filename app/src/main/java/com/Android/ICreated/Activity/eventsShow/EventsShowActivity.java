@@ -53,7 +53,7 @@ public class EventsShowActivity extends ActionBarActivity
         if (retainedWorkerFragment != null)
         {
             eventsShowModel = retainedWorkerFragment.getEventsShowModel();
-
+            //wat
         } else
         {
             final EventsShowWorkerFragment workerFragment = new EventsShowWorkerFragment();
