@@ -72,6 +72,7 @@ public class EventsShowActivity extends ActionBarActivity
         return eventsShowModel;
     }
 
+
     private Toolbar toolbarInit()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -171,7 +172,6 @@ public class EventsShowActivity extends ActionBarActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar, menu);
         return true;
-
     }
 
     @Override

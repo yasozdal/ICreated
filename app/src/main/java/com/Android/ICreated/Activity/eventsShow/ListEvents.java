@@ -1,6 +1,5 @@
-package com.Android.ICreated;
+package com.Android.ICreated.Activity.eventsShow;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,11 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
-import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
-import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
-import com.Android.ICreated.Activity.eventsShow.EventsShowWorkerFragment;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.CameraPosition;
+import com.Android.ICreated.Event;
+import com.Android.ICreated.R;
 
 /**
  * Created by Mikhail on 28.10.2014.

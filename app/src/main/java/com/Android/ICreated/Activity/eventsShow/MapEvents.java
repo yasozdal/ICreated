@@ -1,4 +1,4 @@
-package com.Android.ICreated;
+package com.Android.ICreated.Activity.eventsShow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.Android.ICreated.*;
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 import com.Android.ICreated.Activity.EventShowActivity;
-import com.Android.ICreated.Activity.eventCreate.EventCreateWorkerFragment;
-import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
-import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
-import com.Android.ICreated.Activity.eventsShow.EventsShowWorkerFragment;
+import com.Android.ICreated.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.*;
@@ -35,7 +33,7 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.events_map, container, false);
+        View v = inflater.inflate(com.Android.ICreated.R.layout.events_map, container, false);
         mapView = (MapView) v.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
 

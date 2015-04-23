@@ -55,6 +55,10 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // This sets the window size, while working around the IllegalStateException thrown by ActionBarView
+        //this.getWindow().setLayout(600, 900);
+
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         setContentView(R.layout.create_event);
         etDescription = (EditText) findViewById(R.id.etDescription);

@@ -1,4 +1,4 @@
-package com.Android.ICreated;
+package com.Android.ICreated.Activity.eventsShow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.Android.ICreated.Activity.EventShowActivity;
-import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
+import com.Android.ICreated.R;
 
 /**
  * Created by Mikhail on 03.04.2015.

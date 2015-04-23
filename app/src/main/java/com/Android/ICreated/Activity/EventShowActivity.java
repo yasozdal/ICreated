@@ -37,7 +37,7 @@ public class EventShowActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.description);
+        setContentView(R.layout.event_show);
 
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         tvCategory = (TextView) findViewById(R.id.tvCategory);
@@ -124,16 +124,6 @@ public class EventShowActivity extends ActionBarActivity
 
             tvDate.setText(day + "." + month + "." + year + "   " + hourView + hour + ":" + minuteView + minute);
         }
-
-
-        Button CloseButton = (Button) findViewById(R.id.CloseButton);
-        View.OnClickListener oclCloseButton = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        };
-        CloseButton.setOnClickListener(oclCloseButton);
     }
 
     @Override

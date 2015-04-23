@@ -1,10 +1,12 @@
-package com.Android.ICreated;
+package com.Android.ICreated.Activity.eventsShow;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import com.Android.ICreated.Activity.eventsShow.EventsShowModel;
+import com.Android.ICreated.Event;
+import com.Android.ICreated.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 

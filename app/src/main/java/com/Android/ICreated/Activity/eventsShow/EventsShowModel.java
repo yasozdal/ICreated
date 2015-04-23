@@ -1,13 +1,10 @@
 package com.Android.ICreated.Activity.eventsShow;
 
-import android.app.Fragment;
 import android.content.Context;
-import android.os.Bundle;
 import com.Android.ICreated.Event;
 import com.Android.ICreated.EventsDataBase;
 import com.Android.ICreated.ServerAPI;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
