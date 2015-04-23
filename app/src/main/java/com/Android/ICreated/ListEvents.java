@@ -32,7 +32,10 @@ public class ListEvents extends Fragment implements EventsShowModel.Observer
         context = getActivity();
         eventsShowModel = ((EventsShowActivity)getActivity()).getModel();
 
-        eventsShowModel.addObserver(this);
+        if (!eventsShowModel.containsObserver(this))
+        {
+            eventsShowModel.addObserver(this);
+        }
 
         rvEvents = (RecyclerView) v.findViewById(R.id.list);
         rvEvents.setHasFixedSize(true);

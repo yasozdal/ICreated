@@ -41,7 +41,10 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
 
         context = getActivity();
         eventsShowModel = ((EventsShowActivity)getActivity()).getModel();
-        eventsShowModel.addObserver(this);
+        if (!eventsShowModel.containsObserver(this))
+        {
+            eventsShowModel.addObserver(this);
+        }
 
         if (mapInit())
         {
@@ -89,6 +92,7 @@ public class MapEvents extends Fragment implements GoogleMap.OnMapLongClickListe
 
     private void loadEvents()
     {
+        eventsShowModel.clearMarkersId();
         Event[] events = eventsShowModel.getEvents();
         for (int i = 0; i < eventsShowModel.getSize(); ++i)
         {

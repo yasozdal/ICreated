@@ -87,6 +87,11 @@ public class EventsShowModel
         }
     }
 
+    public boolean containsObserver(Observer observer)
+    {
+        return listeners.contains(observer);
+    }
+
     public Event[] getEvents()
     {
         Event[] eventsArr = new Event[events.size()];
@@ -101,6 +106,11 @@ public class EventsShowModel
     public void addMarkerId(int index, Marker marker)
     {
         markersId.add(index, marker.getId());
+    }
+
+    public void clearMarkersId()
+    {
+        markersId = new ArrayList<>();
     }
 
     public Event findEventByMarker(Marker marker)
