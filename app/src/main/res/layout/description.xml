@@ -154,12 +154,6 @@
                     android:layout_alignParentLeft="true"/>
 
 
-            <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/close"
-                    android:id="@+id/CloseButton" android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"/>
         </RelativeLayout>
         <ListView android:id="@+id/left_drawer"
                   android:layout_width="@dimen/drawer_width"
