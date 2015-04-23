@@ -21,4 +21,7 @@
         <item name="colorPrimaryDark">@color/dark_main</item>
     </style>
 
+    <style name="event_create"
+           parent="app_main_style">
+    </style>
 </resources>

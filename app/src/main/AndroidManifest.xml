@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".Activity.eventCreate.EventCreateActivity"
                   android:label="@string/app_name"
+                  android:theme="@style/event_create"
                   android:parentActivityName=".Activity.eventsShow.EventsShowActivity">
         </activity>
         <activity android:name=".Activity.selectLocation.SelectLocationActivity"

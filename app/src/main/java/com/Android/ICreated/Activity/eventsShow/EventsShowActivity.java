@@ -81,7 +81,6 @@ public class EventsShowActivity extends ActionBarActivity
         {
             toolbar.setTitle(R.string.events);
             setSupportActionBar(toolbar);
-            toolbar.setLogo(R.drawable.bar_icon);
         }
 
         return toolbar;

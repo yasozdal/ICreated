@@ -67,7 +67,6 @@ public class LoginActivity extends ActionBarActivity
         if (toolbar != null)
         {
             setSupportActionBar(toolbar);
-            toolbar.setLogo(R.drawable.bar_icon);
         }
 
         return toolbar;

@@ -59,7 +59,6 @@ public class SelectLocationActivity extends ActionBarActivity implements GoogleM
         {
             toolbar.setTitle(R.string.choose_event_location);
             setSupportActionBar(toolbar);
-            toolbar.setLogo(R.drawable.bar_icon);
         }
 
         return toolbar;

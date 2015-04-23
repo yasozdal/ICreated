@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
@@ -33,10 +34,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
 
     Event event;
     EditText etDescription;
-    String[] drawerTitles;
-    DrawerLayout drawerLayout;
-    ListView drawerList;
-    ActionBarDrawerToggle drawerToggle;
     TextView btnCategory, btnLocation, btnDate, btnPhoto, btnLock;
     TextView tvCategory, tvLocation, tvDate, tvPhoto, tvLock;
     TextView tvCategoryIcon, tvLocationIcon, tvDateIcon, tvPhotoIcon, tvLockIcon, equalizer;
@@ -56,11 +53,15 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     {
         super.onCreate(savedInstanceState);
 
-        // This sets the window size, while working around the IllegalStateException thrown by ActionBarView
-        //this.getWindow().setLayout(600, 900);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int screenWidth = (int) (metrics.widthPixels * 0.90);
+        int screenHeight = (int) (metrics.heightPixels * 0.50);
 
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         setContentView(R.layout.create_event);
+
+        getWindow().setLayout(screenWidth, screenHeight);
+
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDescription.addTextChangedListener(this);
         btnInit();
@@ -82,11 +83,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         }
 
         Toolbar toolbar = toolbarInit();
-        if (toolbar != null)
-        {
-            drawerInit();
-        }
-
     }
 
     private void initWorkerFragment()
@@ -151,8 +147,9 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         {
             toolbar.setTitle(R.string.new_event);
             setSupportActionBar(toolbar);
-            toolbar.setLogo(R.drawable.bar_icon);
         }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         return toolbar;
     }
@@ -358,8 +355,8 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
         {
         if (data == null) {return;}
         double latitude = data.getDoubleExtra("latitude", 0);
-        double longitude = data.getDoubleExtra("longitude", 0);
-        event.setLatLng(new LatLng(latitude, longitude));
+            double longitude = data.getDoubleExtra("longitude", 0);
+            event.setLatLng(new LatLng(latitude, longitude));
         showLocation();
 
         onPrepareOptionsMenu(barMenu);
@@ -387,14 +384,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     public boolean onPrepareOptionsMenu(Menu menu)
     {
         barMenu = menu;
-        if (drawerLayout.isDrawerOpen(drawerList))
-        {
-            menu.findItem(R.id.btnSaveEvent).setVisible(false);
-        }
-        else
-        {
-            menu.findItem(R.id.btnSaveEvent).setVisible(true);
-        }
         if (isBtnSaveEnabledByDescription && isBtnSaveEnabledByLocation)
         {
             menu.findItem(R.id.btnSaveEvent).setEnabled(true);
@@ -406,37 +395,6 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
             menu.findItem(R.id.btnSaveEvent).setIcon(R.drawable.complete_grey);
         }
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    private void drawerInit()
-    {
-        drawerTitles = getResources().getStringArray(R.array.drawer_titles);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-        String[] icons = getResources().getStringArray(R.array.drawer_icons);
-
-        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_list_elem, R.id.tvTitle, R.id.tvIcon, drawerTitles, icons, getResources().getString(R.string.menu_font)));
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.events)
-        {
-
-            public void onDrawerClosed(View view)
-            {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(R.string.events);
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View drawerView)
-            {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle(R.string.app_name);
-                invalidateOptionsMenu();
-            }
-        };
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        drawerLayout.setDrawerListener(drawerToggle);
     }
 
     @Override
