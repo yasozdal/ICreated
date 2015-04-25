@@ -12,11 +12,10 @@ import com.octo.android.robospice.SpiceManager;
 public class EventsShowWorkerFragment extends Fragment
 {
     private EventsShowModel eventsShowModel;
-    private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
 
     public EventsShowWorkerFragment()
     {
-        eventsShowModel = new EventsShowModel(spiceManager);
+        eventsShowModel = new EventsShowModel();
     }
 
     @Override
@@ -24,18 +23,6 @@ public class EventsShowWorkerFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        spiceManager.start(getActivity());
-    }
-
-    @Override
-    public void onStop() {
-        spiceManager.shouldStop();
-        super.onStop();
     }
 
 

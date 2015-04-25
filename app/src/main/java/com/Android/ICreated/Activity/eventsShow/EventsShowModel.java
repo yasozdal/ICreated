@@ -4,9 +4,14 @@ import android.content.Context;
 import com.Android.ICreated.Event;
 import com.Android.ICreated.EventsDataBase;
 import com.Android.ICreated.ServerAPI;
+import com.Android.ICreated.network.Converter;
+import com.Android.ICreated.network.requests.GetEventsRequest;
+import com.Android.ICreated.network.responses.GetEventsResponse;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Marker;
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 
@@ -23,9 +28,8 @@ public class EventsShowModel
     private Context context;
     private SpiceManager spiceManager;
 
-    public EventsShowModel(SpiceManager spiceManager)
+    public EventsShowModel()
     {
-        this.spiceManager = spiceManager;
         events = new ArrayList<Event>();
         listeners = new ArrayList<Observer>();
         markersId = new ArrayList<>();
@@ -35,12 +39,33 @@ public class EventsShowModel
     {
         this.context = context;
         dataBase = new EventsDataBase(context);
-        getEventsFromServer();
+        spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
+//        getEventsFromServer();
+    }
+
+    private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            //fail
+        }
+
+        @Override
+        public void onRequestSuccess(GetEventsResponse result) {
+            if (result.getStatusCode() == 200) {
+                events = Converter.EventModelsToEvents(result.getResponse());
+                dataBase.recreateDataBase(getEvents());
+            }
+            else {
+                events = dataBase.getEvents();
+            }
+
+        }
     }
 
     public void setSpiceManager(SpiceManager spiceManager) {
         this.spiceManager = spiceManager;
     }
+
 
     public String[] getEventsNames()
     {
@@ -59,19 +84,19 @@ public class EventsShowModel
         return  events.get(index);
     }
 
-    public void getEventsFromServer()
-    {
-        ServerAPI.Response response = ServerAPI.getEvents();
-        if (!response.isEmpty())
-        {
-            events = response.getEvents();
-            dataBase.recreateDataBase(getEvents());
-        }
-        else
-        {
-            events = dataBase.getEvents();
-        }
-    }
+//    public void getEventsFromServer()
+//    {
+//        ServerAPI.Response response = ServerAPI.getEvents();
+//        if (!response.isEmpty())
+//        {
+//            events = response.getEvents();
+//            dataBase.recreateDataBase(getEvents());
+//        }
+//        else
+//        {
+//            events = dataBase.getEvents();
+//        }
+//    }
 
     public void addObserver(Observer observer)
     {

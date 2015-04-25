@@ -84,6 +84,7 @@ public class EventsShowActivity extends ActionBarActivity
                     .commit();
 
             eventsShowModel = workerFragment.getEventsShowModel();
+            eventsShowModel.setSpiceManager(spiceManager);
             eventsShowModel.setContext(this);
         }
     }
