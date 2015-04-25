@@ -53,15 +53,17 @@ public class EventCreateActivity extends ActionBarActivity implements TextWatche
     {
         super.onCreate(savedInstanceState);
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int screenWidth = (int) (metrics.widthPixels * 0.90);
-        int screenHeight = (int) (metrics.heightPixels * 0.50);
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (isTablet)
+        {
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int screenWidth = (int) (metrics.widthPixels * 0.90);
+            int screenHeight = (int) (metrics.heightPixels * 0.50);
+            getWindow().setLayout(screenWidth, screenHeight);
+        }
 
         tf = Typeface.createFromAsset(getAssets(), getResources().getString(R.string.icon_font));
         setContentView(R.layout.create_event);
-
-        getWindow().setLayout(screenWidth, screenHeight);
-
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDescription.addTextChangedListener(this);
         btnInit();
