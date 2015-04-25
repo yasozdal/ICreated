@@ -13,9 +13,11 @@ import com.Android.ICreated.R;
 import com.Android.ICreated.ServerAPI;
 import android.support.v7.app.ActionBarActivity;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
+import com.Android.ICreated.network.requests.AddEventRequest;
 import com.Android.ICreated.network.requests.GetEventsRequest;
 import com.Android.ICreated.network.requests.RegisterRequest;
 import com.Android.ICreated.network.requests.SignInRequest;
+import com.Android.ICreated.network.responses.AddEventResponse;
 import com.Android.ICreated.network.responses.GetEventsResponse;
 import com.Android.ICreated.network.responses.RegisterResponse;
 import com.Android.ICreated.network.responses.SignInResponse;
@@ -23,6 +25,8 @@ import com.Android.ICreated.network.responses.models.EventModel;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+
+import java.util.Calendar;
 
 /**
  * Created by Филипп on 07.10.2014.
@@ -34,9 +38,7 @@ public class LoginActivity extends ActionBarActivity
     EditText userName;
     EditText password;
     EditText passwordConfirm;
-    /////////////////////////////////for test//////////////////////////////////////
     private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
-    //////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,7 +49,7 @@ public class LoginActivity extends ActionBarActivity
         showStartPage();
         toolbarInit();
     }
-///////////////////////////////for test/////////////////////////////////////////
+
     @Override
     protected void onStart() {
         spiceManager.start(this);
@@ -59,7 +61,7 @@ public class LoginActivity extends ActionBarActivity
         spiceManager.shouldStop();
         super.onStop();
     }
-///////////////////////////////////////////////////////////////////////////////////
+
     private Toolbar toolbarInit()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -111,22 +113,15 @@ public class LoginActivity extends ActionBarActivity
         startActivity(intent);
         finish();
     }
-    // ВНИМАНИЕ, Register и signIn работают неожидаемым способом, ПЕРЕДЕЛАТЬ!
+
     private void Register() {
 
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         passwordConfirm = (EditText) findViewById(R.id.passwordConfirm);
 
-        ServerAPI.setUser(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
-        ServerAPI.Response response = ServerAPI.RegistrationNewUser();
         RegisterRequest request = new RegisterRequest(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
-        /////////////////////////////////////////////////////////////////////
         spiceManager.execute(request, new RegisterRequestListener());
-        ////////////////////////////////////////////////////////////////////
-        if (response.type.equals(ServerAPI.ResponseType.SUCCES)) {
-            signIn();
-        }
 
     }
 
@@ -139,7 +134,12 @@ public class LoginActivity extends ActionBarActivity
 
         @Override
         public void onRequestSuccess(RegisterResponse result) {
-//            String test = result;
+            if (result.getStatusCode() == 200) {
+                signIn();
+            }
+            else {
+                // не смогли зарегестрироваться
+            }
 
         }
     }
@@ -147,21 +147,13 @@ public class LoginActivity extends ActionBarActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        String result = resultTextView.getText().toString();
-//        if (!TextUtils.isEmpty(result)) {
-//            outState.putString(KEY_RESULT, result);
-//        }
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         spiceManager.addListenerIfPending(RegisterResponse.class, null, new RegisterRequestListener());
-//
-//        if (savedInstanceState.containsKey(KEY_RESULT)) {
-//            String result = savedInstanceState.getString(KEY_RESULT);
-//            resultTextView.setText(result);
-//        }
+        spiceManager.addListenerIfPending(SignInResponse.class, null, new SignInRequestListener());
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -169,17 +161,9 @@ public class LoginActivity extends ActionBarActivity
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
 
-        ServerAPI.setUser(userName.getText().toString(), password.getText().toString());
-        //////////////////////////////////////
         spiceManager.execute(new SignInRequest(userName.getText().toString(), password.getText().toString()),new SignInRequestListener());
-        spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
-        /////////////////////////////////////
-        if (ServerAPI.signIn()) {
-            ToMap();
-        }
-        else {
-            Log.d("StartPageActivity", "YOU SHALL NOT PASS");
-        }
+//        spiceManager.execute(new AddEventRequest("32", "32", "Hello, Misha, from Doneck", Calendar.getInstance()), new AddEventRequestListener());
+//        spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
 
     }
     private final class SignInRequestListener implements RequestListener<SignInResponse> {
@@ -191,21 +175,28 @@ public class LoginActivity extends ActionBarActivity
 
         @Override
         public void onRequestSuccess(SignInResponse result) {
-//            String test = result;
-
+            if (result.getStatusCode() == 200) {
+                ToMap();
+            }
+            else {
+                //не смогли залогиниться
+                Log.d("StartPageActivity", "YOU SHALL NOT PASS");
+            }
         }
     }
-    private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.d("REQUEST FAIL", spiceException.getMessage());
-        }
+//    private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {
+//        @Override
+//        public void onRequestFailure(SpiceException spiceException) {
+//            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+//            Log.d("REQUEST FAIL", spiceException.getMessage());
+//        }
+//
+//        @Override
+//        public void onRequestSuccess(GetEventsResponse result) {
+//            EventModel[] a = result.getResponse();
+//            EventModel b = a[0];
+//        }
+//    }
 
-        @Override
-        public void onRequestSuccess(GetEventsResponse result) {
-            EventModel[] a = result.getResponse();
-            EventModel b = a[0];
-        }
-    }
+
 }

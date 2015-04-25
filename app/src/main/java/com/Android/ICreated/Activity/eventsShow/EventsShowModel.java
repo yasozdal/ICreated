@@ -6,6 +6,7 @@ import com.Android.ICreated.EventsDataBase;
 import com.Android.ICreated.ServerAPI;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Marker;
+import com.octo.android.robospice.SpiceManager;
 
 import java.util.ArrayList;
 
@@ -20,9 +21,11 @@ public class EventsShowModel
     private EventsDataBase dataBase;
     private ArrayList<String> markersId;
     private Context context;
+    private SpiceManager spiceManager;
 
-    public EventsShowModel()
+    public EventsShowModel(SpiceManager spiceManager)
     {
+        this.spiceManager = spiceManager;
         events = new ArrayList<Event>();
         listeners = new ArrayList<Observer>();
         markersId = new ArrayList<>();
@@ -33,6 +36,10 @@ public class EventsShowModel
         this.context = context;
         dataBase = new EventsDataBase(context);
         getEventsFromServer();
+    }
+
+    public void setSpiceManager(SpiceManager spiceManager) {
+        this.spiceManager = spiceManager;
     }
 
     public String[] getEventsNames()
@@ -133,7 +140,7 @@ public class EventsShowModel
         events.add(0, event);
         fireListeners(event);
         dataBase.addEvent(event);
-        ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
+//        ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
     }
 
     public int getSize()
