@@ -53,6 +53,9 @@ public class EventsShowModel
         public void onRequestSuccess(GetEventsResponse result) {
             if (result.getStatusCode() == 200) {
                 events = Converter.EventModelsToEvents(result.getResponse());
+                for (Event event : events) {
+                    fireListeners(event);
+                }
                 dataBase.recreateDataBase(getEvents());
             }
             else {
