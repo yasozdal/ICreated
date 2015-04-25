@@ -9,6 +9,9 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by Филипп on 20.04.2015.
@@ -23,7 +26,7 @@ public class GetEventsRequest extends SpiceRequest<GetEventsResponse>{
     @Override
     public GetEventsResponse loadDataFromNetwork() throws Exception {
 
-        String url = ServerURLs.SERVER_URL + ServerURLs.EVENTS;
+        String url = ServerURLs.SERVER_URL + ServerURLs.EVENTS + "?count=50";
 
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -34,6 +37,8 @@ public class GetEventsRequest extends SpiceRequest<GetEventsResponse>{
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+
         try {
             ResponseEntity<EventModel[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, EventModel[].class);
             return new GetEventsResponse(responseEntity.getStatusCode().value(), responseEntity.getBody());

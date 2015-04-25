@@ -17,6 +17,14 @@ import android.widget.TextView;
 import com.Android.ICreated.*;
 import com.Android.ICreated.Activity.EventShowActivity;
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
+import com.Android.ICreated.network.Converter;
+import com.Android.ICreated.network.MyOkHttpSpiceService;
+import com.Android.ICreated.network.requests.AddEventRequest;
+import com.Android.ICreated.network.responses.AddEventResponse;
+import com.google.android.gms.drive.internal.AddEventListenerRequest;
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 
 /**
  * Created by Mikhail on 27.10.2014.
@@ -30,6 +38,7 @@ public class EventsShowActivity extends ActionBarActivity
     ActionBarDrawerToggle drawerToggle;
     private FragmentTabHost tabHost;
     private EventsShowModel eventsShowModel;
+    private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,6 +53,18 @@ public class EventsShowActivity extends ActionBarActivity
             drawerInit(toolbar);
         }
         initWorkerFragment();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        spiceManager.start(this);
+    }
+
+    @Override
+    public void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
     }
 
     private void initWorkerFragment()
@@ -197,8 +218,38 @@ public class EventsShowActivity extends ActionBarActivity
         if (resultCode == RESULT_OK)
         {
             Event event = data.getParcelableExtra("Event");
-            eventsShowModel.addEvent(event);
-            showEvent(event);
+            spiceManager.execute(new AddEventRequest
+                                                    (Double.toString(event.getLatLng().latitude),
+                                                     Double.toString(event.getLatLng().longitude),
+                                                     event.getDescription(),
+                                                     event.getTime() ),
+                                 new AddEventListener(event));
+//            eventsShowModel.addEvent(event);
+//            showEvent(event);
+        }
+    }
+
+    private final class AddEventListener implements RequestListener<AddEventResponse> {
+        Event event;
+
+        public AddEventListener(Event event) {
+            this.event = event;
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            //fail
+        }
+
+        @Override
+        public void onRequestSuccess(AddEventResponse result) {
+            if (result.getStatusCode() == 200) {
+                eventsShowModel.addEvent(event);
+                showEvent(event);
+            }
+            else {
+                // не добавился event
+            }
         }
     }
 
