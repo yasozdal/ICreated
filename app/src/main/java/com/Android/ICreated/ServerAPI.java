@@ -30,7 +30,7 @@ import java.util.*;
 /**
  * Created by Филипп on 08.10.2014.
  */
-
+@Deprecated
 public class ServerAPI {
 
     private static User user; // потом сделать private
