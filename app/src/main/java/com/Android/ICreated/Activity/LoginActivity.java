@@ -163,8 +163,6 @@ public class LoginActivity extends ActionBarActivity
         password = (EditText) findViewById(R.id.password);
 
         spiceManager.execute(new SignInRequest(userName.getText().toString(), password.getText().toString()),new SignInRequestListener());
-//        spiceManager.execute(new AddEventRequest("32", "32", "Hello, Misha, from Doneck", Calendar.getInstance()), new AddEventRequestListener());
-//        spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
 
     }
     private final class SignInRequestListener implements RequestListener<SignInResponse> {
@@ -185,19 +183,6 @@ public class LoginActivity extends ActionBarActivity
             }
         }
     }
-//    private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {
-//        @Override
-//        public void onRequestFailure(SpiceException spiceException) {
-//            Toast.makeText(LoginActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-//            Log.d("REQUEST FAIL", spiceException.getMessage());
-//        }
-//
-//        @Override
-//        public void onRequestSuccess(GetEventsResponse result) {
-//            EventModel[] a = result.getResponse();
-//            EventModel b = a[0];
-//        }
-//    }
 
 
 }
