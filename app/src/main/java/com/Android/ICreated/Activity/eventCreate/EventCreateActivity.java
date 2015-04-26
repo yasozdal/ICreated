@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,7 +26,7 @@ import java.util.Calendar;
 /**
  * Created by Ник on 05.10.2014.
  */
-public class EventCreateActivity extends ActionBarActivity implements TextWatcher
+public class EventCreateActivity extends AppCompatActivity implements TextWatcher
 {
     final String TAG_WORKER = "TAG_WORKER";
 
