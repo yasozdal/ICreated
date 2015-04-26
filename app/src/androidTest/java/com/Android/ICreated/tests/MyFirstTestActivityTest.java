@@ -6,7 +6,7 @@ import com.Android.ICreated.Activity.LoginActivity;
 import com.Android.ICreated.R;
 
 /**
- * Created by Ôèëèïï on 26.04.2015.
+ * Created by Ğ¤Ğ¸Ğ»Ğ¸Ğ¿Ğ¿ on 26.04.2015.
  */
 public class MyFirstTestActivityTest extends ActivityInstrumentationTestCase2<LoginActivity> {
     private LoginActivity mFirstTestActivity;

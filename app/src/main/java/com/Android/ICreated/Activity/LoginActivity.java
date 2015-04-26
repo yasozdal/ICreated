@@ -2,6 +2,7 @@ package com.Android.ICreated.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,7 @@ import java.util.Calendar;
  * Created by Филипп on 07.10.2014.
  */
 
-public class LoginActivity extends ActionBarActivity
+public class LoginActivity extends AppCompatActivity
 {
 
     EditText userName;
