@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="action_bar_style"
-           parent="@style/Theme.AppCompat.Light.NoActionBar">
+           parent="@style/Theme.AppCompat.Light">
         <item name="android:textColor">@color/white</item>
         <item name="colorPrimary">@color/main</item>
         <item name="colorAccent">@color/main</item>

@@ -2,13 +2,13 @@
 <resources>
     <dimen name="standard_height">48dp</dimen>
     <dimen name="button_text_height">16sp</dimen>
-    <dimen name="drawer_element_padding">15dp</dimen>
+    <dimen name="standard_padding">16dp</dimen>
     <dimen name="drawer_text_size">18sp</dimen>
     <dimen name="drawer_width">300dp</dimen>
     <dimen name="drawer_left_padding">20dp</dimen>
     <dimen name="drawer_icon_margin">40dp</dimen>
     <dimen name="drawer_divider_margin">20dp</dimen>
-    <dimen name="text_icons_size">35sp</dimen>
+    <dimen name="text_icons_size">30dp</dimen>
     <dimen name="text_padding">5dp</dimen>
     <dimen name="button_padding">2dp</dimen>
     <dimen name="card_height">220dp</dimen>
@@ -16,4 +16,5 @@
     <dimen name="card_corner_radius">3dp</dimen>
     <dimen name="card_content_padding">10dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
 </resources>
