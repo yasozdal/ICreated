@@ -1,6 +1,7 @@
 package com.Android.ICreated.tests;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.TextView;
 import com.Android.ICreated.Activity.LoginActivity;
 import com.Android.ICreated.R;
@@ -30,6 +31,7 @@ public class MyFirstTestActivityTest extends ActivityInstrumentationTestCase2<Lo
         assertNotNull("mFirstTestText is null", mFirstTestText);
     }
 
+    @SmallTest
     public void testMyFirstTestTextView_labelText() {
         final String expected =
                 mFirstTestActivity.getString(R.string.user_name);
