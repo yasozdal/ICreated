@@ -50,7 +50,6 @@ public class AddEventRequest extends SpiceRequest<AddEventResponse> {
 
         HttpEntity<AddEventBindingModel> requestEntity = new HttpEntity<>(AddEventBindingModel, httpHeaders);
 
-        String test = requestEntity.toString();
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -67,10 +66,6 @@ public class AddEventRequest extends SpiceRequest<AddEventResponse> {
             statusCode = e.getStatusCode().value();
             response = e.getResponseBodyAsString();
         }
-//        catch (HttpServerErrorException ee) {
-//            String a = ee.getResponseBodyAsString();
-//            Exception eee = ee;
-//        }
 
         return new AddEventResponse(statusCode, response);
     }
