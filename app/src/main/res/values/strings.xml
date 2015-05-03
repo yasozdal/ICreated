@@ -33,4 +33,7 @@
     <string name="show_event">Просмотр события</string>
     <string name="choose_event_location">Выбор местоположения события</string>
     <string name="new_event">Новое событие</string>
+
+    <string name="set_date">ОК</string>
+    <string name="set_time">ОК</string>
 </resources>

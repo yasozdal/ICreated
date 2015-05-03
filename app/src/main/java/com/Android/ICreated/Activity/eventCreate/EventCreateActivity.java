@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -218,7 +219,10 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
                                                                             Calendar.MONTH,
                                                                             Calendar.DAY_OF_MONTH);
             dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+
             dpd.setTitle(R.string.dialog_date);
+            dpd.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.set_date), dpd);
+
             dpd.show();
         }
         else
@@ -244,14 +248,29 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
 
     DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener()
     {
+        private boolean isNewDate (int pickedYear, int pickedMonth, int pickedDay) {
+            return (event.getTime() == null)
+
+                    ||
+
+                    ((event.getTime().get(Calendar.YEAR) != pickedYear)
+                    &&
+                    (event.getTime().get(Calendar.MONTH) != pickedMonth)
+                    &&
+                    (event.getTime().get(Calendar.DAY_OF_MONTH) != pickedDay));
+        }
+
+        @Override
         public void onDateSet(DatePicker view, int pickedYear, int pickedMonth, int pickedDay)
         {
-            event.setTime(Calendar.getInstance());
-            event.getTime().set(Calendar.YEAR, pickedYear);
-            event.getTime().set(Calendar.MONTH, pickedMonth);
-            event.getTime().set(Calendar.DAY_OF_MONTH, pickedDay);
+            if (isNewDate(pickedYear, pickedMonth, pickedDay)) {
+                event.setTime(Calendar.getInstance());
+                event.getTime().set(Calendar.YEAR, pickedYear);
+                event.getTime().set(Calendar.MONTH, pickedMonth);
+                event.getTime().set(Calendar.DAY_OF_MONTH, pickedDay);
 
-            callTimePicker();
+                callTimePicker();
+            }
         }
     };
 
@@ -262,6 +281,8 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
                                                     currTime.get(Calendar.HOUR_OF_DAY),
                                                     currTime.get(Calendar.MINUTE), true);
         tpd.setTitle(R.string.dialog_time);
+        tpd.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.set_time), tpd);
+
         tpd.show();
     }
 
