@@ -5,6 +5,7 @@ import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import android.widget.DatePicker;
+import com.google.android.gms.maps.model.LatLng;
 import org.hamcrest.Matcher;
 
 /**
@@ -29,4 +30,24 @@ public final class MyActions {
             }
         };
     }
+
+//    map.addMarker(new MarkerOptions().position(latLng));
+//    public static ViewAction setMarker(final LatLng latLng) {
+//        return new ViewAction() {
+//            @Override
+//            public Matcher<View> getConstraints() {
+//                return ViewMatchers.is
+//            }
+//
+//            @Override
+//            public String getDescription() {
+//                return null;
+//            }
+//
+//            @Override
+//            public void perform(UiController uiController, View view) {
+//
+//            }
+//        }
+//    }
 }

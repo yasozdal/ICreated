@@ -6,14 +6,12 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.view.View;
-import android.widget.DatePicker;
+
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 import com.Android.ICreated.R;
 import com.Android.ICreated.actions.MyActions;
-import com.Android.ICreated.matchers.DataPickerMatcher;
-import com.Android.ICreated.matchers.MyMatchers;
-import com.fasterxml.jackson.databind.util.ViewMatcher;
+import com.Android.ICreated.matchers.ClassNameMatcher;
+
 
 
 /**
@@ -37,16 +35,22 @@ public class EventCreateActivityTest extends ActivityInstrumentationTestCase2<Ev
         Espresso.onView(ViewMatchers.withId(R.id.etDescription)).perform(ViewActions.typeText("Hello"));
     }
 
-    @SmallTest
+    @LargeTest
     public void testTextViewDescription2() {
-        Espresso.onView(ViewMatchers.withId(R.id.etDescription)).perform(ViewActions.typeText("Hello"));
+        Espresso.onView(ViewMatchers.withId(R.id.etDescription)).perform(ViewActions.typeText("My Cool Event"));
+
         Espresso.onView(ViewMatchers.withId(R.id.btnDate)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withClassName(DataPickerMatcher.isDataPicker())).perform(MyActions.setDate(10, 10, 2016));
+        Espresso.onView(ViewMatchers.withClassName(ClassNameMatcher.DatePicker())).perform(MyActions.setDate(10, 10, 2016));
         Espresso.onView(ViewMatchers.withText(R.string.set_date)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText(R.string.set_date)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.etDescription)).perform(ViewActions.typeText("Hello"));
-        Espresso.onView(ViewMatchers.withId(R.id.etDescription)).perform(ViewActions.typeText("Hello"));
+
         Espresso.onView(ViewMatchers.withId(R.id.btnLocation)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withContentDescription("Карта Google")).perform(ViewActions.click());
+
+        Espresso.onView(ViewMatchers.withId(R.id.btnSaveEvent)).perform(ViewActions.click());
+
+        Espresso.onView(ViewMatchers.withId(R.id.btnSaveEvent)).perform(ViewActions.click());
+
     }
 
 }

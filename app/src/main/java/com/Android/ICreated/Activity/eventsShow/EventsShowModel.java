@@ -40,13 +40,12 @@ public class EventsShowModel
         this.context = context;
         dataBase = new EventsDataBase(context);
         spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
-//        getEventsFromServer();
     }
 
     private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            //fail
+            events = dataBase.getEvents();
         }
 
         @Override
@@ -87,19 +86,6 @@ public class EventsShowModel
         return  events.get(index);
     }
 
-//    public void getEventsFromServer()
-//    {
-//        ServerAPI.Response response = ServerAPI.getEvents();
-//        if (!response.isEmpty())
-//        {
-//            events = response.getEvents();
-//            dataBase.recreateDataBase(getEvents());
-//        }
-//        else
-//        {
-//            events = dataBase.getEvents();
-//        }
-//    }
 
     public void addObserver(Observer observer)
     {
@@ -168,7 +154,6 @@ public class EventsShowModel
         events.add(0, event);
         fireListeners(event);
         dataBase.addEvent(event);
-//        ServerAPI.addEvent("" + event.getLatLng().latitude, "" + event.getLatLng().longitude, event.getDescription(), event.getTime().toString());
     }
 
     public int getSize()
