@@ -7,7 +7,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Created by Ôèëèïï on 04.05.2015.
+ * Created by Ğ¤Ğ¸Ğ»Ğ¸Ğ¿Ğ¿ on 04.05.2015.
  */
 public class ClassNameMatcher extends TypeSafeMatcher<String> {
     private String expectedClassName;

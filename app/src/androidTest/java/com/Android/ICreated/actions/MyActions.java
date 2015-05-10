@@ -1,15 +1,15 @@
 package com.Android.ICreated.actions;
 
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.matcher.ViewMatchers;
+
 import android.view.View;
 import android.widget.DatePicker;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.apps.common.testing.ui.espresso.UiController;
+import com.google.android.apps.common.testing.ui.espresso.ViewAction;
+import com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers;
 import org.hamcrest.Matcher;
 
 /**
- * Created by ‘ËÎËÔÔ on 28.04.2015.
+ * Created by –§–∏–ª–∏–ø–ø on 28.04.2015.
  */
 public final class MyActions {
     public static ViewAction setDate(final int day, final int month, final int year) {

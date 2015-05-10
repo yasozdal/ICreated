@@ -1,8 +1,5 @@
 package com.Android.ICreated.tests;
 
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -11,7 +8,9 @@ import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 import com.Android.ICreated.R;
 import com.Android.ICreated.actions.MyActions;
 import com.Android.ICreated.matchers.ClassNameMatcher;
-
+import com.google.android.apps.common.testing.ui.espresso.Espresso;
+import com.google.android.apps.common.testing.ui.espresso.action.ViewActions;
+import com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers;
 
 
 /**
