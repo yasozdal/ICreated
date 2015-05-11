@@ -1,6 +1,6 @@
 package com.Android.ICreated.network.requests;
 
-import com.Android.ICreated.network.ServerURLs;
+import com.Android.ICreated.network.Network;
 
 import com.Android.ICreated.network.requests.models.RegisterBindingModel;
 import com.Android.ICreated.network.responses.RegisterResponse;
@@ -35,7 +35,7 @@ public class RegisterRequest extends OkHttpSpiceRequest<RegisterResponse>{
         registerBindingModel.setPassword(password);
         registerBindingModel.setConfirmPassword(confirmPassword);
         
-        String url = ServerURLs.SERVER_URL + ServerURLs.REGISTER;
+        String url = Network.SERVER_URL + Network.REGISTER;
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);

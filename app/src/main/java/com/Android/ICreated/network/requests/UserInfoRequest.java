@@ -1,10 +1,8 @@
 package com.Android.ICreated.network.requests;
 
 import com.Android.ICreated.network.CurrentUser;
-import com.Android.ICreated.network.ServerURLs;
-import com.Android.ICreated.network.responses.SignInResponse;
+import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.responses.UserInfoResponse;
-import com.Android.ICreated.network.responses.models.SignInModel;
 import com.Android.ICreated.network.responses.models.UserInfoModel;
 import com.octo.android.robospice.request.SpiceRequest;
 import org.springframework.http.*;
@@ -26,7 +24,7 @@ public class UserInfoRequest extends SpiceRequest<UserInfoResponse>{
     @Override
     public UserInfoResponse loadDataFromNetwork() throws Exception {
 
-        String url = ServerURLs.SERVER_URL + ServerURLs.USER_INFO;
+        String url = Network.SERVER_URL + Network.USER_INFO;
 
 
         HttpHeaders httpHeaders = new HttpHeaders();

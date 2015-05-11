@@ -1,6 +1,6 @@
 package com.Android.ICreated.network.requests;
 
-import com.Android.ICreated.network.ServerURLs;
+import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.responses.GetEventsResponse;
 import com.Android.ICreated.network.responses.models.EventModel;
 import com.octo.android.robospice.request.SpiceRequest;
@@ -8,9 +8,6 @@ import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -26,7 +23,7 @@ public class GetEventsRequest extends SpiceRequest<GetEventsResponse>{
     @Override
     public GetEventsResponse loadDataFromNetwork() throws Exception {
 
-        String url = ServerURLs.SERVER_URL + ServerURLs.EVENTS + "?count=50";
+        String url = Network.SERVER_URL + Network.EVENTS + "?count=50";
 
 
         HttpHeaders httpHeaders = new HttpHeaders();

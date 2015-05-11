@@ -19,6 +19,7 @@ import com.Android.ICreated.Activity.EventShowActivity;
 import com.Android.ICreated.Activity.eventCreate.EventCreateActivity;
 import com.Android.ICreated.network.Converter;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
+import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.requests.AddEventRequest;
 import com.Android.ICreated.network.responses.AddEventResponse;
 import com.google.android.gms.drive.internal.AddEventListenerRequest;
@@ -219,11 +220,11 @@ public class EventsShowActivity extends ActionBarActivity
         if (resultCode == RESULT_OK)
         {
             Event event = data.getParcelableExtra("Event");
-            spiceManager.execute(new AddEventRequest
-                                                    (Double.toString(event.getLatLng().latitude),
-                                                     Double.toString(event.getLatLng().longitude),
-                                                     event.getDescription(),
-                                                     event.getTime() ),
+            spiceManager.execute(Network.requestsFactory.addEventRequest
+                                    (Double.toString(event.getLatLng().latitude),
+                                    Double.toString(event.getLatLng().longitude),
+                                    event.getDescription(),
+                                    event.getTime()),
                                  new AddEventListener(event));
 //            eventsShowModel.addEvent(event);
 //            showEvent(event);

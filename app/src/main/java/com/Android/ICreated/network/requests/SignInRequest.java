@@ -1,22 +1,15 @@
 package com.Android.ICreated.network.requests;
 
-import android.os.Message;
-import android.util.Log;
 import com.Android.ICreated.network.CurrentUser;
-import com.Android.ICreated.network.ServerURLs;
+import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.responses.SignInResponse;
 import com.Android.ICreated.network.responses.models.SignInModel;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.okhttp.OkHttpSpiceRequest;
-import org.apache.http.client.methods.HttpHead;
 import org.springframework.http.*;
-import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -36,7 +29,7 @@ public class SignInRequest extends OkHttpSpiceRequest<SignInResponse> {
     @Override
     public SignInResponse loadDataFromNetwork() throws Exception {
 
-        String url = ServerURLs.SERVER_URL + ServerURLs.TOKEN;
+        String url = Network.SERVER_URL + Network.TOKEN;
 
         String requestBody = String.format("grant_type=password&username=%s&password=%s", name, password);
 

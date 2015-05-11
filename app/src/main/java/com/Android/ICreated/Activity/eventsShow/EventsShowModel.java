@@ -5,6 +5,7 @@ import com.Android.ICreated.Event;
 import com.Android.ICreated.EventsDataBase;
 import com.Android.ICreated.ServerAPI;
 import com.Android.ICreated.network.Converter;
+import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.requests.GetEventsRequest;
 import com.Android.ICreated.network.responses.GetEventsResponse;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -39,7 +40,7 @@ public class EventsShowModel
     {
         this.context = context;
         dataBase = new EventsDataBase(context);
-        spiceManager.execute(new GetEventsRequest(), new GetEventsRequestListener());
+        spiceManager.execute(Network.requestsFactory.getEventsRequest(), new GetEventsRequestListener());
     }
 
     private final class GetEventsRequestListener implements RequestListener<GetEventsResponse> {

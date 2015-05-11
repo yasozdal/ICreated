@@ -11,24 +11,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.Android.ICreated.Activity.eventsShow.EventsShowActivity;
 import com.Android.ICreated.R;
-import com.Android.ICreated.ServerAPI;
-import android.support.v7.app.ActionBarActivity;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
-import com.Android.ICreated.network.requests.AddEventRequest;
-import com.Android.ICreated.network.requests.GetEventsRequest;
+import com.Android.ICreated.network.Network;
+import com.Android.ICreated.network.Requests;
 import com.Android.ICreated.network.requests.RegisterRequest;
 import com.Android.ICreated.network.requests.SignInRequest;
-import com.Android.ICreated.network.responses.AddEventResponse;
-import com.Android.ICreated.network.responses.GetEventsResponse;
 import com.Android.ICreated.network.responses.RegisterResponse;
 import com.Android.ICreated.network.responses.SignInResponse;
-import com.Android.ICreated.network.responses.models.EventModel;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.octo.android.robospice.request.notifier.RequestListenerNotifier;
-
-import java.util.Calendar;
 
 /**
  * Created by Филипп on 07.10.2014.
@@ -121,8 +113,8 @@ public class LoginActivity extends AppCompatActivity
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         passwordConfirm = (EditText) findViewById(R.id.passwordConfirm);
-
-        RegisterRequest request = new RegisterRequest(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
+        RegisterRequest request = Network.requestsFactory
+                .registerRequest(userName.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
         spiceManager.execute(request, new RegisterRequestListener());
 
     }
@@ -163,7 +155,7 @@ public class LoginActivity extends AppCompatActivity
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
 
-        spiceManager.execute(new SignInRequest(userName.getText().toString(), password.getText().toString()),new SignInRequestListener());
+        spiceManager.execute(Network.requestsFactory.signInRequest(userName.getText().toString(), password.getText().toString()),new SignInRequestListener());
 
     }
     private final class SignInRequestListener implements RequestListener<SignInResponse> {

@@ -2,23 +2,17 @@ package com.Android.ICreated.network.requests;
 
 import com.Android.ICreated.network.Converter;
 import com.Android.ICreated.network.CurrentUser;
-import com.Android.ICreated.network.ServerURLs;
+import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.requests.models.AddEventBindingModel;
-import com.Android.ICreated.network.requests.models.RegisterBindingModel;
 import com.Android.ICreated.network.responses.AddEventResponse;
-import com.Android.ICreated.network.responses.RegisterResponse;
-import com.Android.ICreated.network.responses.UserInfoResponse;
-import com.Android.ICreated.network.responses.models.UserInfoModel;
 import com.octo.android.robospice.request.SpiceRequest;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Calendar;
-import java.util.Collections;
 
 /**
  * Created by Филипп on 19.04.2015.
@@ -39,7 +33,7 @@ public class AddEventRequest extends SpiceRequest<AddEventResponse> {
     @Override
     public AddEventResponse loadDataFromNetwork() throws Exception {
 
-        String url = ServerURLs.SERVER_URL + ServerURLs.EVENTS;
+        String url = Network.SERVER_URL + Network.EVENTS;
 
 
         HttpHeaders httpHeaders = new HttpHeaders();

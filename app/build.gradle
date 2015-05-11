@@ -57,6 +57,7 @@ android {
     }
 }
 
+
 dependencies {
 
     compile 'com.android.support:appcompat-v7:22.1.1'
@@ -68,6 +69,14 @@ dependencies {
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.2'
 
+
+    androidTestCompile 'org.mockito:mockito-core:1.10.8'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'
+
+    //espresso dependencies
+    androidTestCompile 'com.google.guava:guava:18.0'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.1'
     androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3')
+
 
 }
