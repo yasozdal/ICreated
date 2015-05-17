@@ -11,8 +11,6 @@ import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.RequestsFactory;
 import com.Android.ICreated.network.requests.GetEventsRequest;
 import com.Android.ICreated.network.requests.SignInRequest;
-import com.Android.ICreated.network.responses.GetEventsResponse;
-import com.Android.ICreated.network.responses.Response;
 import com.Android.ICreated.network.responses.SignInResponse;
 import com.google.android.apps.common.testing.ui.espresso.Espresso;
 import com.google.android.apps.common.testing.ui.espresso.action.ViewActions;
