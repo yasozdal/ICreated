@@ -41,6 +41,13 @@ public class EventsShowActivity extends ActionBarActivity
     private EventsShowModel eventsShowModel;
     private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
 
+    //for tests
+    public void setSpiceManager(SpiceManager spiceManager) {
+        this.spiceManager.shouldStop();
+        this.spiceManager = spiceManager;
+        this.spiceManager.start(this);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -226,8 +233,6 @@ public class EventsShowActivity extends ActionBarActivity
                                     event.getDescription(),
                                     event.getTime()),
                                  new AddEventListener(event));
-//            eventsShowModel.addEvent(event);
-//            showEvent(event);
         }
     }
 

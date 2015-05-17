@@ -14,6 +14,7 @@ import com.Android.ICreated.R;
 import com.Android.ICreated.network.MyOkHttpSpiceService;
 import com.Android.ICreated.network.Network;
 import com.Android.ICreated.network.Requests;
+import com.Android.ICreated.network.RequestsFactory;
 import com.Android.ICreated.network.requests.RegisterRequest;
 import com.Android.ICreated.network.requests.SignInRequest;
 import com.Android.ICreated.network.responses.RegisterResponse;
@@ -32,7 +33,13 @@ public class LoginActivity extends AppCompatActivity
     EditText userName;
     EditText password;
     EditText passwordConfirm;
-    private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
+    public SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
+    //for testing, use only in running activity, old manager will shutdown
+    public void setSpiceManager(SpiceManager spiceManager) {
+        this.spiceManager.shouldStop();
+        this.spiceManager = spiceManager;
+        this.spiceManager.start(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,7 +108,7 @@ public class LoginActivity extends AppCompatActivity
 
     }
 
-    private void ToMap()
+    public void ToMap()
     {
         Intent intent = new Intent(this, EventsShowActivity.class);
         startActivity(intent);
@@ -154,8 +161,8 @@ public class LoginActivity extends AppCompatActivity
     private void signIn() {
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
+        spiceManager.execute(Network.requestsFactory.signInRequest(userName.getText().toString(), password.getText().toString()), new SignInRequestListener());
 
-        spiceManager.execute(Network.requestsFactory.signInRequest(userName.getText().toString(), password.getText().toString()),new SignInRequestListener());
 
     }
     private final class SignInRequestListener implements RequestListener<SignInResponse> {
