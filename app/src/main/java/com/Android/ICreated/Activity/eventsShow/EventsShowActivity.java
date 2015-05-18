@@ -1,5 +1,7 @@
 package com.Android.ICreated.Activity.eventsShow;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import com.Android.ICreated.*;
 import com.Android.ICreated.Activity.EventShowActivity;
@@ -22,6 +25,7 @@ import com.Android.ICreated.network.MyOkHttpSpiceService;
 import com.Android.ICreated.network.requests.AddEventRequest;
 import com.Android.ICreated.network.responses.AddEventResponse;
 import com.google.android.gms.drive.internal.AddEventListenerRequest;
+import com.google.android.gms.maps.MapFragment;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -36,7 +40,7 @@ public class EventsShowActivity extends ActionBarActivity
     DrawerLayout drawerLayout;
     ListView drawerList;
     ActionBarDrawerToggle drawerToggle;
-    private FragmentTabHost tabHost;
+    //    private FragmentTabHost tabHost;
     private EventsShowModel eventsShowModel;
     private SpiceManager spiceManager = new SpiceManager(MyOkHttpSpiceService.class);
 
@@ -49,10 +53,14 @@ public class EventsShowActivity extends ActionBarActivity
         Toolbar toolbar = toolbarInit();
         if (toolbar != null)
         {
-            tabHostInit();
+//            tabHostInit();
             drawerInit(toolbar);
         }
         initWorkerFragment();
+        Fragment frag = new MapEvents();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.frag_panel, frag);
+        ft.commit();
     }
 
     @Override
@@ -108,21 +116,21 @@ public class EventsShowActivity extends ActionBarActivity
         return toolbar;
     }
 
-    private void tabHostInit()
-    {
-        tabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
-        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.map)).setIndicator(getResources().getString(R.string.map)),
-                MapEvents.class, null);
-        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.list)).setIndicator(getResources().getString(R.string.list)),
-                ListEvents.class, null);
-        for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++)
-        {
-            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextColor(getResources().getColor(R.color.white));
-        }
-    }
+//    private void tabHostInit()
+//    {
+//        tabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+//        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+//
+//        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.map)).setIndicator(getResources().getString(R.string.map)),
+//                MapEvents.class, null);
+//        tabHost.addTab(tabHost.newTabSpec(getResources().getString(R.string.list)).setIndicator(getResources().getString(R.string.list)),
+//                ListEvents.class, null);
+//        for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++)
+//        {
+//            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+//            tv.setTextColor(getResources().getColor(R.color.white));
+//        }
+//    }
 
 
     private void drawerInit(Toolbar toolbar)
@@ -220,11 +228,11 @@ public class EventsShowActivity extends ActionBarActivity
         {
             Event event = data.getParcelableExtra("Event");
             spiceManager.execute(new AddEventRequest
-                                                    (Double.toString(event.getLatLng().latitude),
-                                                     Double.toString(event.getLatLng().longitude),
-                                                     event.getDescription(),
-                                                     event.getTime() ),
-                                 new AddEventListener(event));
+                                    (Double.toString(event.getLatLng().latitude),
+                                    Double.toString(event.getLatLng().longitude),
+                                    event.getDescription(),
+                                    event.getTime()),
+                    new AddEventListener(event));
 //            eventsShowModel.addEvent(event);
 //            showEvent(event);
         }
@@ -249,7 +257,7 @@ public class EventsShowActivity extends ActionBarActivity
                 showEvent(event);
             }
             else {
-                // не добавился event
+                // ?? ????????? event
             }
         }
     }

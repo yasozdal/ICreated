@@ -2,6 +2,7 @@
 
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -11,39 +12,12 @@
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-        <android.support.v4.app.FragmentTabHost
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@android:id/tabhost"
+        <FrameLayout
+                android:id="@+id/frag_panel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <TabWidget
-                        android:id="@android:id/tabs"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/main"
-                        android:divider="@color/main"
-                        android:layout_weight="0"/>
-                <FrameLayout
-                        android:id="@android:id/tabcontent"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="0"/>
-                <FrameLayout
-                        android:id="@+id/realtabcontent"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-                </FrameLayout>
-            </LinearLayout>
-        </android.support.v4.app.FragmentTabHost>
-
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+        </FrameLayout>
         <ListView android:id="@+id/left_drawer"
                   android:layout_width="@dimen/drawer_width"
                   android:layout_height="match_parent"
