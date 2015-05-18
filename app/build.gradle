@@ -32,7 +32,7 @@ android {
     }
 
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
 
@@ -67,6 +67,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.2'
+    compile 'com.sothree.slidinguppanel:library:3.0.0'
+
 
     androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3')
 
