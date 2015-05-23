@@ -160,33 +160,43 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
         btnCategory = (TextView) findViewById(R.id.btnCategory);
         tvCategory = (TextView) findViewById(R.id.tvCategory);
         tvCategoryIcon = (TextView) findViewById(R.id.tvCategoryIcon);
+
         btnCategory.setTypeface(tf);
         tvCategory.setTypeface(tf);
         tvCategoryIcon.setTypeface(tf);
+
         btnLocation = (TextView) findViewById(R.id.btnLocation);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvLocationIcon = (TextView) findViewById(R.id.tvLocationIcon);
+
         btnLocation.setTypeface(tf);
         tvLocation.setTypeface(tf);
         tvLocationIcon.setTypeface(tf);
+
         btnDate = (TextView) findViewById(R.id.btnDate);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvDateIcon = (TextView) findViewById(R.id.tvDateIcon);
+
         btnDate.setTypeface(tf);
         tvDate.setTypeface(tf);
         tvDateIcon.setTypeface(tf);
+
         btnPhoto = (TextView) findViewById(R.id.btnPhoto);
         tvPhoto = (TextView) findViewById(R.id.tvPhoto);
         tvPhotoIcon = (TextView) findViewById(R.id.tvPhotoIcon);
+
         btnPhoto.setTypeface(tf);
         tvPhoto.setTypeface(tf);
         tvPhotoIcon.setTypeface(tf);
+
         btnLock = (TextView) findViewById(R.id.btnLock);
         tvLock = (TextView) findViewById(R.id.tvLock);
         tvLockIcon = (TextView) findViewById(R.id.tvLockIcon);
+
         btnLock.setTypeface(tf);
         tvLock.setTypeface(tf);
         tvLockIcon.setTypeface(tf);
+
         equalizer = (TextView) findViewById(R.id.equalizer);
         equalizer.setTypeface(tf);
     }
@@ -216,8 +226,8 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
         if (id == DIALOG_TIME)
         {
             DatePickerDialog dpd = new DatePickerDialog(this, dateCallBack, Calendar.YEAR,
-                                                                            Calendar.MONTH,
-                                                                            Calendar.DAY_OF_MONTH);
+                    Calendar.MONTH,
+                    Calendar.DAY_OF_MONTH);
             dpd.getDatePicker().setMinDate(System.currentTimeMillis());
 
             dpd.setTitle(R.string.dialog_date);
@@ -228,7 +238,8 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
         else
         {
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            switch (id) {
+            switch (id)
+            {
                 case DIALOG_CATEGORY:
                     adb.setTitle(R.string.dialog_category);
                     adb.setSingleChoiceItems(categories, event.getCategory(), dialogClickListener);
@@ -248,22 +259,19 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
 
     DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener()
     {
-        private boolean isNewDate (int pickedYear, int pickedMonth, int pickedDay) {
-            return (event.getTime() == null)
-
-                    ||
-
-                    ((event.getTime().get(Calendar.YEAR) != pickedYear)
-                    &&
-                    (event.getTime().get(Calendar.MONTH) != pickedMonth)
-                    &&
-                    (event.getTime().get(Calendar.DAY_OF_MONTH) != pickedDay));
+        private boolean isNewDate (int pickedYear, int pickedMonth, int pickedDay)
+        {
+            return (event.getTime() == null) ||
+                        ((event.getTime().get(Calendar.YEAR) != pickedYear) &&
+                         (event.getTime().get(Calendar.MONTH) != pickedMonth) &&
+                         (event.getTime().get(Calendar.DAY_OF_MONTH) != pickedDay));
         }
 
         @Override
         public void onDateSet(DatePicker view, int pickedYear, int pickedMonth, int pickedDay)
         {
-            if (isNewDate(pickedYear, pickedMonth, pickedDay)) {
+            if (isNewDate(pickedYear, pickedMonth, pickedDay))
+            {
                 event.setTime(Calendar.getInstance());
                 event.getTime().set(Calendar.YEAR, pickedYear);
                 event.getTime().set(Calendar.MONTH, pickedMonth);
@@ -278,8 +286,8 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
     {
         Calendar currTime = Calendar.getInstance();
         TimePickerDialog tpd = new TimePickerDialog(EventCreateActivity.this, timeCallBack,
-                                                    currTime.get(Calendar.HOUR_OF_DAY),
-                                                    currTime.get(Calendar.MINUTE), true);
+                currTime.get(Calendar.HOUR_OF_DAY),
+                currTime.get(Calendar.MINUTE), true);
         tpd.setTitle(R.string.dialog_time);
         tpd.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.set_time), tpd);
 
@@ -294,9 +302,9 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
             if (event.getTime().get(Calendar.YEAR) == currTime.get(Calendar.YEAR) &&
                 event.getTime().get(Calendar.MONTH) == currTime.get(Calendar.MONTH) &&
                 event.getTime().get(Calendar.DAY_OF_MONTH) == currTime.get(Calendar.DAY_OF_MONTH) &&
-               (pickedHour < currTime.get(Calendar.HOUR_OF_DAY) ||
-               (pickedHour == currTime.get(Calendar.HOUR_OF_DAY) &&
-                pickedMinute < currTime.get(Calendar.MINUTE))))
+                (pickedHour < currTime.get(Calendar.HOUR_OF_DAY) ||
+                    (pickedHour == currTime.get(Calendar.HOUR_OF_DAY) &&
+                     pickedMinute < currTime.get(Calendar.MINUTE))))
             {
                 Toast toast = Toast.makeText(getApplicationContext(),R.string.past_event_toast, Toast.LENGTH_SHORT);
                 toast.show();
@@ -316,8 +324,8 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
         String hourView = "";
         String minuteView = "";
         btnDate.setTextColor(getResources().getColor(R.color.main));
-        if (event.getTime().get(Calendar.HOUR_OF_DAY) < 10) { hourView = "0"; }
-        if (event.getTime().get(Calendar.MINUTE) < 10) { minuteView = "0"; }
+        if (event.getTime().get(Calendar.HOUR_OF_DAY) < 10) { hourView = "0"; } // We add "0" into view of date
+        if (event.getTime().get(Calendar.MINUTE) < 10) { minuteView = "0"; }    // to set 06 hours instead of 6 hours
         tvDate.setText(event.getTime().get(Calendar.DAY_OF_MONTH) + "." + event.getTime().get(Calendar.MONTH)
                 + "." + event.getTime().get(Calendar.YEAR) + "   " + hourView + event.getTime().get(Calendar.HOUR_OF_DAY)
                 + ":" + minuteView + event.getTime().get(Calendar.MINUTE));
@@ -327,10 +335,7 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
 
     OnClickListener dialogClickListener = new OnClickListener()
     {
-        public void onClick(DialogInterface dialog, int which)
-        {
-            Log.d("olologs", "which = " + which);
-        }
+        public void onClick(DialogInterface dialog, int which) {}
     };
 
     OnClickListener btnOkClickListener = new OnClickListener()
@@ -373,11 +378,11 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
-        {
+    {
         if (data == null) {return;}
         double latitude = data.getDoubleExtra("latitude", 0);
-            double longitude = data.getDoubleExtra("longitude", 0);
-            event.setLatLng(new LatLng(latitude, longitude));
+        double longitude = data.getDoubleExtra("longitude", 0);
+        event.setLatLng(new LatLng(latitude, longitude));
         showLocation();
 
         onPrepareOptionsMenu(barMenu);
@@ -428,6 +433,8 @@ public class EventCreateActivity extends AppCompatActivity implements TextWatche
     public void afterTextChanged(Editable s)
     {
         String description = etDescription.getText().toString();
+        isBtnSaveEnabledByDescription = !description.matches("");
+        invalidateOptionsMenu();
         if (description.matches(""))
         {
             isBtnSaveEnabledByDescription = false;
